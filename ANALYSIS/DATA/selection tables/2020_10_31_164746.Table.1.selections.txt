@@ -1,0 +1,3 @@
+Selection	View	Channel	Begin Time (s)	End Time (s)	Low Freq (Hz)	High Freq (Hz)	Annotation
+1	Waveform 1	1	292.391793979	292.668271421	0.000	22050.000	369
+1	Spectrogram 1	1	292.391793979	292.668271421	0.000	22050.000	369
