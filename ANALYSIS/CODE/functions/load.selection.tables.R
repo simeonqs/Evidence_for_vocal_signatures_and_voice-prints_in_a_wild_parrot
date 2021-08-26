@@ -1,15 +1,16 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: monk parakeets
 # Date started: 10-12-2020
-# Date last modified: 07-01-2021
-# Author: Simeon Smeele
+# Date last modified: 26-08-2021
+# Author: Simeon Q. Smeele
 # Description: Loads selection tables made in Raven and outputs them binded into a dataframe. 
 # This version fixes a problem where there were more than eight columns. 
-# Arguments:
-# - path_selection_tables: the path to the folder containing the .txt files. 
+# This version includes the option to merge the annotations onto the selection tables. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-load.selection.tables = function(path_selection_tables){
+load.selection.tables = function(path_selection_tables,
+                                 path_annotations = NULL # if included annotations are merged on
+                                 ){
   
   if(!is.character(path_selection_tables)) 
     stop(paste0('Not a character. This function only takes one argument:',
@@ -36,6 +37,14 @@ load.selection.tables = function(path_selection_tables){
   dat = selection_tables %>%
     bind_rows(.id = 'file')
   dat = dat[dat$View == 'Waveform 1',]
+  
+  # Merge annotations
+  if(!is.null(path_annotations)){
+    annotations = read.csv2(path_annotations)
+    dat = merge(dat, annotations, by.x = 'Annotation', by.y = 'annotation_ref',
+                all.x = T, all.y = F)
+  }
+  
   return(dat)
   
 }
