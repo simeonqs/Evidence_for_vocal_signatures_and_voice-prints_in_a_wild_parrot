@@ -1,10 +1,11 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: chapter II
 # Date started: 24-08-2021
-# Date last modified: 25-08-2021
+# Date last modified: 27-08-2021
 # Author: Simeon Q. Smeele
 # Description: Running model on real data.  
-# source('04_run_model_real.R')
+# This version was moved to the new repo and paths are fixed. 
+# source('ANALYSIS/CODE/luscinia/social networks model/04_run_model_real.R')
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
@@ -18,9 +19,9 @@ for(i in libraries){
 rm(list = ls())
 
 # Paths
-path_data = '../../RESULTS/social networks model/real_dat.RData'
-path_model = 'm_2.stan'
-path_out = '../../RESULTS/social networks model/real_model.RData'
+path_data = 'ANALYSIS/RESULTS/luscinia/social networks model/real_dat.RData'
+path_model = 'ANALYSIS/CODE/luscinia/social networks model/m_3.stan'
+path_out = 'ANALYSIS/RESULTS/luscinia/social networks model/real_model.RData'
 
 # Load data
 load(path_data)
