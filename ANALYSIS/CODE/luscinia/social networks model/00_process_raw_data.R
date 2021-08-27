@@ -4,10 +4,9 @@
 # Date last modified: 27-08-2021
 # Author: Simeon Q. Smeele
 # Description: Load DTW results and prepare for model. NOT FINISHED.
-# setwd('/Users/ssmeele/ownCloud/Simeon/MPI AB/PhD thesis/Chapter II/phd_chapter_II')
 # NOTE: subsampling inds to test model, REMEMBER TO INCLUDE ALL
 # This version adds data to code whether or not an ind pair is the same ind. 
-# This version adds the rec level. 
+# This version adds the rec level and is moved to the new repo. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
@@ -21,62 +20,42 @@ for(lib in libraries){
 rm(list=ls()) 
 
 # Paths
-path_functions = 'ANALYSIS/CODE/social networks model/functions'
-path_functions_all = 'ANALYSIS/CODE/functions'
-path_out = 'ANALYSIS/RESULTS/social networks model/real_dat.RData'
-path_dtw = 'ANALYSIS/RESULTS/Luscinia/dtw_outs_with_names.RData'
+path_functions = 'ANALYSIS/CODE/functions'
+path_out = 'ANALYSIS/RESULTS/luscinia/social networks model/real_dat.RData'
+path_dtw = 'ANALYSIS/RESULTS/luscinia/dtw/dtw_and_m.RData'
 path_anno = 'ANALYSIS/DATA/overview recordings/annotations.csv'
 path_context = 'ANALYSIS/DATA/overview recordings/call types.xlsx'
+path_st = 'ANALYSIS/DATA/selection tables'
 
 # Import functions
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
-.functions = sapply(list.files(path_functions_all, pattern = '*R', full.names = T), source)
 
 # Load data
 load(path_dtw)
-dat = load.selection.tables('ANALYSIS/DATA/selection tables')
+dat = load.selection.tables(path_st, path_anno)
+anno = read.csv2(path_anno)
 
-# Merge annotations
-annotations = read.csv2(path_anno)
-dat = merge(dat, annotations, by.x = 'Annotation', by.y = 'annotation_ref',
-            all.x = T, all.y = F)
-
-# Load context
-context = load.call.type.context(path_context)
-pasted = paste0(str_remove(context$file, '.Table.1.selections.txt'), '-', context$selection)
-isolated_contacts = pasted[context$`call type` == 'contact' & context$context %in% c('isolated', 'response')]
-
-# Create matrix
-o = dtw_outs_with_names$dtw_outs
-m = o.to.m(o, inds)
-l = length(dtw_outs_with_names$file_sels)
-o = o / max(o)
-m = matrix(nrow = l, ncol = l)
-m[lower.tri(m)] = o
-m[upper.tri(m)] = t(m)[upper.tri(m)]
-diag(m) = 0
-file_sels = dtw_outs_with_names$file_sels %>% str_remove('.wav')
-
-# Subset
-m = m[file_sels %in% isolated_contacts, file_sels %in% isolated_contacts]
-fs = file_sels[file_sels %in% isolated_contacts]
-
-# Get individual ID
-dat$file_sel = paste(dat$file, dat$Selection, sep = '-')
-inds = sapply(fs, function(x) dat$bird[dat$file_sel == x])
+# Get ind and rec
+dat$fs = paste(dat$file, dat$Selection, sep = '-')
+fs = rownames(m) %>% str_remove('.wav')
+files = fs %>% str_split('-') %>% sapply(`[`, 1)
+inds = sapply(fs, function(x) anno$bird[anno$annotation_ref == dat$Annotation[dat$fs == x]])
 
 # Sample down inds for now 
 set.seed(1)
-s = sample(unique(inds), 15)
+s = sample(unique(inds), 10)
 m = m[inds %in% s, inds %in% s]
+files = files[inds %in% s]
 inds = inds[inds %in% s]
 
 # List data
-d = m.to.df(m, as.integer(as.factor(inds)))
+d = m.to.df(m, inds = as.integer(as.factor(inds)), recs = as.integer(as.factor(files)))
 clean_dat = as.list(d)
 clean_dat$d = as.numeric(scale(d$d))
 clean_dat$N_ind_pair = max(d$ind_pair)
+clean_dat$N_rec_pair = max(d$rec_pair)
 clean_dat$N_ind = max(d$ind_i)
+clean_dat$N_rec = max(d$rec_i)
 clean_dat$N_call = max(d$call_j)
 clean_dat$N_obs = length(d$call_i)
 clean_dat$same_ind = sapply(1:max(d$ind_pair), function(pair) # 1 = same, 0 = different
