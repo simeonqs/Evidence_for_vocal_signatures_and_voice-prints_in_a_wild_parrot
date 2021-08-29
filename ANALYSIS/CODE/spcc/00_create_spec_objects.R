@@ -1,9 +1,10 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: chapter II
 # Date started: 26-08-2021
-# Date last modified: 26-08-2021
+# Date last modified: 27-08-2021
 # Author: Simeon Q. Smeele
-# Description: Running pixel comparison on all calls from 2020. 
+# Description: Creating spec objects for all calls from 2020.
+# This version adds the names to the spec_objects. 
 # source('ANALYSIS/CODE/spcc/00_create_spec_objects.R')
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -60,4 +61,5 @@ spec_objects = sapply(1:nrow(dat), function(i){
 image(t(spec_objects[[1]]), col = hcl.colors(12, 'Blue-Yellow', rev = T)) 
 
 # Save spec_objects
+names(spec_objects) = paste(dat$file, dat$Selection, sep = '-')
 save(spec_objects, file = path_spec_objects)
