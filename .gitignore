@@ -4,4 +4,6 @@
 *.Rproj
 *.DS_Store
 ANALYSIS/DATA/audio
+ANALYSIS/RESULTS/luscinia/social networks model/real_model.RData
+ANALYSIS/RESULTS/luscinia/social networks model/real_dat.RData
 .Rproj.user
