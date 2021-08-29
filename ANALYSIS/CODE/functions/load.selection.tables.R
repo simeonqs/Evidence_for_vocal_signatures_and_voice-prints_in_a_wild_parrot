@@ -1,20 +1,21 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: monk parakeets
 # Date started: 10-12-2020
-# Date last modified: 26-08-2021
+# Date last modified: 27-08-2021
 # Author: Simeon Q. Smeele
 # Description: Loads selection tables made in Raven and outputs them binded into a dataframe. 
 # This version fixes a problem where there were more than eight columns. 
 # This version includes the option to merge the annotations onto the selection tables. 
+# This version adds a fs column with the file selections. 
+# This version adds the context if supplied. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
+require(readxl)
+
 load.selection.tables = function(path_selection_tables,
-                                 path_annotations = NULL # if included annotations are merged on
+                                 path_annotations = NULL, # if included annotations are merged on
+                                 path_context = NULL # if included adds the context
                                  ){
-  
-  if(!is.character(path_selection_tables)) 
-    stop(paste0('Not a character. This function only takes one argument:',
-                'the path to the folder containing the .txt files from Raven.'))
   
   selection_tables = path_selection_tables %>% 
     list.files('*txt', full.names = T) %>% 
@@ -38,10 +39,20 @@ load.selection.tables = function(path_selection_tables,
     bind_rows(.id = 'file')
   dat = dat[dat$View == 'Waveform 1',]
   
+  # Add fs column
+  dat$fs = paste(dat$file, dat$Selection, sep = '-')
+  
   # Merge annotations
   if(!is.null(path_annotations)){
     annotations = read.csv2(path_annotations)
     dat = merge(dat, annotations, by.x = 'Annotation', by.y = 'annotation_ref',
+                all.x = T, all.y = F)
+  }
+  
+  # Merge annotations
+  if(!is.null(path_context)){
+    context = load.call.type.context(path_context)
+    dat = merge(dat, context, by = 'fs',
                 all.x = T, all.y = F)
   }
   
