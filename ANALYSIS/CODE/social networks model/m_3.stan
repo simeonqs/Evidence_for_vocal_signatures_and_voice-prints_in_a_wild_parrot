@@ -1,11 +1,12 @@
 // Project: chapter II
 // Date started: 25-08-2021
-// Date last modified: 25-08-2021
+// Date last modified: 26-08-2021
 // Author: Simeon Q. Smeele
 // Description: Multi-level model with based on social networks model. Includes varying effects for:
 // call, individual and individual pair. 
 // This version has an added parameter for whether or ind pair is the same ind. 
 // This version adds the rec level. 
+// This version actually has priors for all parameters and tighter priors for some others. 
 data{
     int N_obs;
     int N_call;
@@ -46,17 +47,19 @@ model{
     sigma_rec_pair ~ exponential( 1 );
     sigma_ind ~ exponential( 1 );
     sigma_rec ~ exponential( 1 );
-    sigma_call ~ exponential( 1 );
+    sigma_call ~ exponential( 2 );
     sigma ~ exponential( 1 );
-    b_ind_pair ~ normal( 0 , 1 );
-    a_ind_pair ~ normal( 0 , 1 );
+    b_ind_pair ~ normal( 0 , 0.5 );
+    a_ind_pair ~ normal( 0 , 0.5 );
     // sub model that explains the offset for ind pair based on wheter or not it's the same ind
     for( n in 1:N_ind_pair ) {
       z_ind_pair[n] = a_ind_pair + b_ind_pair * same_ind[n];
     }
-    z_ind ~ normal( 0 , 1 );
-    z_call ~ normal( 0 , 1 );
-    a ~ normal( 0 , 1 );
+    z_ind ~ normal( 0 , 0.5 );
+    z_call ~ normal( 0 , 0.5 );
+    z_rec ~ normal( 0 , 0.5 );
+    z_rec_pair ~ normal( 0 , 0.5 );
+    a ~ normal( 0 , 0.5 );
     // main model
     for( n in 1:N_obs ) {
         mu[n] = 

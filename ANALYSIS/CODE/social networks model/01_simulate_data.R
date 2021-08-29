@@ -1,11 +1,12 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: chapter II
 # Date started: 24-08-2021
-# Date last modified: 25-08-2021
+# Date last modified: 28-08-2021
 # Author: Simeon Q. Smeele
 # Description: Simple simulation of data that we might get from dtw. 
 # This version adds data to code whether or not an ind pair is the same ind. 
 # This version adds the rec level. 
+# This version was moved to the new repo and paths were fixed. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
@@ -17,17 +18,17 @@ for(i in libraries){
 
 # Settings
 set.seed(3)
-N_ind = 5
+N_ind = 10
 N_var = 5
-lambda_rec = 3
-lambda_obs = 5
+lambda_rec = 2
+lambda_obs = 3
 sigma_ind = 1
 sigma_rec = 0.5
 sigma_obs = 0.1
 
 # Paths
-path_functions = 'ANALYSIS/CODE/social networks model/functions'
-path_out = 'ANALYSIS/RESULTS/social networks model/sim_dat.RData'
+path_functions = 'ANALYSIS/CODE/functions'
+path_out = 'ANALYSIS/RESULTS/luscinia/social networks model/sim_dat.RData'
 
 # Import functions
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
@@ -64,7 +65,7 @@ d = m.to.df(m, inds, recs)
 
 # List data
 clean_dat = as.list(d)
-clean_dat$d = as.numeric(scale(d$d))
+clean_dat$d = as.numeric(scale(d$d)) # smaller values = closer = more similar
 clean_dat$N_ind_pair = max(d$ind_pair)
 clean_dat$N_rec_pair = max(d$rec_pair)
 clean_dat$N_ind = max(d$ind_i)
@@ -77,3 +78,7 @@ clean_dat$same_ind = sapply(1:max(d$ind_pair), function(pair) # 1 = same, 0 = di
 
 # Save
 save(clean_dat, file = path_out)
+
+# Report
+message(sprintf('Simulated data for %s individuals. Saved a total of %s data points',
+                clean_dat$N_ind, clean_dat$N_obs))
