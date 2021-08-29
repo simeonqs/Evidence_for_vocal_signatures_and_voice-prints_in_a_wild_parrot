@@ -1,0 +1,7 @@
+For alarm r = 0.07 and p = 0.
+For contact r = 0.07 and p = 0.
+For growl r = 0.05 and p = 0.
+For short_contact r = 0 and p = 0.55.
+For tja r = 0.01 and p = 0.33.
+For tjup r = 0.01 and p = 0.3.
+For trruup r = 0.05 and p = 0.01.
