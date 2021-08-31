@@ -21,18 +21,18 @@ sim.sna.data = function(settings = list(N_ind = 10,
   recs = c()
   inds = c()
   dat = data.frame()
-  for(ind in 1:N_ind){
-    means_ind = rnorm(N_var, 0, sigma_ind)
-    N_rec = rpois(1, lambda_rec)
+  for(ind in 1:settings$N_ind){
+    means_ind = rnorm(settings$N_var, 0, settings$sigma_ind)
+    N_rec = rpois(1, settings$lambda_rec)
     if(N_rec == 0) next
     for(rec in 1:N_rec){
-      means_rec = rnorm(N_var, means_ind, sigma_rec)
-      N_obs = rpois(1, lambda_obs)
+      means_rec = rnorm(settings$N_var, means_ind, settings$sigma_rec)
+      N_obs = rpois(1, settings$lambda_obs)
       if(N_obs == 0) next
       for(obs in 1:N_obs){
         recs = c(recs, paste(ind, rec))
         inds = c(inds, ind)
-        dat = rbind(dat, rnorm(N_var, means_rec, sigma_obs))
+        dat = rbind(dat, rnorm(settings$N_var, means_rec, settings$sigma_obs))
       }
     }
   }
@@ -52,8 +52,8 @@ sim.sna.data = function(settings = list(N_ind = 10,
   clean_dat$d = as.numeric(scale(d$d)) # smaller values = closer = more similar
   clean_dat$N_ind_pair = max(d$ind_pair)
   clean_dat$N_rec_pair = max(d$rec_pair)
-  clean_dat$N_ind = max(d$ind_i)
-  clean_dat$N_rec = max(d$rec_i)
+  clean_dat$N_ind = max(d$ind_j)
+  clean_dat$N_rec = max(d$rec_j)
   clean_dat$N_call = max(d$call_j)
   clean_dat$N_obs = length(d$call_i)
   clean_dat$same_ind = sapply(1:max(d$ind_pair), function(pair) # 1 = same, 0 = different
