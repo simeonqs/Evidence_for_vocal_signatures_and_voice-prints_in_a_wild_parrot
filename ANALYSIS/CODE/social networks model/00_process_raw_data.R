@@ -1,10 +1,10 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: chapter II
 # Date started: 24-08-2021
-# Date last modified: 27-08-2021
+# Date last modified: 31-08-2021
 # Author: Simeon Q. Smeele
-# Description: Load DTW results and prepare for model. NOT FINISHED.
-# NOTE: subsampling inds to test model, REMEMBER TO INCLUDE ALL
+# Description: Load DTW results and prepare for model.
+# Note: check if subsampling inds.
 # This version adds data to code whether or not an ind pair is the same ind. 
 # This version adds the rec level and is moved to the new repo. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -21,7 +21,7 @@ rm(list=ls())
 
 # Paths
 path_functions = 'ANALYSIS/CODE/functions'
-path_out = 'ANALYSIS/RESULTS/luscinia/social networks model/real_dat.RData'
+path_out = 'ANALYSIS/RESULTS/social networks model/real_dat.RData'
 path_dtw = 'ANALYSIS/RESULTS/luscinia/dtw/dtw_and_m.RData'
 path_anno = 'ANALYSIS/DATA/overview recordings/annotations.csv'
 path_context = 'ANALYSIS/DATA/overview recordings/call types.xlsx'
@@ -43,10 +43,10 @@ inds = sapply(fs, function(x) anno$bird[anno$annotation_ref == dat$Annotation[da
 
 # Sample down inds for now 
 set.seed(1)
-s = sample(unique(inds), 10)
-m = m[inds %in% s, inds %in% s]
-files = files[inds %in% s]
-inds = inds[inds %in% s]
+# s = sample(1:length(fs), 50)
+# m = m[s, s]
+# files = files[s]
+# inds = inds[s]
 
 # List data
 d = m.to.df(m, inds = as.integer(as.factor(inds)), recs = as.integer(as.factor(files)))
