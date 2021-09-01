@@ -13,22 +13,22 @@
 // This version has an uncentered slope. 
 // This version adds back in the rec level. 
 data{
-    int N_obs;
-    int N_call;
-    int N_rec;
-    int N_ind;
-    int N_ind_pair;
-    int N_rec_pair;
-    real d[N_obs];
-    int call_i[N_obs];
-    int call_j[N_obs];
-    int rec_i[N_obs];
+    int N_obs; // number of rows (one row per call pair)
+    int N_call; // number of calls
+    int N_rec; // number of recordings (multiple calls per recording)
+    int N_ind; // number of individuals (multiple calls per individual)
+    int N_ind_pair; // number of pairs of individuals (either from same or two different)
+    int N_rec_pair; // same for recording
+    real d[N_obs]; // the accoustical distance between two calls (i and j)
+    int call_i[N_obs]; // index for call i
+    int call_j[N_obs]; 
+    int rec_i[N_obs]; // index for the recording call i came from
     int rec_j[N_obs];
-    int ind_i[N_obs];
+    int ind_i[N_obs]; // same for ind
     int ind_j[N_obs];
-    int ind_pair[N_obs];
+    int ind_pair[N_obs]; // this is not currently used
     int rec_pair[N_obs];
-    int same_ind[N_ind_pair];
+    int same_ind[N_ind_pair]; // whether or not indpair is the same of different ind
 }
 parameters{
     real a;
