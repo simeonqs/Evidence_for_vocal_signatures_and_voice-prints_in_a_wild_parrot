@@ -17,16 +17,19 @@ for(i in libraries){
 rm(list = ls())
 
 # Paths
-path_model = 'ANALYSIS/RESULTS/luscinia/social networks model/sim_model.RData'
+path_model = 'ANALYSIS/RESULTS/social networks model/real_model.RData'
 
 # Load data
 load(path_model)
 post = extract.samples(model)
 
+# Plot precis
+plot(precis(model))
+
 # Compare slope to prior
-prior = rexp(1e6, 2) %>% density
-plot(prior, xlim = c(0, 3), ylim = c(0, 3), main = '',
+prior = rnorm(1e6, 0, 0.5) %>% density
+plot(prior, xlim = c(-3, 3), ylim = c(0, 3), main = '',
      xlab = '', ylab = 'density')
 polygon(prior, col = alpha('grey', 0.5))
-post$b_ind_pair %>% density %>% polygon(col = alpha(4, 0.8))
+post$b_bar %>% density %>% polygon(col = alpha(4, 0.8))
 
