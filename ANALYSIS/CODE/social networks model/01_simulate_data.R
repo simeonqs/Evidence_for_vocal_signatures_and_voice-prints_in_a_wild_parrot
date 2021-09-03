@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: chapter II
 # Date started: 24-08-2021
-# Date last modified: 28-08-2021
+# Date last modified: 30-08-2021
 # Author: Simeon Q. Smeele
 # Description: Simple simulation of data that we might get from dtw. 
 # This version adds data to code whether or not an ind pair is the same ind. 
@@ -18,13 +18,13 @@ for(i in libraries){
 }
 
 # Settings
-set.seed(3)
+set.seed(1)
 settings = list(N_ind = 10,
                 N_var = 5,
                 lambda_rec = 2,
                 lambda_obs = 3,
                 sigma_ind = 1,
-                sigma_rec = 0.5,
+                sigma_rec = 0.1,
                 sigma_obs = 0.1)
 
 # Paths
