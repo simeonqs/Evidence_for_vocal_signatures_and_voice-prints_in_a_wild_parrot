@@ -20,7 +20,7 @@ rm(list=ls())
 
 # Paths
 path_data = 'ANALYSIS/RESULTS/spcc/datasets per call type'
-path_model = 'ANALYSIS/CODE/social networks model/m_3.stan'
+path_model = 'ANALYSIS/CODE/social networks model/m_8.stan'
 path_functions = 'ANALYSIS/CODE/functions'
 path_out = 'ANALYSIS/RESULTS/spcc/models'
 

@@ -6,16 +6,16 @@
 # Description: Running the SN model. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-run.sna.model = function(path_data_set,
-                         path_model,
-                         path_out,
-                         N_obs = NULL){
+run.sn.model = function(path_data_set,
+                        path_model,
+                        path_out,
+                        N_obs = NULL){
   
   # Load data
   load(path_data_set)
   
   # Optional subset
-  if(!is.null(N_obs)){
+  if(!is.null(N_obs) & N_obs < nrow(m_sub)){
     s = sample(1:nrow(d_sub), N_obs)
     m_sub = m_sub[s, s]
     d_sub = d_sub[s,]
@@ -44,6 +44,7 @@ run.sna.model = function(path_data_set,
              clean_dat$ind_j[clean_dat$ind_pair == pair][1], 1, 0))
   
   # Report
+  message('\n=========================================================\n')
   message('Starting model with ', clean_dat$N_obs, ' observations.\n')
   
   # Run model
@@ -59,4 +60,5 @@ run.sna.model = function(path_data_set,
   # Print the results
   message('Here are the results:\n')
   print(precis(model, depth = 1))
-}
+  
+} # end function
