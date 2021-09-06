@@ -1,9 +1,9 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: social networks
 # Date started: 27-08-2021
-# Date last modified: 27-08-2021
+# Date last modified: 06-09-2021
 # Author: Simeon Q. Smeele
-# Description: Running the sna model. 
+# Description: Running the SN model. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 run.sna.model = function(path_data_set,
