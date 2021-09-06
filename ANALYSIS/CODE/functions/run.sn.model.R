@@ -24,6 +24,7 @@ run.sn.model = function(path_data_set,
   # Report start
   split = path_data_set %>% strsplit('/')
   name_data = split[[1]][length(split[[1]])] %>% str_remove('.RData')
+  message('\n==============================================================================\n')
   message(sprintf('Cleaning data for *%s* with %s calls.\n', 
                   name_data, nrow(d_sub)))
   
@@ -44,7 +45,6 @@ run.sn.model = function(path_data_set,
              clean_dat$ind_j[clean_dat$ind_pair == pair][1], 1, 0))
   
   # Report
-  message('\n=========================================================\n')
   message('Starting model with ', clean_dat$N_obs, ' observations.\n')
   
   # Run model

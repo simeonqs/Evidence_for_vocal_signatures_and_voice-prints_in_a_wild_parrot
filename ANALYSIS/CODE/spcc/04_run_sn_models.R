@@ -32,4 +32,4 @@ data_set_paths = list.files(path_data, full.names = T, pattern = '*RData')
 
 # Run models
 set.seed(1)
-.out = lapply(data_set_paths, run.sn.model, path_model, path_out, N_obs = 300)
+.out = lapply(data_set_paths, run.sn.model, path_model, path_out, N_obs = 200)
