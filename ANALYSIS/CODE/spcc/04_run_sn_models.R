@@ -1,11 +1,11 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 27-08-2021
-# Date last modified: 27-08-2021
+# Date last modified: 06-09-2021
 # Author: Simeon Q. Smeele
 # Description: Running sna model per call type. 
-# NOTE: subsetting to 10 inds per call type for now!
-# source('ANALYSIS/CODE/spcc/04_run_sna_models.R')
+# NOTE: subsetting per call type for now!
+# source('ANALYSIS/CODE/spcc/04_run_sn_models.R')
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
@@ -20,7 +20,7 @@ rm(list=ls())
 
 # Paths
 path_data = 'ANALYSIS/RESULTS/spcc/datasets per call type'
-path_model = 'ANALYSIS/CODE/luscinia/social networks model/m_3.stan'
+path_model = 'ANALYSIS/CODE/social networks model/m_3.stan'
 path_functions = 'ANALYSIS/CODE/functions'
 path_out = 'ANALYSIS/RESULTS/spcc/models'
 
@@ -32,4 +32,4 @@ data_set_paths = list.files(path_data, full.names = T, pattern = '*RData')
 
 # Run models
 set.seed(1)
-.out = lapply(data_set_paths, run.sna.model, path_model, path_out, N_obs = 50)
+.out = lapply(data_set_paths, run.sn.model, path_model, path_out, N_obs = 300)
