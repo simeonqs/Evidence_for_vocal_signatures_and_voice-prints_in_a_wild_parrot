@@ -43,10 +43,10 @@ inds = sapply(fs, function(x) anno$bird[anno$annotation_ref == dat$Annotation[da
 
 # Sample down inds for now 
 set.seed(1)
-# s = sample(1:length(fs), 50)
-# m = m[s, s]
-# files = files[s]
-# inds = inds[s]
+s = sample(1:length(fs), 500)
+m = m[s, s]
+files = files[s]
+inds = inds[s]
 
 # List data
 d = m.to.df(m, inds = as.integer(as.factor(inds)), recs = as.integer(as.factor(files)))
