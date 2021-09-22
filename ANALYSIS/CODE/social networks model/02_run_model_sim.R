@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: chapter II
 # Date started: 24-08-2021
-# Date last modified: 30-08-2021
+# Date last modified: 22-09-2021
 # Author: Simeon Q. Smeele
 # Description: Running model on simulated data.  
 # This version was moved to the new repo and paths were fixed. 
@@ -21,7 +21,7 @@ rm(list = ls())
 
 # Paths
 path_data = 'ANALYSIS/RESULTS/social networks model/sim_dat.RData'
-path_model = 'ANALYSIS/CODE/social networks model/m_8.stan'
+path_model = 'ANALYSIS/CODE/social networks model/m_10.stan'
 path_out = 'ANALYSIS/RESULTS/social networks model/sim_model.RData'
 
 # Load data
