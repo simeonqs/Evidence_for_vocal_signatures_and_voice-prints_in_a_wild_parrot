@@ -1,12 +1,13 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: chapter II
 # Date started: 24-08-2021
-# Date last modified: 31-08-2021
+# Date last modified: 22-09-2021
 # Author: Simeon Q. Smeele
 # Description: Load DTW results and prepare for model.
 # Note: check if subsampling inds.
 # This version adds data to code whether or not an ind pair is the same ind. 
 # This version adds the rec level and is moved to the new repo. 
+# This version adds the same rec vector. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
@@ -41,9 +42,9 @@ fs = rownames(m) %>% str_remove('.wav')
 files = fs %>% str_split('-') %>% sapply(`[`, 1)
 inds = sapply(fs, function(x) anno$bird[anno$annotation_ref == dat$Annotation[dat$fs == x]])
 
-# Sample down inds for now 
+# Sample down for now 
 set.seed(1)
-s = sample(1:length(fs), 500)
+s = sample(1:length(fs), 100)
 m = m[s, s]
 files = files[s]
 inds = inds[s]
@@ -61,6 +62,9 @@ clean_dat$N_obs = length(d$call_i)
 clean_dat$same_ind = sapply(1:max(d$ind_pair), function(pair) # 1 = same, 0 = different
   ifelse(clean_dat$ind_i[clean_dat$ind_pair == pair][1] == 
            clean_dat$ind_j[clean_dat$ind_pair == pair][1], 1, 0))
+clean_dat$same_rec = sapply(1:max(d$rec_pair), function(pair) # 1 = same, 0 = different
+  ifelse(clean_dat$rec_i[clean_dat$rec_pair == pair][1] == 
+           clean_dat$rec_j[clean_dat$rec_pair == pair][1], 1, 0))
 
 # Save
 save(clean_dat, file = path_out)

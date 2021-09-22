@@ -1,20 +1,20 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: sna model
 # Date started: 29-08-2021
-# Date last modified: 29-08-2021
+# Date last modified: 08-09-2021
 # Author: Simeon Q. Smeele
 # Description: This function runs the simulation for the data that can be analysed with a social networks
 # model. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-sim.sna.data = function(settings = list(N_ind = 10,
-                                        N_var = 5,
-                                        lambda_rec = 2,
-                                        lambda_obs = 3,
-                                        sigma_ind = 1,
-                                        sigma_rec = 0.5,
-                                        sigma_obs = 0.1),
-                        plot_it = F
+sim.sn.data = function(settings = list(N_ind = 10,
+                                       N_var = 5,
+                                       lambda_rec = 2,
+                                       lambda_obs = 3,
+                                       sigma_ind = 1,
+                                       sigma_rec = 0.5,
+                                       sigma_obs = 0.1),
+                       plot_it = F
 ){
   
   # Simulate
@@ -59,6 +59,9 @@ sim.sna.data = function(settings = list(N_ind = 10,
   clean_dat$same_ind = sapply(1:max(d$ind_pair), function(pair) # 1 = same, 0 = different
     ifelse(clean_dat$ind_i[clean_dat$ind_pair == pair][1] == 
              clean_dat$ind_j[clean_dat$ind_pair == pair][1], 1, 0))
+  clean_dat$same_rec = sapply(1:max(d$rec_pair), function(pair) # 1 = same, 0 = different
+    ifelse(clean_dat$rec_i[clean_dat$rec_pair == pair][1] == 
+             clean_dat$rec_j[clean_dat$rec_pair == pair][1], 1, 0))
   clean_dat$settings = settings
   
   # Return
