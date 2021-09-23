@@ -25,7 +25,7 @@ path_pdf = 'ANALYSIS/RESULTS/spcc/sn results.pdf'
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
 
 # Plot beta parameter per call type
-# pdf(path_pdf, 10, 10)
+pdf(path_pdf, 10, 10)
 par(mfrow = c(3, 3))
 for(path_model in list.files(path_models, full.names = T, pattern = '*RData')){
   load(path_model)
@@ -35,9 +35,12 @@ for(path_model in list.files(path_models, full.names = T, pattern = '*RData')){
   plot(prior, xlim = c(-2, 2), ylim = c(0, 5), main = name_data, 
        xlab = '', ylab = 'density')
   polygon(prior, col = alpha('grey', 0.5))
-  post$b_bar %>% density %>% polygon(col = alpha(4, 0.8))
+  post$b_bar_rec %>% density %>% polygon(col = alpha(2, 0.8))
+  post$b_bar_ind %>% density %>% polygon(col = alpha(4, 0.8))
 }
-# dev.off()
+plot(NULL, xlim = c(-1, 1), ylim = c(0, 3), xaxt = 'n', yaxt = 'n', xlab = '', ylab = '', bty = 'n')
+text(c(0, 0), c(1, 2), c('beta individual', 'beta recording'), col = c(2, 4))
+dev.off()
 
 
 
