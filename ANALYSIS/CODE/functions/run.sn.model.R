@@ -1,9 +1,10 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: social networks
 # Date started: 27-08-2021
-# Date last modified: 06-09-2021
+# Date last modified: 22-09-2021
 # Author: Simeon Q. Smeele
 # Description: Running the SN model. 
+# This version runs the sn model with same/different rec level. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 run.sn.model = function(path_data_set,
@@ -43,6 +44,9 @@ run.sn.model = function(path_data_set,
   clean_dat$same_ind = sapply(1:max(d$ind_pair), function(pair) # 1 = same, 0 = different
     ifelse(clean_dat$ind_i[clean_dat$ind_pair == pair][1] == 
              clean_dat$ind_j[clean_dat$ind_pair == pair][1], 1, 0))
+  clean_dat$same_rec = sapply(1:max(d$rec_pair), function(pair) # 1 = same, 0 = different
+    ifelse(clean_dat$rec_i[clean_dat$rec_pair == pair][1] == 
+             clean_dat$rec_j[clean_dat$rec_pair == pair][1], 1, 0))
   
   # Report
   message('Starting model with ', clean_dat$N_obs, ' observations.\n')
