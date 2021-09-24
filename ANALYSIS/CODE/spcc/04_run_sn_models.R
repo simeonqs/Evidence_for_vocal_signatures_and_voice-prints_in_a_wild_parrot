@@ -3,7 +3,7 @@
 # Date started: 27-08-2021
 # Date last modified: 22-09-2021
 # Author: Simeon Q. Smeele
-# Description: Running sna model per call type. 
+# Description: Running sn model per call type. 
 # NOTE: subsetting per call type for now!
 # source('ANALYSIS/CODE/spcc/04_run_sn_models.R')
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -25,7 +25,7 @@ path_functions = 'ANALYSIS/CODE/functions'
 path_out = 'ANALYSIS/RESULTS/spcc/models'
 
 # Settings
-N_obs = 200
+N_obs = 500
 
 # Import functions
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
