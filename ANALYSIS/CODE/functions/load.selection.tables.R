@@ -1,13 +1,14 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: monk parakeets
 # Date started: 10-12-2020
-# Date last modified: 27-08-2021
+# Date last modified: 22-09-2021
 # Author: Simeon Q. Smeele
 # Description: Loads selection tables made in Raven and outputs them binded into a dataframe. 
 # This version fixes a problem where there were more than eight columns. 
 # This version includes the option to merge the annotations onto the selection tables. 
 # This version adds a fs column with the file selections. 
 # This version adds the context if supplied. 
+# This version removes the file name from the context before merge. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 require(readxl)
@@ -52,7 +53,7 @@ load.selection.tables = function(path_selection_tables,
   # Merge annotations
   if(!is.null(path_context)){
     context = load.call.type.context(path_context)
-    dat = merge(dat, context, by = 'fs',
+    dat = merge(dat, context[,names(context) != 'file'], by = 'fs',
                 all.x = T, all.y = F)
   }
   
