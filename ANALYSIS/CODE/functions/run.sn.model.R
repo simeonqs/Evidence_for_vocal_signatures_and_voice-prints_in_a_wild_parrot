@@ -1,16 +1,18 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: social networks
 # Date started: 27-08-2021
-# Date last modified: 22-09-2021
+# Date last modified: 23-09-2021
 # Author: Simeon Q. Smeele
 # Description: Running the SN model. 
 # This version runs the sn model with same/different rec level. 
+# This version has the option to include time between recordings. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 run.sn.model = function(path_data_set,
                         path_model,
                         path_out,
-                        N_obs = NULL){
+                        N_obs = NULL, 
+                        incl_time = F){
   
   # Load data
   load(path_data_set)
@@ -32,7 +34,8 @@ run.sn.model = function(path_data_set,
   # List data
   d = m.to.df(m_sub, 
               inds = as.integer(as.factor(d_sub$ind)), 
-              recs = as.integer(as.factor(d_sub$file)))
+              recs = as.integer(as.factor(d_sub$file)),
+              incl_time = incl_time)
   clean_dat = as.list(d)
   clean_dat$d = as.numeric(scale(d$d))
   clean_dat$N_ind_pair = max(d$ind_pair)
@@ -62,7 +65,7 @@ run.sn.model = function(path_data_set,
   save('model', file = paste0(path_out, '/', name_data, '.RData'))
   
   # Print the results
-  message('Here are the results:\n')
+  message(sprintf('Here are the results for %s:\n', name_data))
   print(precis(model, depth = 1))
   
 } # end function
