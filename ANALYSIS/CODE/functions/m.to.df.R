@@ -1,16 +1,20 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: social networks
 # Date started: 24-08-2021
-# Date last modified: 25-08-2021
+# Date last modified: 24-09-2021
 # Author: Simeon Q. Smeele
 # Description: Taking matrix with distances and making it into a dataframe that can be analysed with stan 
 # model. 
 # This version has the option to also include the rec level. 
+# This version also calculates the time difference between recordings. 
+# This verison includes the time difference for the simulation .
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 m.to.df = function(m, 
                    inds,
                    recs = NULL,
+                   incl_time = F,
+                   time_saver = NULL,
                    progress_bar = T){
   
   d = data.frame()
@@ -32,14 +36,20 @@ m.to.df = function(m,
         new = cbind(new, data.frame(
         rec_i = recs[i],
         rec_j = recs[j],
-        rec_pair = paste(recs[i], recs[j], sep = '-')
-        ))
+        rec_pair = paste(recs[i], recs[j], sep = '-')))
       }
+      if(incl_time) new$time = c(recs[i], recs[j]) %>% str_sub(1, 10) %>% str_replace_all('_', '-') %>% 
+          as.Date %>% diff %>% abs %>% as.numeric
+      if(!is.null(time_saver)) new$time = c(time_saver[i], time_saver[j]) %>% diff %>% abs
       d = rbind(d, new)
     }
   }
   d$ind_pair = as.integer(as.factor(d$ind_pair))
-  if(!is.null(recs)) d$rec_pair = as.integer(as.factor(d$rec_pair))
+  if(!is.null(recs)){
+    d$rec_i = as.integer(as.factor(d$rec_i))
+    d$rec_j = as.integer(as.factor(d$rec_j))
+    d$rec_pair = as.integer(as.factor(d$rec_pair))
+  }
   if(progress_bar) close(pb)
   
   return(d)
