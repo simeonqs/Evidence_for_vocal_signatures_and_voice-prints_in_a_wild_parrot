@@ -1,13 +1,14 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: chapter II
 # Date started: 24-08-2021
-# Date last modified: 22-09-2021
+# Date last modified: 23-09-2021
 # Author: Simeon Q. Smeele
 # Description: Load DTW results and prepare for model.
-# Note: check if subsampling inds.
+# NOTE: downsampling for now!
 # This version adds data to code whether or not an ind pair is the same ind. 
 # This version adds the rec level and is moved to the new repo. 
 # This version adds the same rec vector. 
+# This version includes time between recordings. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
@@ -19,6 +20,9 @@ for(lib in libraries){
 
 # Clean R
 rm(list=ls()) 
+
+# Settings
+N_obs = 100
 
 # Paths
 path_functions = 'ANALYSIS/CODE/functions'
@@ -44,13 +48,13 @@ inds = sapply(fs, function(x) anno$bird[anno$annotation_ref == dat$Annotation[da
 
 # Sample down for now 
 set.seed(1)
-s = sample(1:length(fs), 100)
+s = sample(1:length(fs), N_obs)
 m = m[s, s]
 files = files[s]
 inds = inds[s]
 
 # List data
-d = m.to.df(m, inds = as.integer(as.factor(inds)), recs = as.integer(as.factor(files)))
+d = m.to.df(m, inds = as.integer(as.factor(inds)), recs = files, incl_time = T)
 clean_dat = as.list(d)
 clean_dat$d = as.numeric(scale(d$d))
 clean_dat$N_ind_pair = max(d$ind_pair)
