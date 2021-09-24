@@ -37,6 +37,7 @@ for(path_model in list.files(path_models, full.names = T, pattern = '*RData')){
   polygon(prior, col = alpha('grey', 0.5))
   post$b_bar_rec %>% density %>% polygon(col = alpha(2, 0.8))
   post$b_bar_ind %>% density %>% polygon(col = alpha(4, 0.8))
+  text(-2, 4, sprintf('N = %s', ncol(post$z_call)), adj = 0)
 }
 plot(NULL, xlim = c(-1, 1), ylim = c(0, 3), xaxt = 'n', yaxt = 'n', xlab = '', ylab = '', bty = 'n')
 text(c(0, 0), c(1, 2), c('beta individual', 'beta recording'), col = c(2, 4))
