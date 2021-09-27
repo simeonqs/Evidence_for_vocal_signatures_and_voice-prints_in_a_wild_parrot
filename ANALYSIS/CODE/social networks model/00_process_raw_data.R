@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: chapter II
 # Date started: 24-08-2021
-# Date last modified: 23-09-2021
+# Date last modified: 24-09-2021
 # Author: Simeon Q. Smeele
 # Description: Load DTW results and prepare for model.
 # NOTE: downsampling for now!
@@ -9,6 +9,7 @@
 # This version adds the rec level and is moved to the new repo. 
 # This version adds the same rec vector. 
 # This version includes time between recordings. 
+# This version includes time differences within recordings. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
@@ -22,7 +23,7 @@ for(lib in libraries){
 rm(list=ls()) 
 
 # Settings
-N_obs = 100
+N_obs = 200
 
 # Paths
 path_functions = 'ANALYSIS/CODE/functions'
@@ -42,6 +43,7 @@ anno = read.csv2(path_anno)
 
 # Get ind and rec
 dat$fs = paste(dat$file, dat$Selection, sep = '-')
+times = dat$Begin.Time..s.
 fs = rownames(m) %>% str_remove('.wav')
 files = fs %>% str_split('-') %>% sapply(`[`, 1)
 inds = sapply(fs, function(x) anno$bird[anno$annotation_ref == dat$Annotation[dat$fs == x]])
@@ -50,12 +52,14 @@ inds = sapply(fs, function(x) anno$bird[anno$annotation_ref == dat$Annotation[da
 set.seed(1)
 s = sample(1:length(fs), N_obs)
 m = m[s, s]
+times = times[s]
 files = files[s]
 inds = inds[s]
 
 # List data
-d = m.to.df(m, inds = as.integer(as.factor(inds)), recs = files, incl_time = T)
+d = m.to.df(m, inds = as.integer(as.factor(inds)), recs = files, time_saver = times)
 clean_dat = as.list(d)
+clean_dat$time = clean_dat$time/3600
 clean_dat$d = as.numeric(scale(d$d))
 clean_dat$N_ind_pair = max(d$ind_pair)
 clean_dat$N_rec_pair = max(d$rec_pair)
@@ -72,3 +76,7 @@ clean_dat$same_rec = sapply(1:max(d$rec_pair), function(pair) # 1 = same, 0 = di
 
 # Save
 save(clean_dat, file = path_out)
+
+# Report
+message(sprintf('Simulated %s calls. Saved a total of %s data points',
+                clean_dat$N_call, clean_dat$N_obs))
