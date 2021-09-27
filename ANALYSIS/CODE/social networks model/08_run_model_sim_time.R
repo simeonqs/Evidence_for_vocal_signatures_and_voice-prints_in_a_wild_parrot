@@ -22,7 +22,7 @@ rm(list = ls())
 
 # Paths
 path_data = 'ANALYSIS/RESULTS/social networks model/sim_dat_time.RData'
-path_model = 'ANALYSIS/CODE/social networks model/m_12.stan'
+path_model = 'ANALYSIS/CODE/social networks model/m_13.stan'
 path_out = 'ANALYSIS/RESULTS/social networks model/sim_model_time.RData'
 
 # Load data
