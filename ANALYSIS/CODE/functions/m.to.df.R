@@ -38,7 +38,8 @@ m.to.df = function(m,
         rec_j = recs[j],
         rec_pair = paste(recs[i], recs[j], sep = '-')))
       }
-      if(incl_time) new$time = c(recs[i], recs[j]) %>% str_sub(1, 10) %>% str_replace_all('_', '-') %>% 
+      if(incl_time) new$time_btw_recs = c(recs[i], recs[j]) %>% 
+          str_sub(1, 10) %>% str_replace_all('_', '-') %>% 
           as.Date %>% diff %>% abs %>% as.numeric
       if(!is.null(time_saver)) new$time = c(time_saver[i], time_saver[j]) %>% diff %>% abs
       d = rbind(d, new)
