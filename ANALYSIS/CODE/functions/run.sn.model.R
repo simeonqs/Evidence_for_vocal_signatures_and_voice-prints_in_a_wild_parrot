@@ -38,7 +38,6 @@ run.sn.model = function(path_data_set,
   d = m.to.df(m_sub, 
               inds = as.integer(as.factor(d_sub$ind)), 
               recs = as.integer(as.factor(d_sub$file)),
-              incl_time_between = incl_time_between, 
               time_saver = time_saver)
   clean_dat = as.list(d)
   clean_dat$d = as.numeric(scale(d$d))
