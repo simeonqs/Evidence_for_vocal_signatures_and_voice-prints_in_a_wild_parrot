@@ -9,7 +9,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
-libraries = c('rethinking', 'tidyverse')
+libraries = c('rethinking', 'tidyverse', 'parallel')
 for(lib in libraries){
   if(! lib %in% installed.packages()) lapply(lib, install.packages)
   lapply(libraries, require, character.only = TRUE)
@@ -25,7 +25,8 @@ path_functions = 'ANALYSIS/CODE/functions'
 path_out = 'ANALYSIS/RESULTS/spcc/models time'
 
 # Settings
-N_obs = 150
+N_obs = 250
+mc.cores = 8
 
 # Import functions
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
@@ -35,4 +36,6 @@ data_set_paths = list.files(path_data, full.names = T, pattern = '*RData')
 
 # Run models
 set.seed(1)
-.out = lapply(data_set_paths, run.sn.model, path_model, path_out, N_obs = N_obs, incl_time_within = T)
+.out = mclapply(data_set_paths, run.sn.model, 
+                path_model, path_out, N_obs = N_obs, incl_time_within = T,
+                mc.cores = mc.cores)
