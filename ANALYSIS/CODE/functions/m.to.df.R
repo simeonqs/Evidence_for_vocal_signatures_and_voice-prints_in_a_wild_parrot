@@ -1,20 +1,21 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: social networks
 # Date started: 24-08-2021
-# Date last modified: 24-09-2021
+# Date last modified: 27-09-2021
 # Author: Simeon Q. Smeele
 # Description: Taking matrix with distances and making it into a dataframe that can be analysed with stan 
 # model. 
 # This version has the option to also include the rec level. 
 # This version also calculates the time difference between recordings. 
-# This verison includes the time difference for the simulation .
+# This version includes the time difference for the simulation .
+# This version includes the option to include time between recordings.  
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 m.to.df = function(m, 
                    inds,
                    recs = NULL,
-                   incl_time = F,
                    time_saver = NULL,
+                   day_saver = NULL,
                    progress_bar = T){
   
   d = data.frame()
@@ -38,10 +39,11 @@ m.to.df = function(m,
         rec_j = recs[j],
         rec_pair = paste(recs[i], recs[j], sep = '-')))
       }
-      if(incl_time) new$time_btw_recs = c(recs[i], recs[j]) %>% 
-          str_sub(1, 10) %>% str_replace_all('_', '-') %>% 
-          as.Date %>% diff %>% abs %>% as.numeric
+      # if(incl_time_between) new$time_btw_recs = c(recs[i], recs[j]) %>% 
+      #     str_sub(1, 10) %>% str_replace_all('_', '-') %>% 
+      #     as.Date %>% diff %>% abs %>% as.numeric
       if(!is.null(time_saver)) new$time = c(time_saver[i], time_saver[j]) %>% diff %>% abs
+      if(!is.null(day_saver)) new$date = c(day_saver[i], day_saver[j]) %>% diff %>% abs
       d = rbind(d, new)
     }
   }

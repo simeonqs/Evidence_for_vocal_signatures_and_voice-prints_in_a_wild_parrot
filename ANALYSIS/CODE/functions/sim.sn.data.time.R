@@ -1,22 +1,25 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: sn model
 # Date started: 24-09-2021
-# Date last modified: 24-09-2021
+# Date last modified: 27-09-2021
 # Author: Simeon Q. Smeele
 # Description: This function runs the simulation for the data that can be analysed with a social networks
 # model and includes time. 
 # This version also includes the rec level. 
+# This version adds time between recordings. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 sim.sn.data.time = function(settings = list(N_ind = 3,
                                             N_var = 2,
-                                            lambda_obs = 15,
-                                            lambda_rec = 3,
+                                            lambda_obs = 2,
+                                            lambda_rec = 10,
                                             sigma_ind = 1,
                                             sigma_obs = 0.05,
-                                            sigma_rec = 0.5,
-                                            slope_time = 0.05,
-                                            dur_rec = 20),
+                                            sigma_rec = 0.1,
+                                            slope_time = 0.00,
+                                            slope_day = 0.05,
+                                            dur_rec = 20,
+                                            dur_dates = 20),
                             plot_it = F
 ){
   
@@ -24,12 +27,17 @@ sim.sn.data.time = function(settings = list(N_ind = 3,
   inds = c()
   dat = data.frame()
   time_saver = c()
+  day_saver = c()
   recs = c()
   for(ind in 1:settings$N_ind){
     means_ind = rnorm(settings$N_var, 0, settings$sigma_ind)
     N_rec = rpois(1, settings$lambda_rec)
     if(N_rec == 0) next
+    days = sort(round(runif(N_rec, 0, settings$dur_dates)))
     for(rec in 1:N_rec){
+      if(rec > 1)
+        means_ind = means_ind + 
+          settings$slope_day * (days[rec] - days[rec-1]) * rnorm(settings$N_var, 0, 1)
       means_rec = rnorm(settings$N_var, means_ind, settings$sigma_rec)
       N_obs = rpois(1, settings$lambda_obs)
       if(N_obs == 0) next
@@ -39,24 +47,25 @@ sim.sn.data.time = function(settings = list(N_ind = 3,
         recs = c(recs, paste(ind, rec))
         if(obs > 1)
           means_rec = means_rec + 
-            settings$slope_time * (times[obs] - times[obs-1]) * rnorm(settings$N_var, 0, 1)
+          settings$slope_time * (times[obs] - times[obs-1]) * rnorm(settings$N_var, 0, 1)
         dat = rbind(dat, 
                     rnorm(settings$N_var, means_rec, settings$sigma_obs))
         time_saver = c(time_saver, times[obs])
-      }
-    }
-  }
+        day_saver = c(day_saver, days[rec])
+      } # end obs loop
+    } # end rec loop
+  } # end ind loop
   
   # Plot first two variables
-  if(plot_it) plot(dat[,1], dat[,2], pch = 16 + as.numeric(str_sub(recs, 3, 3)), 
-                   col = alpha(inds, time_saver/20))
+  plot(dat[,1], dat[,2], pch = 16 + as.numeric(str_sub(recs, 3, 3)), 
+       col = alpha(inds, day_saver/20))
   
   # Make into distance matrix
   inds = as.integer(as.factor(inds))
   recs = as.integer(as.factor(recs))
   names(dat) = paste0('x', 1:ncol(dat))
   m = as.matrix(dist(dat))
-  d = m.to.df(m, inds, recs, time_saver = time_saver)
+  d = m.to.df(m, inds, recs, time_saver = time_saver, day_saver = day_saver)
   
   # List data
   clean_dat = as.list(d)

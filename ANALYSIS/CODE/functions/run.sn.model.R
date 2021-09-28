@@ -1,18 +1,20 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: social networks
 # Date started: 27-08-2021
-# Date last modified: 23-09-2021
+# Date last modified: 27-09-2021
 # Author: Simeon Q. Smeele
 # Description: Running the SN model. 
 # This version runs the sn model with same/different rec level. 
 # This version has the option to include time between recordings. 
+# This version has the option to include time within recordings. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 run.sn.model = function(path_data_set,
                         path_model,
                         path_out,
                         N_obs = NULL, 
-                        incl_time = F){
+                        incl_time_between = F,
+                        incl_time_within = F){
   
   # Load data
   load(path_data_set)
@@ -32,10 +34,12 @@ run.sn.model = function(path_data_set,
                   name_data, nrow(d_sub)))
   
   # List data
+  if(incl_time_within) time_saver = d_sub$time else time_saver = NULL
   d = m.to.df(m_sub, 
               inds = as.integer(as.factor(d_sub$ind)), 
               recs = as.integer(as.factor(d_sub$file)),
-              incl_time = incl_time)
+              incl_time_between = incl_time_between, 
+              time_saver = time_saver)
   clean_dat = as.list(d)
   clean_dat$d = as.numeric(scale(d$d))
   clean_dat$N_ind_pair = max(d$ind_pair)
@@ -50,6 +54,7 @@ run.sn.model = function(path_data_set,
   clean_dat$same_rec = sapply(1:max(d$rec_pair), function(pair) # 1 = same, 0 = different
     ifelse(clean_dat$rec_i[clean_dat$rec_pair == pair][1] == 
              clean_dat$rec_j[clean_dat$rec_pair == pair][1], 1, 0))
+  if(incl_time_within) clean_dat$time = clean_dat$time/3600
   
   # Report
   message('Starting model with ', clean_dat$N_obs, ' observations.\n')
