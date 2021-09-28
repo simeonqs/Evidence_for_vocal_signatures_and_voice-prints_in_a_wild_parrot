@@ -14,7 +14,7 @@ for(i in libraries){
 }
 
 # Settings
-set.seed(2)
+set.seed(1)
 settings = list(N_ind = 4,
                 N_var = 2,
                 lambda_obs = 4,
@@ -23,7 +23,9 @@ settings = list(N_ind = 4,
                 sigma_rec = 0.1,
                 sigma_obs = 0.01,
                 slope_time = 0.02,
-                dur_rec = 20)
+                slope_day = 0.00,
+                dur_rec = 20,
+                dur_dates = 20)
 
 # Paths
 path_functions = 'ANALYSIS/CODE/functions'
