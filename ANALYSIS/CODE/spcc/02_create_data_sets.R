@@ -1,10 +1,11 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 27-08-2021
-# Date last modified: 27-08-2021
+# Date last modified: 27-09-2021
 # Author: Simeon Q. Smeele
 # Description: Creates a dataset per call type including the subsetted distance matrix from spcc, and a 
 # data.frame with file, file_sel, and ind. 
+# source('ANALYSIS/CODE/spcc/02_create_data_sets.R')
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
@@ -24,6 +25,7 @@ path_out = 'ANALYSIS/RESULTS/spcc/datasets per call type'
 path_selection_tables = 'ANALYSIS/DATA/selection tables'
 path_annotations = 'ANALYSIS/DATA/overview recordings/annotations.csv'
 path_context = 'ANALYSIS/DATA/overview recordings/call types.xlsx'
+path_call_type_classification = 'ANALYSIS/CODE/call type classification.R'
 
 # Import functions
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
@@ -39,17 +41,10 @@ m = o.to.m(o_with_names$o, o_with_names$file_sels)
 d = data.frame(file_sel = o_with_names$file_sels,
                file = o_with_names$file_sels %>% strsplit('-') %>% sapply(`[`, 1))
 d$ind = sapply(d$file_sel, function(fs) st$bird[st$fs == fs])
+d$time = sapply(d$file_sel, function(fs) st$Begin.Time..s.[st$fs == fs])
 
 # Listing the call types to include - need to include more, just starting small
-unique(context$`call type`)
-types_include = list(contact = c('contact', 'contact or contact-like'), 
-                     short_contact = c('short contact', 'tjup (short contact)'),
-                     growl = c('growl (upsweep)', 'growl', 'growl (kraa)', 'growl (kree)', 
-                               'growl (downsweep)'),
-                     trruup = 'trruup',
-                     tjup = c('tjup', 'tjep', 'tjup (ladder)'),
-                     tja = c('tja', 'tjagrrt', 'tja (tjiep)'),
-                     alarm = c('alarm', 'growl or alarm', 'short alarm'))
+source(path_call_type_classification)
 
 # Run through them and save
 for(type in names(types_include)){
