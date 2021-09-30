@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: chapter II
 # Date started: 24-08-2021
-# Date last modified: 24-09-2021
+# Date last modified: 29-09-2021
 # Author: Simeon Q. Smeele
 # Description: Load DTW results and prepare for model.
 # NOTE: downsampling for now!
@@ -23,7 +23,7 @@ for(lib in libraries){
 rm(list=ls()) 
 
 # Settings
-N_obs = 200
+N_obs = 250
 
 # Paths
 path_functions = 'ANALYSIS/CODE/functions'
@@ -41,12 +41,13 @@ load(path_dtw)
 dat = load.selection.tables(path_st, path_anno)
 anno = read.csv2(path_anno)
 
-# Get ind and rec
+# Get info
 dat$fs = paste(dat$file, dat$Selection, sep = '-')
 times = dat$Begin.Time..s.
 fs = rownames(m) %>% str_remove('.wav')
 files = fs %>% str_split('-') %>% sapply(`[`, 1)
 inds = sapply(fs, function(x) anno$bird[anno$annotation_ref == dat$Annotation[dat$fs == x]])
+dates = files %>% str_sub(1, 10) %>% str_replace_all('_', '-') %>% as.Date %>% as.numeric
 
 # Sample down for now 
 set.seed(1)
@@ -57,9 +58,10 @@ files = files[s]
 inds = inds[s]
 
 # List data
-d = m.to.df(m, inds = as.integer(as.factor(inds)), recs = files, time_saver = times)
+d = m.to.df(m, inds = as.integer(as.factor(inds)), recs = files, time_saver = times, day_saver = dates)
 clean_dat = as.list(d)
 clean_dat$time = clean_dat$time/3600
+clean_dat$date = clean_dat$date/30
 clean_dat$d = as.numeric(scale(d$d))
 clean_dat$N_ind_pair = max(d$ind_pair)
 clean_dat$N_rec_pair = max(d$rec_pair)
@@ -78,5 +80,5 @@ clean_dat$same_rec = sapply(1:max(d$rec_pair), function(pair) # 1 = same, 0 = di
 save(clean_dat, file = path_out)
 
 # Report
-message(sprintf('Simulated %s calls. Saved a total of %s data points',
+message(sprintf('Prepared %s calls. Saved a total of %s data points',
                 clean_dat$N_call, clean_dat$N_obs))
