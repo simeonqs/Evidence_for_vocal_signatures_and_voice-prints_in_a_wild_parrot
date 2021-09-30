@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: social networks
 # Date started: 24-08-2021
-# Date last modified: 27-09-2021
+# Date last modified: 28-09-2021
 # Author: Simeon Q. Smeele
 # Description: Taking matrix with distances and making it into a dataframe that can be analysed with stan 
 # model. 
@@ -39,9 +39,6 @@ m.to.df = function(m,
         rec_j = recs[j],
         rec_pair = paste(recs[i], recs[j], sep = '-')))
       }
-      # if(incl_time_between) new$time_btw_recs = c(recs[i], recs[j]) %>% 
-      #     str_sub(1, 10) %>% str_replace_all('_', '-') %>% 
-      #     as.Date %>% diff %>% abs %>% as.numeric
       if(!is.null(time_saver)) new$time = c(time_saver[i], time_saver[j]) %>% diff %>% abs
       if(!is.null(day_saver)) new$date = c(day_saver[i], day_saver[j]) %>% diff %>% abs
       d = rbind(d, new)
