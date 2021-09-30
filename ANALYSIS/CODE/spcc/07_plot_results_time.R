@@ -44,5 +44,16 @@ plot(NULL, xlim = c(-1, 1), ylim = c(0, 3), xaxt = 'n', yaxt = 'n', xlab = '', y
 text(c(0, 0), c(1, 2), c('beta individual', 'beta recording'), col = c(2, 4))
 dev.off()
 
+# Plot line on data
+
+test = data.frame(time = clean_dat$time[clean_dat$same_rec[clean_dat$rec_pair] == 1],
+                  dist = clean_dat$d[clean_dat$same_rec[clean_dat$rec_pair] == 1])
+plot(test$time, test$dist, col = alpha(1, 0.4))
+
+summary(glm(dist ~ time, dat = test))
+
+x = seq(0, 0.2, length.out = 100)
+lines(x, -1+ 2*x^0.2, col = 2)
+lines(x, -1 + exp(0.1*log(x)), col = 3)
 
 
