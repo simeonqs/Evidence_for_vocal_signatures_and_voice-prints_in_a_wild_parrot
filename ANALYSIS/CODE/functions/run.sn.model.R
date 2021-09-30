@@ -66,7 +66,7 @@ run.sn.model = function(path_data_set,
                control = list(max_treedepth = 15, adapt_delta = 0.95))
   
   # Save
-  save('model', file = paste0(path_out, '/', name_data, '.RData'))
+  save(model, clean_dat, file = paste0(path_out, '/', name_data, '.RData'))
   
   # Print the results
   message(sprintf('Here are the results for %s:\n', name_data))
