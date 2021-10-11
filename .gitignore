@@ -5,7 +5,6 @@
 *.DS_Store
 ANALYSIS/DATA/audio
 ANALYSIS/RESULTS/social networks model/real_model.RData
-ANALYSIS/RESULTS/social networks model/real_dat.RData
 ANALYSIS/RESULTS/social networks model/sim_model.RDataANALYSIS/RESULTS/social networks model/sim_dat.RData
 ANALYSIS/RESULTS/spcc/models
 .Rproj.user
