@@ -14,14 +14,14 @@ for(i in libraries){
 }
 
 # Settings
-set.seed(1)
-settings = list(N_ind = 4,
+set.seed(6)
+settings = list(N_ind = 3,
                 N_var = 2,
-                lambda_obs = 4,
-                lambda_rec = 4,
-                sigma_ind = 1,
-                sigma_rec = 0.1,
-                sigma_obs = 0.01,
+                lambda_obs = 10,
+                lambda_rec = 1,
+                sigma_ind = 0.5,
+                sigma_rec = 0.3,
+                sigma_obs = 0.05,
                 slope_time = 0.02,
                 slope_day = 0.00,
                 dur_rec = 20,

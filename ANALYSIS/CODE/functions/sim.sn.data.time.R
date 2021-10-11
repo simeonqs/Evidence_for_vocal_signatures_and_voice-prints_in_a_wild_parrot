@@ -45,9 +45,10 @@ sim.sn.data.time = function(settings = list(N_ind = 3,
       for(obs in 1:N_obs){
         inds = c(inds, ind)
         recs = c(recs, paste(ind, rec))
-        if(obs > 1)
+        if(obs > 1){
           means_rec = means_rec + 
-          settings$slope_time * (times[obs] - times[obs-1]) * rnorm(settings$N_var, 0, 1)
+            settings$slope_time * (times[obs] - times[obs-1]) * rnorm(settings$N_var, 0, 1)
+        }
         dat = rbind(dat, 
                     rnorm(settings$N_var, means_rec, settings$sigma_obs))
         time_saver = c(time_saver, times[obs])
@@ -58,7 +59,7 @@ sim.sn.data.time = function(settings = list(N_ind = 3,
   
   # Plot first two variables
   plot(dat[,1], dat[,2], pch = 16 + as.numeric(str_sub(recs, 3, 3)), 
-       col = alpha(inds, day_saver/20))
+       col = alpha(inds, time_saver/20))
   
   # Make into distance matrix
   inds = as.integer(as.factor(inds))
