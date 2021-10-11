@@ -23,7 +23,7 @@ rm(list = ls())
 
 # Paths
 path_data = 'ANALYSIS/RESULTS/social networks model/sim_dat_date.RData'
-path_model = 'ANALYSIS/CODE/social networks model/m_date_1.stan'
+path_model = 'ANALYSIS/CODE/social networks model/m_date_2.stan'
 path_out = 'ANALYSIS/RESULTS/social networks model/sim_model_date.RData'
 
 # Load data
@@ -35,12 +35,12 @@ message('Starting model with ', sub_dat$N_obs, ' observations.')
 # Run model
 model = stan(path_model,
              data = sub_dat, 
-             chains = 1, cores = 1,
+             chains = 4, cores = 4,
              iter = 2000, warmup = 500,
              control = list(max_treedepth = 15, adapt_delta = 0.95))
 
 # Save
-save('model', file = path_out)
+save('model', 'sub_dat', file = path_out)
 
 # Print the results
 message('Here are the results: \n')
