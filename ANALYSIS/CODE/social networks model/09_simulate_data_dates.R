@@ -18,12 +18,12 @@ set.seed(1)
 settings = list(N_ind = 5,
                 N_var = 2,
                 lambda_obs = 4,
-                lambda_rec = 7,
+                lambda_rec = 5,
                 sigma_ind = 1,
                 sigma_rec = 0.2,
                 sigma_obs = 0.1,
                 slope_time = 0.00,
-                slope_day = 0.1,
+                slope_day = 0.05,
                 dur_rec = 20,
                 dur_dates = 20)
 
@@ -55,12 +55,16 @@ sub_dat = list(call_i = clean_dat$call_i[subber] %>% as.factor %>% as.integer,
                settings = clean_dat$settings)
 sub_dat$date_per_rec = sapply(seq_along(unique(sub_dat$rec_pair)), 
                               function(x) sub_dat$date[sub_dat$rec_pair == x][1])
+sub_dat$ind_per_rec = sapply(seq_along(unique(sub_dat$rec_pair)), 
+                              function(x) sub_dat$ind[sub_dat$rec_pair == x][1])
 plot(sub_dat$date, sub_dat$d, col = sub_dat$ind)
 
 # Save
 save(sub_dat, file = path_out)
 
+# Print str
+str(sub_dat)
+
 # Report
 message(sprintf('Simulated %s calls. Saved a total of %s data points',
                 sub_dat$N_call, sub_dat$N_obs))
-
