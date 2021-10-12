@@ -1,0 +1,46 @@
+---
+title: "The voice of the monk parakeet"
+author: "Simeon Q. Smeele"
+date: "11-10-2021"
+output: pdf_document
+---
+
+# Questions
+
+## Contact calls
+- Is there a difference in the individual signature that can be detected with SPCC, DTW and MFCC?
+- How recognisable are individuals? How to best visualise this?
+- Does the signal decay within recordings or throughout a month?
+
+## All calls
+- Which call types have individual signature? What could drive a potential difference?
+- Is the signal as stable as the contact call?
+- Is there a signal across call types?
+
+# Methods
+
+## Contact calls
+
+### SPCC, DTW and MFCC
+
+Spectrographic cross correlation (SPCC) compares two calls by sliding the spectrograms over each other. Pixels of similar value cancel out each other. At the point of maximal cancelation the difference is computed and gives a pair-wise distance. 
+
+Dynamic time warping uses the fundamental frequency and warps the signal to achieve maximal overlap. For this method we used Luscinia which also removed most of the background noise. The result is also a pair-wise distance. 
+
+Mel frequency cepstral coefficients should be able to detect more universal features of a call. We used the mean value and standard deviation per trace to summarise each call. We then computed the euclidean distance in this multidimensioal space to have a result similar to the other two methods. 
+# Results
+
+## Contact calls
+
+### SPCC, DTW and MFCC
+
+Low dimensional representation of results. 
+
+Density of slopes per method. 
+
+
+
+
+
+
+
