@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: social networks
 # Date started: 24-08-2021
-# Date last modified: 30-09-2021
+# Date last modified: 12-10-2021
 # Author: Simeon Q. Smeele
 # Description: Taking matrix with distances and making it into a dataframe that can be analysed with stan 
 # model. 
@@ -10,6 +10,7 @@
 # This version includes the time difference for the simulation .
 # This version includes the option to include time between recordings.  
 # This version made recordings unique per ind. 
+# This version includes the option to further clean the data. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 m.to.df = function(m, 
@@ -17,7 +18,8 @@ m.to.df = function(m,
                    recs = NULL,
                    time_saver = NULL,
                    day_saver = NULL,
-                   progress_bar = T){
+                   progress_bar = T,
+                   clean_data = F){
   
   d = data.frame()
   
@@ -53,6 +55,22 @@ m.to.df = function(m,
   }
   if(progress_bar) close(pb)
   
-  return(d)
+  if(clean_data){
+    clean_dat = as.list(d)
+    clean_dat$d = as.numeric(scale(d$d))
+    clean_dat$N_ind_pair = max(d$ind_pair)
+    clean_dat$N_rec_pair = max(d$rec_pair)
+    clean_dat$N_ind = max(d$ind_i)
+    clean_dat$N_rec = max(d$rec_i)
+    clean_dat$N_call = max(d$call_j)
+    clean_dat$N_obs = length(d$call_i)
+    clean_dat$same_ind = sapply(1:max(d$ind_pair), function(pair) # 1 = same, 0 = different
+      ifelse(clean_dat$ind_i[clean_dat$ind_pair == pair][1] == 
+               clean_dat$ind_j[clean_dat$ind_pair == pair][1], 1, 0))
+    clean_dat$same_rec = sapply(1:max(d$rec_pair), function(pair) # 1 = same, 0 = different
+      ifelse(clean_dat$rec_i[clean_dat$rec_pair == pair][1] == 
+               clean_dat$rec_j[clean_dat$rec_pair == pair][1], 1, 0))
+    return(clean_dat)
+  } else return(d)
   
 }
