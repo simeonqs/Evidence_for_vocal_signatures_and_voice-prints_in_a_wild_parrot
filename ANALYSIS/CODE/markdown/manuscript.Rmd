@@ -2,7 +2,9 @@
 title: "The voice of the monk parakeet"
 author: "Simeon Q. Smeele"
 date: "11-10-2021"
-output: pdf_document
+output:  
+  bookdown::pdf_document2:
+    fig_caption: yes
 ---
 
 # Questions
@@ -34,11 +36,15 @@ Mel frequency cepstral coefficients should be able to detect more universal feat
 
 ### SPCC, DTW and MFCC
 
-Low dimensional representation of results. 
+MFCC contained most individual signature (see Figure \@ref(fig:umap-pco) and Figure \@ref(fig:model-results)) and least recording signature while PCO contained most recording signature.
 
-Density of slopes per method. 
+```{r umap-pco, echo = FALSE, message=FALSE, fig.align='center', fig.cap='Low dimensional representation of similarity. Top row UMAP, bottom row PCO.', out.width='0.75\\linewidth'}
+knitr::include_graphics('../../RESULTS/00_compare_methods/umap.pdf')
+```
 
-
+```{r model-results, echo = FALSE, message=FALSE, fig.align='center', fig.cap='Model results for the three methods.'}
+knitr::include_graphics('../../RESULTS/00_compare_methods/model results.pdf')
+```
 
 
 
