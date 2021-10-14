@@ -49,8 +49,10 @@ m.to.df = function(m,
   }
   d$ind_pair = as.integer(as.factor(d$ind_pair))
   if(!is.null(recs)){
-    d$rec_i = as.integer(as.factor(d$rec_i))
-    d$rec_j = as.integer(as.factor(d$rec_j))
+    trans_recs = seq_along(unique(c(d$rec_i, d$rec_j)))
+    names(trans_recs) = unique(c(d$rec_i, d$rec_j))
+    d$rec_i = trans_recs[d$rec_i]
+    d$rec_j = trans_recs[d$rec_j]
     d$rec_pair = as.integer(as.factor(d$rec_pair))
   }
   if(progress_bar) close(pb)
