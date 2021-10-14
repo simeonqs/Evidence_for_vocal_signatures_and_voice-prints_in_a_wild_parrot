@@ -1,9 +1,10 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 22-09-2021
-# Date last modified: 23-09-2021
+# Date last modified: 13-10-2021
 # Author: Simeon Q. Smeele
 # Description: Running mfcc per call type and saving data as long distance for SN model. 
+# source('ANALYSIS/CODE/mfcc/00_run_mfcc.R')
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -19,8 +20,6 @@ for(i in libraries){
 
 # Clean R
 rm(list=ls()) 
-dev.off()
-cat('\014')  
 
 # Paths
 path_functions = 'ANALYSIS/CODE/functions'
