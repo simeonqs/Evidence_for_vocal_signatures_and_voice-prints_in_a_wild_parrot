@@ -79,7 +79,7 @@ cols = col_trans[d_all$bird]
 cols[is.na(cols)] = 1
 
 # Plot
-pdf(path_pdf, 9, 6)
+pdf(path_pdf, 8, 5.5)
 par(mfrow = c(2, 3))
 plot(umap_dtw$layout, pch = 16, col = alpha(cols, ifelse(cols == 1, 0.2, 0.7)), cex = 2,
      xlab = 'UMAP 1', ylab = 'UMAP 2', main = 'DTW')
