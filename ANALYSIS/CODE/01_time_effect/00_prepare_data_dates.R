@@ -1,9 +1,9 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
-# Date started: 13-10-2021
+# Date started: 16-10-2021
 # Date last modified: 16-10-2021
 # Author: Simeon Q. Smeele
-# Description: Prepare data for the time and date models.
+# Description: Prepare data for the date models.
 # NOTE: subsetting for now. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -21,16 +21,10 @@ rm(list=ls())
 path_functions = 'ANALYSIS/CODE/functions'
 path_mfcc = 'ANALYSIS/RESULTS/mfcc/datasets per call type'
 path_spcc = 'ANALYSIS/RESULTS/spcc/datasets per call type'
-path_anno = 'ANALYSIS/DATA/overview recordings/annotations.csv'
-path_context = 'ANALYSIS/DATA/overview recordings/call types.xlsx'
-path_st = 'ANALYSIS/DATA/selection tables'
-path_out = 'ANALYSIS/RESULTS/01_time_effect/data_sets.RData'
+path_out = 'ANALYSIS/RESULTS/01_time_effect/data_sets_dates.RData'
 
 # Import functions
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
-
-# Load data
-dat = load.selection.tables(path_st, path_anno, path_context)
 
 # Functions
 prep.dat = function(file){
@@ -39,24 +33,24 @@ prep.dat = function(file){
   if(nrow(d_sub) > 200) subber = sample(nrow(d_sub), 200) else subber = sample(nrow(d_sub))
   inds = as.integer(as.factor(d_sub$ind[subber]))
   recs = as.integer(as.factor(d_sub$file[subber]))
-  time_saver = d_sub$Begin.Time..s.[subber]/60/60
+  dates = d_sub$files %>% str_sub(1, 10) %>% str_replace_all('_', '-') %>% as.Date %>% as.numeric
   if(length(time_saver) == 0) time_saver = d_sub$time[subber]/60/60
-  clean_dat = m.to.df(m_sub[subber, subber], inds, recs, time_saver = time_saver, clean_data = T)
+  clean_dat = m.to.df(m_sub[subber, subber], inds, recs, date_saver = dates, clean_data = T)
   subber = which(clean_dat$same_rec[clean_dat$rec_pair] == 1)
   if(any(clean_dat$ind_i[subber] != clean_dat$ind_j[subber])) stop('Problem subsetting!')
   sub_dat = list(call_i = clean_dat$call_i[subber] %>% as.factor %>% as.integer,
                  call_j = clean_dat$call_j[subber] %>% as.factor %>% as.integer,
-                 rec = clean_dat$rec_i[subber] %>% as.factor %>% as.integer,
+                 rec_pair = clean_dat$rec_pair[subber] %>% as.factor %>% as.integer,
                  ind = clean_dat$ind_i[subber] %>% as.factor %>% as.integer,
-                 time = clean_dat$time[subber],
+                 time = clean_dat$date[subber],
                  d = clean_dat$d[subber] %>% scale %>% as.numeric,
                  N_obs = length(subber),
                  N_call = length(unique(c(clean_dat$call_i[subber],
                                           clean_dat$call_j[subber]))),
-                 N_rec = length(unique(clean_dat$rec_i[subber])),
+                 N_rec = length(unique(clean_dat$rec_pair[subber])),
                  N_ind = length(unique(clean_dat$ind_i[subber])),
                  settings = clean_dat$settings)
-  plot(sub_dat$time, sub_dat$d, col = sub_dat$ind, pch = 16)
+  plot(sub_dat$date, sub_dat$d, col = sub_dat$ind, pch = 16)
   return(sub_dat)
 }
 
