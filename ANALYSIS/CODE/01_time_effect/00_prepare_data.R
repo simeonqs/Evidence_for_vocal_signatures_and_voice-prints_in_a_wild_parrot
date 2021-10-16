@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 13-10-2021
-# Date last modified: 13-10-2021
+# Date last modified: 16-10-2021
 # Author: Simeon Q. Smeele
 # Description: Prepare data for the time and date models.
 # NOTE: subsetting for now. 
@@ -36,11 +36,11 @@ dat = load.selection.tables(path_st, path_anno, path_context)
 prep.dat = function(file){
   print(file)
   load(file)
-  if(nrow(d_sub) > 100) subber = sample(nrow(d_sub), 100) else subber = sample(nrow(d_sub))
+  if(nrow(d_sub) > 200) subber = sample(nrow(d_sub), 200) else subber = sample(nrow(d_sub))
   inds = as.integer(as.factor(d_sub$ind[subber]))
   recs = as.integer(as.factor(d_sub$file[subber]))
-  time_saver = d_sub$Begin.Time..s.[subber]
-  if(is.null(time_saver)) time_saver = d_sub$time[subber]
+  time_saver = d_sub$Begin.Time..s.[subber]/60/60
+  if(length(time_saver) == 0) time_saver = d_sub$time[subber]/60/60
   clean_dat = m.to.df(m_sub[subber, subber], inds, recs, time_saver = time_saver, clean_data = T)
   subber = which(clean_dat$same_rec[clean_dat$rec_pair] == 1)
   if(any(clean_dat$ind_i[subber] != clean_dat$ind_j[subber])) stop('Problem subsetting!')
