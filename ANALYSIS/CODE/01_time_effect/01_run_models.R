@@ -31,7 +31,6 @@ load(path_data)
 
 # Function to run model
 run.model = function(data_set){
-  print(str(data_set))
   model = stan(path_time_model,
                data = data_set, 
                chains = 4, cores = 4,
