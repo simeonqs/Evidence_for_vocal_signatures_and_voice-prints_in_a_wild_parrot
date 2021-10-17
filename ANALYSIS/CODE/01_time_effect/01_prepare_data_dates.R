@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 16-10-2021
-# Date last modified: 16-10-2021
+# Date last modified: 17-10-2021
 # Author: Simeon Q. Smeele
 # Description: Prepare data for the date models.
 # NOTE: subsetting for now. 
@@ -47,9 +47,13 @@ prep.dat = function(file){
                  N_obs = length(subber),
                  N_call = length(unique(c(clean_dat$call_i[subber],
                                           clean_dat$call_j[subber]))),
-                 N_rec = length(unique(clean_dat$rec_pair[subber])),
+                 N_rec_pair = length(unique(clean_dat$rec_pair[subber])),
                  N_ind = length(unique(clean_dat$ind_i[subber])),
                  settings = clean_dat$settings)
+  sub_dat$date_per_rec = sapply(seq_along(unique(sub_dat$rec_pair)), 
+                                function(x) sub_dat$date[sub_dat$rec_pair == x][1])
+  sub_dat$ind_per_rec = sapply(seq_along(unique(sub_dat$rec_pair)), 
+                               function(x) sub_dat$ind[sub_dat$rec_pair == x][1])
   plot(sub_dat$date, sub_dat$d, col = sub_dat$ind, pch = 16)
   return(sub_dat)
 }
