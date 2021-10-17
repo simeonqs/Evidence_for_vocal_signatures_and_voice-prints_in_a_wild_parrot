@@ -30,7 +30,7 @@ path_out = 'ANALYSIS/RESULTS/01_time_effect/data_sets_dates.RData'
 prep.dat = function(file){
   print(file)
   load(file)
-  if(nrow(d_sub) > 200) subber = sample(nrow(d_sub), 200) else subber = sample(nrow(d_sub))
+  if(nrow(d_sub) > 100) subber = sample(nrow(d_sub), 100) else subber = sample(nrow(d_sub))
   inds = as.integer(as.factor(d_sub$ind[subber]))
   recs = as.integer(as.factor(d_sub$file[subber]))
   dates = d_sub$files %>% str_sub(1, 10) %>% str_replace_all('_', '-') %>% as.Date %>% as.numeric
@@ -42,7 +42,7 @@ prep.dat = function(file){
                  call_j = clean_dat$call_j[subber] %>% as.factor %>% as.integer,
                  rec_pair = clean_dat$rec_pair[subber] %>% as.factor %>% as.integer,
                  ind = clean_dat$ind_i[subber] %>% as.factor %>% as.integer,
-                 time = clean_dat$date[subber],
+                 date = clean_dat$date[subber]/30,
                  d = clean_dat$d[subber] %>% scale %>% as.numeric,
                  N_obs = length(subber),
                  N_call = length(unique(c(clean_dat$call_i[subber],
