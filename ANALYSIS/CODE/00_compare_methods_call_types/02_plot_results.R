@@ -1,10 +1,10 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 12-10-2021
-# Date last modified: 14-10-2021
+# Date last modified: 17-10-2021
 # Author: Simeon Q. Smeele
 # Description: Plotting model results per method.  
-# This version includes all call types. 
+# This version includes not all call types, but more than before. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
@@ -41,13 +41,11 @@ plot.model = function(model, yaxt = 'n', xaxt = 'n'){
   post$b_bar_rec %>% density %>% lines(col = alpha(4, 1), lwd = 5, lty = 1)
   post$b_bar_ind %>% density %>% lines(col = alpha(3, 1), lwd = 5, lty = 1)
   text(1.5, 9, sprintf('N = %s', ncol(post$z_call)), adj = 1)
-  # text(c(-2, -2), c(1, 2), c('beta individual', 'beta recording'), col = c(2, 4), adj = 0)
 }
 write.title = function(label){
-  par(mar = c(1, 3, 2, 2))
+  par(mar = c(2, 3, 1, 2))
   plot(NULL, xlim = c(-1, 1), ylim = c(-1, 1), 
        xlab = '', ylab = '', xaxt = 'n', yaxt = 'n', bty = 'n')
-  mtext('density', 4, cex = 0.75)
   text(0, 0, label, font = 2, cex = 1.25)
   par(mar = c(2, 1, 1, 0.1))
 }
@@ -61,6 +59,7 @@ par(mfrow = c(3, 9), oma = c(2, 0, 2, 0))
 write.title('SPCC')
 plot.model(model_spcc, yaxt = 'l')
 mtext('isolated contact', 3, 1, font = 2)
+mtext('density', 2, 2, cex = 0.75)
 for(type in call_types){
   path_model = models_spcc[str_detect(models_spcc, type)][1] # fix for contact
   load(path_model)
@@ -69,6 +68,7 @@ for(type in call_types){
 }
 write.title('MFCC')
 plot.model(model_mfcc, yaxt = 'l')
+mtext('density', 2, 2, cex = 0.75)
 for(type in call_types){
   path_model = models_mfcc[str_detect(models_mfcc, type)][1] # fix for contact
   load(path_model)
@@ -77,6 +77,7 @@ for(type in call_types){
 }
 write.title('DTW')
 plot.model(model_dtw, yaxt = 'l', xaxt = 'l')
+mtext('density', 2, 2, cex = 0.75)
 mtext('beta', 1, 2, cex = 0.75)
 # for(i in 1:7){
 #   plot(NULL, xlim = c(-1, 1), ylim = c(-1, 1), 
