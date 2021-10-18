@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 16-10-2021
-# Date last modified: 16-10-2021
+# Date last modified: 17-10-2021
 # Author: Simeon Q. Smeele
 # Description: Running date model on all datasets. 
 # source('ANALYSIS/CODE/01_time_effect/03_run_models_dates.R')
@@ -26,23 +26,24 @@ path_out = 'ANALYSIS/RESULTS/01_time_effect/models_dates.RData'
 # Import functions
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
 
-# Load data
+# Load data1
 load(path_data)
 
 # Function to run model
 run.model = function(data_set){
-  print(str(data_set))
-  model = stan(path_time_model,
-               data = data_set, 
-               chains = 4, cores = 4,
-               iter = 2000, warmup = 500,
-               control = list(max_treedepth = 15, adapt_delta = 0.95))
+  if(length(data_set) == 1) return(NA) else {
+    model = stan(path_time_model,
+                 data = data_set, 
+                 chains = 4, cores = 4,
+                 iter = 2000, warmup = 500,
+                 control = list(max_treedepth = 15, adapt_delta = 0.95))
+  }
 }
 
 # Run models
-models_mfcc = lapply(data_sets_mfcc, run.model)
-models_spcc = lapply(data_sets_spcc, run.model)
+models_mfcc_dates = lapply(data_sets_mfcc_dates, run.model)
+models_spcc_dates = lapply(data_sets_spcc_dates, run.model)
 
 # Save and message
-save(models_mfcc, models_spcc, file = path_out)
+save(models_mfcc_dates, models_spcc_dates, file = path_out)
 message('Finished all models.')
