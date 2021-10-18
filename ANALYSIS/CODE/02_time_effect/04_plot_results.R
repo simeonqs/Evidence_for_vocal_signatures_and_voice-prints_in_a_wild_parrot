@@ -70,7 +70,7 @@ write.title('SPCC')
 for(type in call_types){
   i = which(str_detect(names(data_sets_spcc_time), type))[1]
   plot(data_sets_spcc_dates[[i]]$date/5, data_sets_spcc_dates[[i]]$d, pch = 16, col = alpha('black', 0.5),
-       xlim = c(0, 0.2), ylim = c(-1.5, 2.5),
+       xlim = c(0, 0.2), ylim = c(-3, 3),
        xlab = '', ylab = '', xaxt = 'n', yaxt = 'n')
   plot.model.time(models_spcc_time[[i]], data_sets_spcc_time[[i]])
   plot.model.dates(models_spcc_dates[[i]], data_sets_spcc_dates[[i]])
@@ -85,7 +85,7 @@ for(type in call_types){
   i = which(str_detect(names(data_sets_mfcc_time), type))[1]
   plot(data_sets_mfcc_dates[[i]]$date/5, data_sets_mfcc_dates[[i]]$d, 
        pch = 16, col = alpha('black', 0.5),
-       xlim = c(0, 0.2), ylim = c(-1.5, 2.5),
+       xlim = c(0, 0.2), ylim = c(-3, 3),
        xlab = '', ylab = '', xaxt = 'n', yaxt = 'n')
   plot.model.time(models_mfcc_time[[i]], data_sets_mfcc_time[[i]])
   if(type == call_types[1]){
