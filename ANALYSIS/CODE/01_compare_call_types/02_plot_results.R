@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 12-10-2021
-# Date last modified: 17-10-2021
+# Date last modified: 18-10-2021
 # Author: Simeon Q. Smeele
 # Description: Plotting model results per method.  
 # This version includes not all call types, but more than before. 
@@ -55,7 +55,7 @@ call_types = c('contact', 'short_contact', 'alarm', 'growl', 'trruup', 'tja', 't
 
 # Plot beta parameter per call type
 pdf(path_pdf, 15, 6)
-par(mfrow = c(3, 9), oma = c(2, 0, 2, 0))
+par(mfrow = c(3, 9), oma = c(2, 0, 2, 0), mgp = c(1, 0.75, 0))
 write.title('SPCC')
 plot.model(model_spcc, yaxt = 'l')
 mtext('isolated contact', 3, 1, font = 2)
@@ -79,14 +79,4 @@ write.title('DTW')
 plot.model(model_dtw, yaxt = 'l', xaxt = 'l')
 mtext('density', 2, 2, cex = 0.75)
 mtext('beta', 1, 2, cex = 0.75)
-# for(i in 1:7){
-#   plot(NULL, xlim = c(-1, 1), ylim = c(-1, 1), 
-#        xlab = '', ylab = '', xaxt = 'n', yaxt = 'n', bty = 'n')
-#   mtext('beta', 3, line = 1, cex = 0.75)
-# }
-# plot(NULL, xlim = c(-1, 1), ylim = c(-1, 1), 
-#      xlab = '', ylab = '', xaxt = 'n', yaxt = 'n', bty = 'n')
-# plot(NULL, xlim = c(-1, 1), ylim = c(-1, 1), 
-#      xlab = '', ylab = '', xaxt = 'n', yaxt = 'n', bty = 'n')
-# mtext('beta', 3, line = 1, cex = 0.75)
 dev.off()
