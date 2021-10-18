@@ -1,7 +1,7 @@
 ---
 title: "The voice of the monk parakeet"
 author: "Simeon Q. Smeele"
-date: "11-10-2021"
+date: "18-10-2021"
 output:  
   bookdown::pdf_document2:
     fig_caption: yes
@@ -9,19 +9,14 @@ output:
 
 # Questions
 
-## Contact calls
 - Is there a difference in the individual signature that can be detected with SPCC, DTW and MFCC?
 - How recognisable are individuals? How to best visualise this?
-- Does the signal decay within recordings or throughout a month?
-
-## All calls
 - Which call types have individual signature? What could drive a potential difference?
+- Does the signal decay within recordings or throughout a month?
 - Is the signal as stable as the contact call?
 - Is there a signal across call types?
 
 # Methods
-
-## Contact calls
 
 ### SPCC, DTW and MFCC
 
@@ -30,20 +25,19 @@ Spectrographic cross correlation (SPCC) compares two calls by sliding the spectr
 Dynamic time warping uses the fundamental frequency and warps the signal to achieve maximal overlap. For this method we used Luscinia which also removed most of the background noise. The result is also a pair-wise distance. 
 
 Mel frequency cepstral coefficients should be able to detect more universal features of a call. We used the mean value and standard deviation per trace to summarise each call. We then computed the euclidean distance in this multidimensioal space to have a result similar to the other two methods. 
+
 # Results
 
-## Contact calls
+## Individual signal
 
-### SPCC, DTW and MFCC
-
-MFCC contained most individual signature (see Figure \@ref(fig:umap-pco) and Figure \@ref(fig:model-results)) and least recording signature while PCO contained most recording signature.
-
-```{r umap-pco, echo = FALSE, message=FALSE, fig.align='center', fig.cap='Low dimensional representation of similarity. Top row UMAP, bottom row PCO.', out.width='0.75\\linewidth'}
-knitr::include_graphics('../../RESULTS/00_compare_methods/umap.pdf')
+```{r model-results-signal, echo = FALSE, message=FALSE, fig.align='center', fig.cap='Posterior densities for xx call types accross three methods. Blue is recording signal, green is individual signal.'}
+knitr::include_graphics('../../RESULTS/00_compare_methods_call_types/model results.pdf')
 ```
 
-```{r model-results, echo = FALSE, message=FALSE, fig.align='center', fig.cap='Model results for the three methods.'}
-knitr::include_graphics('../../RESULTS/00_compare_methods/model results.pdf')
+## Decay over time
+
+```{r time-effect, echo = FALSE, message=FALSE, fig.align='center', fig.cap='Increase in acoustic distance for xx call types accross three methods. Light grey dots and purple line (shade) are the raw data and model estimate (89% PI) respectively within a recording (in hours). Dark grey dots and orange line (shade) are the raw data and model estimate (89% PI) respectively across months.'}
+knitr::include_graphics('../../RESULTS/01_time_effect/model results.pdf')
 ```
 
 
