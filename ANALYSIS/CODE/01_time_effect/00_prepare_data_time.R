@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 13-10-2021
-# Date last modified: 16-10-2021
+# Date last modified: 17-10-2021
 # Author: Simeon Q. Smeele
 # Description: Prepare data for the time and date models.
 # NOTE: subsetting for now. 
@@ -21,16 +21,10 @@ rm(list=ls())
 path_functions = 'ANALYSIS/CODE/functions'
 path_mfcc = 'ANALYSIS/RESULTS/mfcc/datasets per call type'
 path_spcc = 'ANALYSIS/RESULTS/spcc/datasets per call type'
-path_anno = 'ANALYSIS/DATA/overview recordings/annotations.csv'
-path_context = 'ANALYSIS/DATA/overview recordings/call types.xlsx'
-path_st = 'ANALYSIS/DATA/selection tables'
-path_out = 'ANALYSIS/RESULTS/01_time_effect/data_sets.RData'
+path_out = 'ANALYSIS/RESULTS/01_time_effect/data_sets_time.RData'
 
 # Import functions
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
-
-# Load data
-dat = load.selection.tables(path_st, path_anno, path_context)
 
 # Functions
 prep.dat = function(file){
@@ -63,11 +57,11 @@ prep.dat = function(file){
 # Clean up data
 files_mfcc = list.files(path_mfcc, full.names = T)
 files_spcc = list.files(path_spcc, full.names = T)
-data_sets_mfcc = files_mfcc %>% lapply(prep.dat)
-names(data_sets_mfcc) = files_mfcc
-data_sets_spcc = files_spcc %>% lapply(prep.dat)
-names(data_sets_spcc) = files_spcc
+data_sets_mfcc_time = files_mfcc %>% lapply(prep.dat)
+names(data_sets_mfcc_time) = files_mfcc
+data_sets_spcc_time = files_spcc %>% lapply(prep.dat)
+names(data_sets_spcc_time) = files_spcc
 
 # Save
-save(data_sets_mfcc, data_sets_spcc, file = path_out)
+save(data_sets_mfcc_time, data_sets_spcc_time, file = path_out)
 message('Saved both datasets.')
