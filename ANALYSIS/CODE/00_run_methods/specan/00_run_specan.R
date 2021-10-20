@@ -50,7 +50,7 @@ specan.sim = function(dat_orig){
                     to = dat$End.Time..s.[i],
                     units = 'seconds')
     if(max(abs(wave@left)) == 32768) wave@left = wave@right # if clipping use right channel
-    if(max(abs(wave@left)) == 32768) warning(sprintf('Clipping in file %s!', amp_mod$nr.notes))
+    if(max(abs(wave@left)) == 32768) warning(sprintf('Clipping in file %s!', dat$file[i]))
     wave = ffilter(wave, from = 500, output = 'Wave')
     spec_wave = spec(wave, plot = F)
     out$peak_freq_khz[i] = spec_wave[which(spec_wave[,2] == 1), 1]
@@ -63,11 +63,18 @@ specan.sim = function(dat_orig){
     out$amp_mod_ii[i] = amp_mod$amp.mod.med
   }
   
+  return(out)
+  
 } # end specan.sim
   
 # Run specan
 specan_out = lapply(data_sets, specan.sim)
+names(specan_out) = names(data_sets)
+
+# Calculate distance matrices
+## make sure this dist is correct - move function out and write unit tests
+specan_dists = lapply(specan_out, function(x) as.matrix(dist(scale(x[,-1]))))
 
 # Save
-save(specan_out, path_out)
+save(specan_out, specan_dists, data_sets, file = path_out)
 message('Done.')
