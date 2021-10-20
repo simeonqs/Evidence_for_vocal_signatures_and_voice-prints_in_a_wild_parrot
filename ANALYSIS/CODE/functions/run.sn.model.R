@@ -1,44 +1,39 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: social networks
 # Date started: 27-08-2021
-# Date last modified: 27-09-2021
+# Date last modified: 20-10-2021
 # Author: Simeon Q. Smeele
 # Description: Running the SN model. 
 # This version runs the sn model with same/different rec level. 
 # This version has the option to include time between recordings. 
 # This version has the option to include time within recordings. 
+# This version now takes the dataset and dist matrix object directly. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-run.sn.model = function(path_data_set,
+run.sn.model = function(data_set,
+                        m_dist, 
                         path_model,
-                        path_out,
                         N_obs = NULL, 
                         incl_time_between = F,
                         incl_time_within = F){
   
-  # Load data
-  load(path_data_set)
-  
   # Optional subset
-  if(!is.null(N_obs) & N_obs < nrow(m_sub)){
-    s = sample(1:nrow(d_sub), N_obs)
-    m_sub = m_sub[s, s]
-    d_sub = d_sub[s,]
+  if(!is.null(N_obs) & N_obs < nrow(m_dist)){
+    s = sample(1:nrow(data_set), N_obs)
+    m_dist = m_dist[s, s]
+    data_set = data_set[s,]
   }
   
   # Report start
-  split = path_data_set %>% strsplit('/')
-  name_data = split[[1]][length(split[[1]])] %>% str_remove('.RData')
   message('\n==============================================================================\n')
-  message(sprintf('Cleaning data for *%s* with %s calls.\n', 
-                  name_data, nrow(d_sub)))
+  message(sprintf('Cleaning data with %s calls.\n', 
+                  nrow(data_set)))
   
   # List data
-  if(incl_time_within) time_saver = d_sub$time else time_saver = NULL
-  d = m.to.df(m_sub, 
-              inds = as.integer(as.factor(d_sub$ind)), 
-              recs = as.integer(as.factor(d_sub$file)),
-              time_saver = time_saver)
+  if(incl_time_within) time_saver = data_set$time else time_saver = NULL
+  d = m.to.df(m_dist, 
+              inds = as.integer(as.factor(data_set$bird)), 
+              recs = as.integer(as.factor(data_set$file)))
   clean_dat = as.list(d)
   clean_dat$d = as.numeric(scale(d$d))
   clean_dat$N_ind_pair = max(d$ind_pair)
@@ -65,11 +60,11 @@ run.sn.model = function(path_data_set,
                iter = 2000, warmup = 500,
                control = list(max_treedepth = 15, adapt_delta = 0.95))
   
-  # Save
-  save(model, clean_dat, file = paste0(path_out, '/', name_data, '.RData'))
+  # Return
+  return(list(model = model, clean_dat = clean_dat))
   
   # Print the results
-  message(sprintf('Here are the results for %s:\n', name_data))
+  message('Here are the results:')
   print(precis(model, depth = 1))
   
 } # end function
