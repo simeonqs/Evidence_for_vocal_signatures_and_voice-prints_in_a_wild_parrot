@@ -4,6 +4,7 @@
 # Date last modified: 19-10-2021
 # Author: Simeon Q. Smeele
 # Description: Measures amplitude modulation. 
+# This version was fixed for the case there were no minis. Previous solution didn't work. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 amp.mod = function(wave, 
@@ -35,7 +36,7 @@ amp.mod = function(wave,
   
   # Calculate differences
   # If no mini diff = 0
-  if(is.null(minis)) diff = 0 else{
+  if(length(minis) == 0) diff = 0 else{
     diff = c()
     for(i in 1:length(minis)){
       diff = c(diff,
