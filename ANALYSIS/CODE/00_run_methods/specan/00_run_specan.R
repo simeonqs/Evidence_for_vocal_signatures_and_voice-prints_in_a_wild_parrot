@@ -30,10 +30,10 @@ path_audio_files = 'ANALYSIS/DATA/audio'
 load(path_data_sets)
 
 # Specan function
-specan.sim = function(dat_orig){
+specan.sim = function(dat_orig, run_wave_detec = T){
   
   # Redo start and end
-  dat = wave.detec(dat_orig, path_audio_files)
+  if(run_wave_detec) dat = wave.detec(dat_orig, path_audio_files) else dat = dat_orig
   
   # Test if wave.detec kept all calls 
   d = dat$End.Time..s. - dat$Begin.Time..s.
@@ -44,14 +44,9 @@ specan.sim = function(dat_orig){
   out$duration = d
   audio_files = list.files(path_audio_files, full.names = T)
   for(i in 1:nrow(out)){
-    print(out$fs[i])
-    wave = readWave(audio_files[str_detect(audio_files, dat$file[i])], 
-                    from = dat$Begin.Time..s.[i],
-                    to = dat$End.Time..s.[i],
-                    units = 'seconds')
-    if(max(abs(wave@left)) == 32768) wave@left = wave@right # if clipping use right channel
-    if(max(abs(wave@left)) == 32768) warning(sprintf('Clipping in file %s!', dat$file[i]))
-    wave = ffilter(wave, from = 500, output = 'Wave')
+    wave = load.wave(audio_files[str_detect(audio_files, dat$file[i])], 
+                     from = dat$Begin.Time..s.[i],
+                     to = dat$End.Time..s.[i])
     spec_wave = spec(wave, plot = F)
     out$peak_freq_khz[i] = spec_wave[which(spec_wave[,2] == 1), 1]
     w = which(spec_wave[,2] > 0.4)
@@ -68,7 +63,9 @@ specan.sim = function(dat_orig){
 } # end specan.sim
   
 # Run specan
-specan_out = lapply(data_sets, specan.sim)
+specan_out_1 = lapply(data_sets[-length(data_sets)], specan.sim)
+specan_out_2 = lapply(data_sets[length(data_sets)], specan.sim, run_wave_detec = F)
+specan_out = append(specan_out_1, specan_out_2)
 names(specan_out) = names(data_sets)
 
 # Calculate distance matrices
