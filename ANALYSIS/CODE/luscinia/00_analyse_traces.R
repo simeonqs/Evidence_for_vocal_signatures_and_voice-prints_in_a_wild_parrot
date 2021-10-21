@@ -31,18 +31,7 @@ path_out = 'ANALYSIS/RESULTS/luscinia/dtw/dtw_and_m.RData'
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
 
 # Load traces
-traces = read.csv(path_traces)
-cat(sprintf('Loaded traces from %s call type(s) with a total of %s clips.', 
-            length(unique(traces$Individual)),
-            length(unique(traces$Song))))
-
-# Clean traces
-traces = traces[!(traces$Song == '2020_11_16_121650-104.wav' & traces$Element == 1),]
-traces = traces[!(traces$Song == '2020_11_09_083040-4.wav' & traces$Element == 2),]
-traces = traces[!(traces$Song == '2020_11_09_083040-4.wav' & traces$Element == 3),]
-traces = traces[!(traces$Song == '2020_10_27_091634-63.wav' & traces$Element == 2),]
-traces = traces[!(traces$Song == '2020_11_01_170724-3.wav' & traces$Element == 2),]
-traces = traces[!(traces$Song == '2020_11_07_101750-11.wav' & traces$Element == 2),]
+traces = load.traces(path_traces)
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # ANALYSIS ----
