@@ -1,13 +1,17 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: monk parakeets
 # Date started: 20-10-2021
-# Date last modified: 20-10-2021
+# Date last modified: 17-01-2022
 # Author: Simeon Q. Smeele
 # Description: Load the Luscina traces and filters out issues. 
+# This version removes the bad traces if a path is supplied.
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-load.traces = function(path_traces){
+require(readxl)
+
+load.traces = function(path_traces, path_bad_traces){
   
+  # Load
   traces = read.csv(path_traces)
   message(sprintf('Loaded %s traces.', length(unique(traces$Song))))
   
@@ -19,6 +23,16 @@ load.traces = function(path_traces){
   traces = traces[!(traces$Song == '2020_11_01_170724-3.wav' & traces$Element == 2),]
   traces = traces[!(traces$Song == '2020_11_07_101750-11.wav' & traces$Element == 2),]
   
+  # Remove bad traces for now
+  bad_traces = read_xlsx(path_bad_traces)
+  song_to_file_end = sapply(traces$Song, function(x){
+    split = str_split(x, '_')
+    pasted = paste(split[[1]][3], split[[1]][4], sep = '_')
+    return(str_remove(pasted, '.wav'))
+  }) 
+  traces = traces[!song_to_file_end %in% bad_traces$file_end,]
+  
+  # Return
   return(traces)
   
 }
