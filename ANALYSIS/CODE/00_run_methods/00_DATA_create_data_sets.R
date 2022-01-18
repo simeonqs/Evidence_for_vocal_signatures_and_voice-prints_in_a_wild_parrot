@@ -5,6 +5,7 @@
 # Author: Simeon Q. Smeele
 # Description: Loading the selection tables and subsetting per call type. Saves subsetted data frames in 
 # one object to be used in further steps. 
+# source('ANALYSIS/CODE/00_run_methods/00_DATA_create_data_sets.R)
 # This version adds the isolated contact calls that are also in Luscinia. 
 # This version switches to the 2021 data with all start and end coming from Luscinia. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -21,7 +22,7 @@ rm(list=ls())
 
 # Paths
 path_functions = 'ANALYSIS/CODE/functions'
-path_out = 'ANALYSIS/RESULTS/00_run_methods/data_sets.RData'
+path_out = 'ANALYSIS/RESULTS/00_run_methods/all_data.RData'
 path_selection_tables = 'ANALYSIS/DATA/selection tables'
 path_annotations_2021 = 'ANALYSIS/DATA/overview recordings/annotations - 2021.xlsx'
 # path_annotations = 'ANALYSIS/DATA/overview recordings/annotations.csv'
@@ -36,6 +37,19 @@ path_bad_traces = '/Users/ssmeele/Desktop/bad_files_2021.xlsx'
 # Load data 
 st = load.selection.tables(path_selection_tables, path_annotations_2021 = path_annotations_2021)
 traces = load.traces(path_traces, path_bad_traces)
+
+# Extract traces, smoothen and padd
+message(sprintf('Starting the smoothening of %s traces...', length(unique(traces$Song))))
+calls = unique(traces$Song)
+smooth_traces = mclapply(calls, function(call){
+  trace = traces$Fundamental_frequency[traces$Song == call]
+  time = traces$Time[traces$Song == call]
+  fit = gap.filler(time, trace)
+  new_trace = smooth.spline(fit, spar = 0.4) %>% fitted
+  return(new_trace)
+}, mc.cores = 4)
+names(smooth_traces) = str_remove(calls, '.wav')
+message('Done.')
 
 # Remove all calls that are not in Luscinia and print them
 traces$fs = str_remove(traces$Song, '.wav')
@@ -54,7 +68,7 @@ st$End.Time..s. = sapply(st$fs, function(fs)
 source(path_call_type_classification)
 
 # Subset per call type and save
-data_sets = lapply(names(types_include), function(type) st[st$`call type` %in% types_include[[type]],])
+data_sets = lapply(names(types_include), function(type) st$fs[st$`call type` %in% types_include[[type]]])
 names(data_sets) = names(types_include)
 
 # Find isolated contact calls
@@ -63,8 +77,8 @@ sub_iso = sub_iso[sub_iso$context %in% c('isolated', 'response'),]
 sub_iso = sub_iso[sub_iso$fs %in% traces$fs,]
 
 # Add
-data_sets = append(data_sets, list(isolated_contact = sub_iso))
+data_sets = append(data_sets, list(isolated_contact = sub_iso$fs))
   
 # Save
-save(data_sets, file = path_out)
-message(sprintf('Saved %s data frames in data_sets.RData!', length(data_sets)))
+save(st, smooth_traces, traces, data_sets, file = path_out)
+message('Saved all data!')
