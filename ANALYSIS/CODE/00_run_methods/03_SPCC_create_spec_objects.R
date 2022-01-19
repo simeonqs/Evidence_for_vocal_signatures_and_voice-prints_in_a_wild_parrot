@@ -1,11 +1,12 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: chapter II
 # Date started: 26-08-2021
-# Date last modified: 18-01-2022
+# Date last modified: 19-01-2022
 # Author: Simeon Q. Smeele
 # Description: Creating spec objects for all calls from 2020.
 # This version adds the names to the spec_objects. 
 # This version is updated for the 2021 data. 
+# This version moves out the reading of the waves. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -25,24 +26,19 @@ rm(list=ls())
 # Paths
 path_functions = 'ANALYSIS/CODE/functions'
 path_data = 'ANALYSIS/RESULTS/00_run_methods/all_data.RData'
-path_audio = 'ANALYSIS/DATA/audio'
 path_spec_objects = 'ANALYSIS/RESULTS/00_run_methods/spcc/spec_objects.RData'
+path_waves = 'ANALYSIS/RESULTS/00_run_methods/waves.RData'
 
 # Import functions
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
 
 # Load data
 load(path_data)
+load(path_waves)
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # ANALYSIS: ----
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-# Load waves
-waves = lapply(1:nrow(st), function(i)
-  load.wave(path_audio_file = paste0(path_audio, '/', st$file[i], '.wav'), 
-            from = st$Begin.Time..s.[i],
-            to = st$End.Time..s.[i]))
 
 # Generate spec_ojects
 spec_objects = sapply(waves, function(wave){

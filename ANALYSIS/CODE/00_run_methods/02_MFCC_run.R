@@ -1,11 +1,12 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 22-09-2021
-# Date last modified: 18-01-2022
+# Date last modified: 19-01-2022
 # Author: Simeon Q. Smeele
 # Description: Running mfcc per call type and saving data as long distance for SN model. 
 # This version saves objects together. 
 # This version is updated for the 2021 data. 
+# This version moves out the reading of the waves. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -23,29 +24,21 @@ for(i in libraries){
 rm(list=ls()) 
 
 # Paths
-path_audio = '/Volumes/Elements 4/BARCELONA_2021/audio'
 path_data = 'ANALYSIS/RESULTS/00_run_methods/all_data.RData'
 path_functions = 'ANALYSIS/CODE/functions'
 path_out = 'ANALYSIS/RESULTS/00_run_methods/mfcc/m_list.RData'
+path_waves = 'ANALYSIS/RESULTS/00_run_methods/waves.RData'
 
 # Import functions
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
 
 # Load data
 load(path_data)
+load(waves)
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # ANALYSIS
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-# Load waves
-waves = lapply(1:nrow(st), function(i){
-  load.wave(path_audio_file = paste0(path_audio, '/', st$file[i], '.wav'), 
-            from = st$Begin.Time..s.[i],
-            to = st$End.Time..s.[i])
-} 
-  )
-
 
 # Run mfcc
 mfcc_out = lapply(waves, run.mfcc)
