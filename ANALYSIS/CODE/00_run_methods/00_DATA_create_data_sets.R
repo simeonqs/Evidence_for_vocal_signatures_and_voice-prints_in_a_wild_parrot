@@ -1,13 +1,14 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 19-10-2021
-# Date last modified: 17-01-2022
+# Date last modified: 19-01-2022
 # Author: Simeon Q. Smeele
 # Description: Loading the selection tables and subsetting per call type. Saves subsetted data frames in 
 # one object to be used in further steps. 
 # source('ANALYSIS/CODE/00_run_methods/00_DATA_create_data_sets.R)
 # This version adds the isolated contact calls that are also in Luscinia. 
 # This version switches to the 2021 data with all start and end coming from Luscinia. 
+# This version also reads in the waves and saves them in a seperate object. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
@@ -23,6 +24,7 @@ rm(list=ls())
 # Paths
 path_functions = 'ANALYSIS/CODE/functions'
 path_out = 'ANALYSIS/RESULTS/00_run_methods/all_data.RData'
+path_waves = 'ANALYSIS/RESULTS/00_run_methods/waves.RData'
 path_selection_tables = 'ANALYSIS/DATA/selection tables'
 path_annotations_2021 = 'ANALYSIS/DATA/overview recordings/annotations - 2021.xlsx'
 # path_annotations = 'ANALYSIS/DATA/overview recordings/annotations.csv'
@@ -30,6 +32,7 @@ path_annotations_2021 = 'ANALYSIS/DATA/overview recordings/annotations - 2021.xl
 path_call_type_classification = 'ANALYSIS/CODE/call type classification.R'
 path_traces = 'ANALYSIS/DATA/luscinia/temp_2021_traces.csv'
 path_bad_traces = '/Users/ssmeele/Desktop/bad_files_2021.xlsx'
+path_audio = '/Volumes/Elements 3/BARCELONA_2021/audio'
 
 # Import functions
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
@@ -63,6 +66,7 @@ st$Begin.Time..s. = sapply(st$fs, function(fs)
   st$Begin.Time..s.[st$fs == fs] - min(traces$Time[traces$fs == fs])/1000)
 st$End.Time..s. = sapply(st$fs, function(fs)
   st$End.Time..s.[st$fs == fs] - min(traces$Time[traces$fs == fs])/1000)
+if(any(st$End.Time..s.-st$Begin.Time..s. > 3)) stop('Some calls are too long.')
 
 # Listing the call types to include - need to include more, just starting small
 source(path_call_type_classification)
@@ -71,14 +75,23 @@ source(path_call_type_classification)
 data_sets = lapply(names(types_include), function(type) st$fs[st$`call type` %in% types_include[[type]]])
 names(data_sets) = names(types_include)
 
-# Find isolated contact calls
-sub_iso = st[st$`call type` == 'contact',]
-sub_iso = sub_iso[sub_iso$context %in% c('isolated', 'response'),]
-sub_iso = sub_iso[sub_iso$fs %in% traces$fs,]
+# # Find isolated contact calls
+# sub_iso = st[st$`call type` == 'contact',]
+# sub_iso = sub_iso[sub_iso$context %in% c('isolated', 'response'),]
+# sub_iso = sub_iso[sub_iso$fs %in% traces$fs,]
+# 
+# # Add
+# data_sets = append(data_sets, list(isolated_contact = sub_iso$fs))
 
-# Add
-data_sets = append(data_sets, list(isolated_contact = sub_iso$fs))
+# Load waves
+message('Loading waves...')
+waves = lapply(1:nrow(st), function(i)
+  load.wave(path_audio_file = paste0(path_audio, '/', st$file[i], '.wav'), 
+            from = st$Begin.Time..s.[i],
+            to = st$End.Time..s.[i]))
+message('Done!')
   
 # Save
 save(st, smooth_traces, traces, data_sets, file = path_out)
+save(waves, file = path_waves)
 message('Saved all data!')
