@@ -13,7 +13,6 @@ load.traces = function(path_traces, path_bad_traces){
   
   # Load
   traces = read.csv(path_traces)
-  message(sprintf('Loaded %s traces.', length(unique(traces$Song))))
   
   # Clean traces
   traces = traces[!(traces$Song == '2020_11_16_121650-104.wav' & traces$Element == 1),]
@@ -33,6 +32,7 @@ load.traces = function(path_traces, path_bad_traces){
   traces = traces[!song_to_file_end %in% bad_traces$file_end,]
   
   # Return
+  message(sprintf('Loaded %s traces.', length(unique(traces$Song))))
   return(traces)
   
 }
