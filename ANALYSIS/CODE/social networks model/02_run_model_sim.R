@@ -1,16 +1,17 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: chapter II
 # Date started: 24-08-2021
-# Date last modified: 22-09-2021
+# Date last modified: 20-01-2022
 # Author: Simeon Q. Smeele
 # Description: Running model on simulated data.  
 # This version was moved to the new repo and paths were fixed. 
 # This version has fixed paths for the new location. 
+# This version used cmdstanr. 
 # source('ANALYSIS/CODE/social networks model/02_run_model_sim.R')
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
-libraries = c('rethinking', 'tidyverse')
+libraries = c('rethinking', 'tidyverse', 'cmdstanr')
 for(i in libraries){
   if(! i %in% installed.packages()) lapply(i, install.packages)
   lapply(libraries, require, character.only = TRUE)
@@ -31,16 +32,19 @@ load(path_data)
 cat('Starting model with', clean_dat$N_obs, 'observations. \n')
 
 # Run model
-model = stan(path_model,
-             data = clean_dat, 
-             chains = 4, cores = 4,
-             iter = 2000, warmup = 500,
-             control = list(max_treedepth = 15, adapt_delta = 0.95))
+model = cmdstan_model(path_model)
+fit = model$sample(data = clean_dat, 
+                   seed = 1, 
+                   chains = 4, 
+                   parallel_chains = 4,
+                   refresh = 100)
+
+draws = fit$draws()
+draws_flat = apply(draws, 3, rbind)
+# colnames(draws_flat)
+dens(draws_flat[,'b_bar_ind'])
+dens(draws_flat[,'b_bar_rec'])
+dens(draws_flat[,'sigma_call'])
 
 # Save
-save('model', file = path_out)
-
-# Print the results
-cat('Here are the results: \n')
-print(precis(model, depth = 1))
-
+save('fit', file = path_out)
