@@ -39,13 +39,14 @@ load(path_data)
 # Get combinations and run function
 m_list = lapply(data_sets, function(data_set){
   
-  spec_objects_sub = spec_objects[st$fs %in% data_set]
+  spec_objects_sub = spec_objects[data_set]
   c = combn(1:length(spec_objects_sub), 2)
   o = mclapply(1:ncol(c), function(i) 
     sliding.pixel.comparison(spec_objects_sub[[c[1,i]]], spec_objects_sub[[c[2,i]]]),
                mc.cores = n_cores) %>% unlist
   o = o/max(o)
   m = o.to.m(o, names(spec_objects_sub))
+  
   return(m)
   
 })
