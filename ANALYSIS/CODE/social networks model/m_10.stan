@@ -1,6 +1,6 @@
 // Project: chapter II
 // Date started: 25-08-2021
-// Date last modified: 22-09-2021
+// Date last modified: 20-01-2022
 // Author: Simeon Q. Smeele
 // Description: Multi-level model with based on social networks model. Includes varying effects for:
 // call, individual and individual pair.
@@ -47,13 +47,13 @@ parameters{
 model{
     vector[N_obs] mu;
     sigma_call ~ exponential( 2 );
-    sigma ~ exponential( 1 );
-    sigma_b_rec ~ exponential(1);
-    sigma_b_ind ~ exponential(1);
+    sigma ~ exponential(2);
+    sigma_b_rec ~ exponential(5);
+    sigma_b_ind ~ exponential(5);
     b_bar_ind ~ normal(0, 1);
     b_bar_rec ~ normal(0, 1);
-    b_ind_pair ~ normal( 0, 1 );
-    b_rec_pair ~ normal( 0, 1 );
+    b_ind_pair ~ normal(0, 1);
+    b_rec_pair ~ normal(0, 1);
     z_call ~ normal( 0 , 1 );
     a ~ normal( 0 , 0.5 );
     // main model
