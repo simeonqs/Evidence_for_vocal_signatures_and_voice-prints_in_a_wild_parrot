@@ -46,7 +46,7 @@ m_list = lapply(data_sets, function(data_set){
                mc.cores = n_cores) %>% unlist
   o = o/max(o)
   m = o.to.m(o, names(spec_objects_sub))
-  
+  rownames(m) = colnames(m) = data_set
   return(m)
   
 })
