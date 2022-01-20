@@ -21,7 +21,7 @@ for(lib in libraries){
 rm(list=ls()) 
 
 # Settings
-n_cores = 4
+n_cores = 40
 
 # Paths
 path_functions = 'ANALYSIS/CODE/functions'
@@ -54,3 +54,4 @@ names(m_list) = names(data_sets)
 
 # Save
 save(m_list, file = path_out)
+message('Done!')

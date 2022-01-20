@@ -28,8 +28,7 @@ load(path_data)
 # Which data sets make sense for DTW
 data_sets = data_sets[c('contact', 'contact_mix', 
                         'short_contact', 'trruup', 
-                        'kaw', 'tja', 'tjup', 
-                        'tonal_mix')]
+                        'kaw', 'tja', 'tjup')]
 
 # Subset smooth traces to only include call types for which DTW makes sense
 smooth_traces = smooth_traces[which(names(smooth_traces) %in% 

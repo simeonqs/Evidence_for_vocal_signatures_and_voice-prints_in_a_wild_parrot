@@ -34,7 +34,7 @@ path_waves = 'ANALYSIS/RESULTS/00_run_methods/waves.RData'
 
 # Load data
 load(path_data)
-load(waves)
+load(path_waves)
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # ANALYSIS

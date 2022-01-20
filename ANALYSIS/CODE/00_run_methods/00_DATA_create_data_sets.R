@@ -31,7 +31,7 @@ path_annotations_2021 = 'ANALYSIS/DATA/overview recordings/annotations - 2021.xl
 # path_context = 'ANALYSIS/DATA/overview recordings/call types.xlsx'
 path_call_type_classification = 'ANALYSIS/CODE/call type classification.R'
 path_traces = 'ANALYSIS/DATA/luscinia/temp_2021_traces.csv'
-path_bad_traces = '/Users/ssmeele/Desktop/bad_files_2021.xlsx'
+path_bad_traces = '/Users/ssmeele/OFFLINE/luscinia/bad_files_2021.xlsx'
 path_audio = '/Volumes/Elements 3/BARCELONA_2021/audio'
 
 # Import functions
