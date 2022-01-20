@@ -1,15 +1,16 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 11-10-2021
-# Date last modified: 12-10-2021
+# Date last modified: 19-01-2022
 # Author: Simeon Q. Smeele
-# Description: Modeling the data.  
+# Description: Modelling the data. 
+# This version is updated for the 2021 data. 
 # NOTE: subsetting for now. 
-# source('ANALYSIS/CODE/00_compare_methods/01_run_models.R')
+# source('ANALYSIS/CODE/02_compare_call_types/01_run_models.R')
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
-libraries = c('rethinking', 'warbleR', 'MASS', 'tidyverse', 'readxl', 'umap', 'ape')
+libraries = c('rethinking', 'warbleR', 'MASS', 'tidyverse', 'readxl', 'umap', 'ape', 'cmdstanr')
 for(lib in libraries){
   if(! lib %in% installed.packages()) lapply(lib, install.packages)
   lapply(libraries, require, character.only = TRUE)
@@ -20,53 +21,57 @@ rm(list=ls())
 
 # Paths
 path_functions = 'ANALYSIS/CODE/functions'
-path_data = 'ANALYSIS/RESULTS/00_compare_methods/objects.RData'
 path_model_10 = 'ANALYSIS/CODE/social networks model/m_10.stan'
-path_out = 'ANALYSIS/RESULTS/00_compare_methods/models.RData'
+path_out = 'ANALYSIS/RESULTS/00_compare_methods/all_models_out.RData'
+path_data = 'ANALYSIS/RESULTS/00_run_methods/all_data.RData'
+path_dtw = 'ANALYSIS/RESULTS/00_run_methods/dtw/m_list.RData'
+path_spcc = 'ANALYSIS/RESULTS/00_run_methods/spcc/m_list.RData'
+path_mfcc = 'ANALYSIS/RESULTS/00_run_methods/mfcc/m_list.RData'
+path_specan = 'ANALYSIS/RESULTS/00_run_methods/specan/m_list.RData'
 
 # Import functions
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
 
 # Load data
-load(path_data) 
+load(path_data)
+rownames(st) = st$fs
 
-# Clean data
-message('Cleaning data.')
-subber = sample(nrow(d_all), 100)
-inds = as.integer(as.factor(d_all$bird[subber]))
-recs = as.integer(as.factor(paste(d_all$bird[subber], d_all$file[subber])))
-d_dtw = m.to.df(m_dtw[subber, subber], inds, recs, clean_data = T)
-d_spcc = m.to.df(m_spcc[subber, subber], inds, recs, clean_data = T)
-d_mfcc = m.to.df(m_mfcc[subber, subber], inds, recs, clean_data = T)
+# Function to run models
+run.models = function(path){
+  
+  # Load data
+  load(path)
+  message(sprintf('Running models for %s...', path))
+  
+  # Run through all datasets and save model output
+  model = cmdstan_model(path_model_10)
+  models_out = lapply(m_list, function(m){
+    
+    # Clean data, REMEMBER TO REMOVE SUBSETTING
+    n = rownames(m)
+    subber = 1:length(n)
+    if(length(n) > 100) subber = sample(length(n), 100) else subber = 1:length(n)
+    inds = as.integer(as.factor(st[n,]$bird[subber]))
+    recs = as.integer(as.factor(paste(st[n,]$bird[subber], st[n,]$file[subber])))
+    d = m.to.df(m[subber, subber], inds, recs, clean_data = T)
+    
+    # Run models
+    fit = model$sample(data = d, 
+                       seed = 1, 
+                       chains = 4, 
+                       parallel_chains = 4,
+                       refresh = 100)
+    
+  }) # end function to run single model
+  
+  message('Done!')
+  
+} # end run.models
 
-# Run models
-message('Running DTW model.')
-model_dtw = stan(path_model_10,
-                 data = d_dtw,
-                 chains = 4, cores = 4,
-                 iter = 2000, warmup = 500,
-                 control = list(max_treedepth = 15, adapt_delta = 0.95))
-message('Here are the results of the DTW model:')
-print(precis(model_dtw, depth = 1))
-
-message('Running SPCC model.')
-model_spcc = stan(path_model_10,
-                  data = d_spcc,
-                  chains = 4, cores = 4,
-                  iter = 2000, warmup = 500,
-                  control = list(max_treedepth = 15, adapt_delta = 0.95))
-message('Here are the results of the SPCC model:')
-print(precis(model_spcc, depth = 1))
-
-message('Running MFCC model.')
-model_mfcc = stan(path_model_10,
-                  data = d_mfcc,
-                  chains = 4, cores = 4,
-                  iter = 2000, warmup = 500,
-                  control = list(max_treedepth = 15, adapt_delta = 0.95))
-message('Here are the results of the MFCC model:')
-print(precis(model_mfcc, depth = 1))
+# Run through all methods
+all_models_out = lapply(c(path_dtw, path_mfcc, path_spcc, path_specan), run.models)
+names(all_models_out) = c('dtw', 'mfcc', 'spcc', 'specan')
 
 # Save
-save(model_dtw, model_spcc, model_mfcc, file = path_out)
+save(all_models_out, file = path_out)
 message('Finished, saved all results.')
