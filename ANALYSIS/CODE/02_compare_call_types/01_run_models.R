@@ -22,7 +22,7 @@ rm(list=ls())
 # Paths
 path_functions = 'ANALYSIS/CODE/functions'
 path_model_10 = 'ANALYSIS/CODE/social networks model/m_10.stan'
-path_out = 'ANALYSIS/RESULTS/00_compare_methods/all_models_out.RData'
+path_out = 'ANALYSIS/RESULTS/02_compare_call_types/all_models_out.RData'
 path_data = 'ANALYSIS/RESULTS/00_run_methods/all_data.RData'
 path_dtw = 'ANALYSIS/RESULTS/00_run_methods/dtw/m_list.RData'
 path_spcc = 'ANALYSIS/RESULTS/00_run_methods/spcc/m_list.RData'
@@ -34,7 +34,6 @@ path_specan = 'ANALYSIS/RESULTS/00_run_methods/specan/m_list.RData'
 
 # Load data
 load(path_data)
-rownames(st) = st$fs
 
 # Function to run models
 run.models = function(path){
@@ -50,7 +49,7 @@ run.models = function(path){
     # Clean data, REMEMBER TO REMOVE SUBSETTING
     n = rownames(m)
     subber = 1:length(n)
-    if(length(n) > 100) subber = sample(length(n), 100) else subber = 1:length(n)
+    if(length(n) > 200) subber = sample(length(n), 200) else subber = 1:length(n)
     inds = as.integer(as.factor(st[n,]$bird[subber]))
     recs = as.integer(as.factor(paste(st[n,]$bird[subber], st[n,]$file[subber])))
     d = m.to.df(m[subber, subber], inds, recs, clean_data = T)
@@ -61,8 +60,11 @@ run.models = function(path){
                        chains = 4, 
                        parallel_chains = 4,
                        refresh = 100)
+    return(fit$draws())
     
   }) # end function to run single model
+  
+  return(models_out)
   
   message('Done!')
   
