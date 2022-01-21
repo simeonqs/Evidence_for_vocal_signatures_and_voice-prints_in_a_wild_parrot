@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 19-10-2021
-# Date last modified: 19-01-2022
+# Date last modified: 21-01-2022
 # Author: Simeon Q. Smeele
 # Description: Loading the selection tables and subsetting per call type. Saves subsetted data frames in 
 # one object to be used in further steps. 
@@ -30,7 +30,7 @@ path_annotations_2021 = 'ANALYSIS/DATA/overview recordings/annotations - 2021.xl
 # path_annotations = 'ANALYSIS/DATA/overview recordings/annotations.csv'
 # path_context = 'ANALYSIS/DATA/overview recordings/call types.xlsx'
 path_call_type_classification = 'ANALYSIS/CODE/call type classification.R'
-path_traces = 'ANALYSIS/DATA/luscinia/temp_2021_traces.csv'
+path_traces = 'ANALYSIS/DATA/luscinia/all_2021_temp_3.csv'
 path_bad_traces = '/Users/ssmeele/OFFLINE/luscinia/bad_files_2021.xlsx'
 path_audio = '/Volumes/Elements 3/BARCELONA_2021/audio'
 
@@ -68,6 +68,9 @@ st$End.Time..s. = sapply(st$fs, function(fs)
   st$End.Time..s.[st$fs == fs] - min(traces$Time[traces$fs == fs])/1000)
 if(any(st$End.Time..s.-st$Begin.Time..s. > 3)) stop('Some calls are too long.')
 
+# Names rows
+rownames(st) = st$fs
+
 # Listing the call types to include - need to include more, just starting small
 source(path_call_type_classification)
 
@@ -89,6 +92,7 @@ waves = lapply(1:nrow(st), function(i)
   load.wave(path_audio_file = paste0(path_audio, '/', st$file[i], '.wav'), 
             from = st$Begin.Time..s.[i],
             to = st$End.Time..s.[i]))
+names(waves) = st$fs
 message('Done!')
   
 # Save
