@@ -42,12 +42,15 @@ load(path_waves)
 
 # Run mfcc
 mfcc_out = lapply(waves, run.mfcc)
+names(mfcc_out) = names(waves)
 
 # Calculate distance matrices
 ## make sure this dist is correct - move function out and write unit tests
 m_list = lapply(data_sets, function(data_set){
-  mfcc_sub = mfcc_out[st$fs %in% data_set] %>% bind_rows
-  return(as.matrix(dist(scale(mfcc_sub))))
+  mfcc_sub = mfcc_out[data_set] %>% bind_rows
+  m = as.matrix(dist(scale(mfcc_sub)))
+  rownames(m) = colnames(m) = data_set
+  return(m)
 } )
 
 # Save

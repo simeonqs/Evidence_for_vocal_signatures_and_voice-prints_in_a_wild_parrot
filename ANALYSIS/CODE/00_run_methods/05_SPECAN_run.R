@@ -34,11 +34,14 @@ load(path_waves)
 # Run specan
 specan_out = lapply(waves, specan.sim)
 specan_out = bind_rows(specan_out)
+rownames(specan_out) = names(waves)
 
 # Calculate distance matrices
 m_list = lapply(data_sets, function(data_set){   
-  specan_sub = specan_out[st$fs %in% data_set,]
-  return(as.matrix(dist(scale(specan_sub))))
+  specan_sub = specan_out[data_set,]
+  m = as.matrix(dist(scale(specan_sub)))
+  rownames(m) = colnames(m) = data_set
+  return(m)
 } )
 
 # Save

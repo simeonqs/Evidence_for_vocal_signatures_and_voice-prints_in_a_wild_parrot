@@ -55,5 +55,5 @@ spec_objects = sapply(waves, function(wave){
 image(t(spec_objects[[1]]), col = hcl.colors(12, 'Blue-Yellow', rev = T)) 
 
 # Save spec_objects
-names(spec_objects) = st$fs
+names(spec_objects) = names(waves)
 save(spec_objects, file = path_spec_objects)
