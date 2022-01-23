@@ -1,10 +1,11 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 16-10-2021
-# Date last modified: 17-10-2021
+# Date last modified: 21-01-2022
 # Author: Simeon Q. Smeele
 # Description: Running date model on all datasets. 
-# source('ANALYSIS/CODE/01_time_effect/03_run_models_dates.R')
+# This version is updated for the 2021 data with new structure and the cmdstanr model. 
+# source('ANALYSIS/CODE/03_time_effect/03_run_models_dates.R')
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
@@ -18,32 +19,38 @@ for(lib in libraries){
 rm(list=ls()) 
 
 # Paths
-path_functions = 'ANALYSIS/CODE/functions'
-path_time_model = 'ANALYSIS/CODE/social networks model/m_date_2.stan'
-path_data = 'ANALYSIS/RESULTS/01_time_effect/data_sets_dates.RData'
-path_out = 'ANALYSIS/RESULTS/01_time_effect/models_dates.RData'
+source('ANALYSIS/CODE/paths.R')
 
 # Import functions
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
 
-# Load data1
-load(path_data)
+# Load data
+load(path_data_sets_date)
 
-# Function to run model
+# Functions to run models
 run.model = function(data_set){
   if(length(data_set) == 1) return(NA) else {
-    model = stan(path_time_model,
-                 data = data_set, 
-                 chains = 4, cores = 4,
-                 iter = 2000, warmup = 500,
-                 control = list(max_treedepth = 15, adapt_delta = 0.95))
+    data_set$settings = NULL
+    fit = model$sample(data = data_set, 
+                       seed = 1, 
+                       chains = 4, 
+                       parallel_chains = 4,
+                       refresh = 2000)
+    return(fit$draws())
   }
 }
 
+run.models = function(data_sets_date_sub){
+  models_out = lapply(data_sets_date_sub, run.model)
+  names(models_out) = names(data_sets_date_sub)
+  return(models_out)
+} 
+
 # Run models
-models_mfcc_dates = lapply(data_sets_mfcc_dates, run.model)
-models_spcc_dates = lapply(data_sets_spcc_dates, run.model)
+model = cmdstan_model(path_date_model)
+all_models_out_date = lapply(data_sets_date, run.models)
+names(all_models_out_date) = c('dtw', 'mfcc', 'spcc', 'specan')
 
 # Save and message
-save(models_mfcc_dates, models_spcc_dates, file = path_out)
+save(all_models_out_date, file = path_date_model_results)
 message('Finished all models.')

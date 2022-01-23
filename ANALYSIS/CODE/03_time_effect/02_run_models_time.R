@@ -1,14 +1,15 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 14-10-2021
-# Date last modified: 17-10-2021
+# Date last modified: 21-01-2022
 # Author: Simeon Q. Smeele
 # Description: Running time model on all datasets. 
-# source('ANALYSIS/CODE/01_time_effect/02_run_models_time.R')
+# This version is updated for the 2021 data with new structure and the cmdstanr model. 
+# source('ANALYSIS/CODE/03_time_effect/02_run_models_time.R')
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
-libraries = c('rethinking', 'warbleR', 'MASS', 'tidyverse', 'readxl', 'umap', 'ape')
+libraries = c('rethinking', 'warbleR', 'cmdstanr', 'tidyverse', 'readxl', 'umap', 'ape')
 for(lib in libraries){
   if(! lib %in% installed.packages()) lapply(lib, install.packages)
   lapply(libraries, require, character.only = TRUE)
@@ -18,32 +19,38 @@ for(lib in libraries){
 rm(list=ls()) 
 
 # Paths
-path_functions = 'ANALYSIS/CODE/functions'
-path_time_model = 'ANALYSIS/CODE/social networks model/m_time_2.stan'
-path_data = 'ANALYSIS/RESULTS/01_time_effect/data_sets_time.RData'
-path_out = 'ANALYSIS/RESULTS/01_time_effect/models_time.RData'
+source('ANALYSIS/CODE/paths.R')
 
 # Import functions
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
 
 # Load data
-load(path_data)
+load(path_data_sets_time)
 
-# Function to run model
+# Functions to run models
 run.model = function(data_set){
   if(length(data_set) == 1) return(NA) else {
-    stan(path_time_model,
-         data = data_set, 
-         chains = 4, cores = 4,
-         iter = 2000, warmup = 500,
-         control = list(max_treedepth = 15, adapt_delta = 0.95))
+    data_set$settings = NULL
+    fit = model$sample(data = data_set, 
+                       seed = 1, 
+                       chains = 4, 
+                       parallel_chains = 4,
+                       refresh = 2000)
+    return(fit$draws())
   }
 }
 
+run.models = function(data_sets_time_sub){
+  models_out = lapply(data_sets_time_sub, run.model)
+  names(models_out) = names(data_sets_time_sub)
+  return(models_out)
+} 
+
 # Run models
-models_mfcc_time = lapply(data_sets_mfcc_time, run.model)
-models_spcc_time = lapply(data_sets_spcc_time, run.model)
+model = cmdstan_model(path_time_model)
+all_models_out_time = lapply(data_sets_time, run.models)
+names(all_models_out_time) = c('dtw', 'mfcc', 'spcc', 'specan')
 
 # Save and message
-save(models_mfcc_time, models_spcc_time, file = path_out)
+save(all_models_out_time, file = path_time_model_results)
 message('Finished all models.')
