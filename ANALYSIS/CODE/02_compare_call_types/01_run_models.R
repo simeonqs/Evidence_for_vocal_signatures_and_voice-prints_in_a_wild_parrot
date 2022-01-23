@@ -20,14 +20,7 @@ for(lib in libraries){
 rm(list=ls()) 
 
 # Paths
-path_functions = 'ANALYSIS/CODE/functions'
-path_model_10 = 'ANALYSIS/CODE/social networks model/m_10.stan'
-path_out = 'ANALYSIS/RESULTS/02_compare_call_types/all_models_out.RData'
-path_data = 'ANALYSIS/RESULTS/00_run_methods/all_data.RData'
-path_dtw = 'ANALYSIS/RESULTS/00_run_methods/dtw/m_list.RData'
-path_spcc = 'ANALYSIS/RESULTS/00_run_methods/spcc/m_list.RData'
-path_mfcc = 'ANALYSIS/RESULTS/00_run_methods/mfcc/m_list.RData'
-path_specan = 'ANALYSIS/RESULTS/00_run_methods/specan/m_list.RData'
+source('ANALYSIS/CODE/paths.R')
 
 # Import functions
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
@@ -71,9 +64,10 @@ run.models = function(path){
 } # end run.models
 
 # Run through all methods
-all_models_out = lapply(c(path_dtw, path_mfcc, path_spcc, path_specan), run.models)
+all_models_out = lapply(c(path_dtw_m_list, path_mfcc_m_list, path_spcc_m_list, path_specan_m_list), 
+                        run.models)
 names(all_models_out) = c('dtw', 'mfcc', 'spcc', 'specan')
 
 # Save
-save(all_models_out, file = path_out)
+save(all_models_out, file = path_ind_models)
 message('Finished, saved all results.')
