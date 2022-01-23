@@ -28,7 +28,6 @@ path_pdf = 'ANALYSIS/RESULTS/02_compare_call_types/model results.pdf'
 
 # Load data
 load(path_models)
-post = all_models_out$dtw$contact
 
 # Functions to plot
 plot.model = function(post, yaxt = 'n', xaxt = 'n'){
@@ -112,26 +111,3 @@ call_types = c('contact', 'short_contact', 'alarm', 'growl', 'trruup', 'tja', 't
   
   dev.off()
 }
-
-mtext('isolated contact', 3, 1, font = 2)
-mtext('density', 2, 2, cex = 0.75)
-for(type in call_types){
-  path_model = models_spcc[str_detect(models_spcc, type)][1] # fix for contact
-  load(path_model)
-  plot.model(model)
-  mtext(str_replace(type, '_', ' '), 3, 1, font = 2)
-}
-write.title('MFCC')
-plot.model(model_mfcc, yaxt = 'l')
-mtext('density', 2, 2, cex = 0.75)
-for(type in call_types){
-  path_model = models_mfcc[str_detect(models_mfcc, type)][1] # fix for contact
-  load(path_model)
-  plot.model(model, xaxt = 'l')
-  mtext('beta', 1, 2, cex = 0.75)
-}
-write.title('DTW')
-plot.model(model_dtw, yaxt = 'l', xaxt = 'l')
-mtext('density', 2, 2, cex = 0.75)
-mtext('beta', 1, 2, cex = 0.75)
-dev.off()
