@@ -1,11 +1,12 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 19-10-2021
-# Date last modified: 19-01-2022
+# Date last modified: 24-01-2022
 # Author: Simeon Q. Smeele
 # Description: Loading the datasets and running specan on all calls. Saving the distance matrices per 
 # dataset. 
 # This version was updated for the 2021 data. 
+# source('ANALYSIS/CODE/00_run_methods/05_SPECAN_run.R')
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
