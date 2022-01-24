@@ -12,7 +12,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
-libraries = c('tidyverse')
+libraries = c('tidyverse', 'parallel')
 for(lib in libraries){
   if(! lib %in% installed.packages()) lapply(lib, install.packages)
   lapply(libraries, require, character.only = TRUE)
@@ -30,9 +30,9 @@ path_annotations_2021 = 'ANALYSIS/DATA/overview recordings/annotations - 2021.xl
 # path_annotations = 'ANALYSIS/DATA/overview recordings/annotations.csv'
 # path_context = 'ANALYSIS/DATA/overview recordings/call types.xlsx'
 path_call_type_classification = 'ANALYSIS/CODE/call type classification.R'
-path_traces = 'ANALYSIS/DATA/luscinia/all_2021_temp_3.csv'
+path_traces = 'ANALYSIS/DATA/luscinia/all_2021_temp_4.csv'
 path_bad_traces = '/Users/ssmeele/OFFLINE/luscinia/bad_files_2021.xlsx'
-path_audio = '/Volumes/Elements 3/BARCELONA_2021/audio'
+path_audio = '/Volumes/Elements 4/BARCELONA_2021/audio'
 
 # Import functions
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
@@ -40,6 +40,10 @@ path_audio = '/Volumes/Elements 3/BARCELONA_2021/audio'
 # Load data 
 st = load.selection.tables(path_selection_tables, path_annotations_2021 = path_annotations_2021)
 traces = load.traces(path_traces, path_bad_traces)
+
+# Remove handling and release for now
+st = st[!str_detect(st$file, '10_26'),]
+st = st[!str_detect(st$file, '10_27'),]
 
 # Extract traces, smoothen and padd
 message(sprintf('Starting the smoothening of %s traces...', length(unique(traces$Song))))
@@ -88,10 +92,10 @@ names(data_sets) = names(types_include)
 
 # Load waves
 message('Loading waves...')
-waves = lapply(1:nrow(st), function(i)
+waves = mclapply(1:nrow(st), function(i)
   load.wave(path_audio_file = paste0(path_audio, '/', st$file[i], '.wav'), 
             from = st$Begin.Time..s.[i],
-            to = st$End.Time..s.[i]))
+            to = st$End.Time..s.[i]), mc.cores = 4)
 names(waves) = st$fs
 message('Done!')
   
