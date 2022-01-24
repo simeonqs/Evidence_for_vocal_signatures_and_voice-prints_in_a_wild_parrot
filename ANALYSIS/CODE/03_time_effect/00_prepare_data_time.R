@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 13-10-2021
-# Date last modified: 21-01-2022
+# Date last modified: 24-01-2022
 # Author: Simeon Q. Smeele
 # Description: Prepare data for the time and date models.
 # This version is updated for the 2021 data and the new data structure. 
@@ -9,7 +9,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
-libraries = c('rethinking', 'warbleR', 'MASS', 'tidyverse', 'readxl', 'umap', 'ape')
+libraries = c('tidyverse')
 for(lib in libraries){
   if(! lib %in% installed.packages()) lapply(lib, install.packages)
   lapply(libraries, require, character.only = TRUE)
@@ -31,7 +31,7 @@ load(path_data)
 prep.dat = function(m){
   
   n = rownames(m)
-  if(length(n) > 300) subber = sample(length(n), 300) else subber = 1:length(n)
+  if(length(n) > 500) subber = sample(length(n), 500) else subber = 1:length(n)
   inds = as.integer(as.factor(st[n,]$bird[subber]))
   recs = as.integer(as.factor(paste(st[n,]$bird[subber], st[n,]$file[subber])))
   
