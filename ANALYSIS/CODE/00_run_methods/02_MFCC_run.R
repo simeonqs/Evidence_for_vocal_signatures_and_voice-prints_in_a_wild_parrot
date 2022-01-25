@@ -7,6 +7,7 @@
 # This version saves objects together. 
 # This version is updated for the 2021 data. 
 # This version moves out the reading of the waves. 
+# source('ANALYSIS/CODE/00_run_methods/02_MFCC_run.R')
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -14,7 +15,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
-libraries = c('data.table', 'tidyverse', 'warbleR')
+libraries = c('tidyverse', 'warbleR')
 for(i in libraries){
   if(! i %in% installed.packages()) lapply(i, install.packages)
   lapply(libraries, require, character.only = TRUE)
