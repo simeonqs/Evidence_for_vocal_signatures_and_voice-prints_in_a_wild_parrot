@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 12-10-2021
-# Date last modified: 20-01-2022
+# Date last modified: 25-01-2022
 # Author: Simeon Q. Smeele
 # Description: Plotting model results per method.  
 # This version includes not all call types, but more than before. 
@@ -111,3 +111,5 @@ call_types = c('contact', 'short_contact', 'alarm', 'growl', 'trruup', 'tja', 't
   
   dev.off()
 }
+
+message('Done.')

@@ -52,7 +52,7 @@ run.models = function(path){
                        seed = 1, 
                        chains = 4, 
                        parallel_chains = 4,
-                       refresh = 100)
+                       refresh = 2000)
     return(fit$draws())
     
   }) # end function to run single model
