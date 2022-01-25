@@ -10,7 +10,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
-libraries = c('rethinking', 'warbleR', 'MASS', 'tidyverse', 'readxl', 'umap', 'ape')
+libraries = c('tidyverse')
 for(lib in libraries){
   if(! lib %in% installed.packages()) lapply(lib, install.packages)
   lapply(libraries, require, character.only = TRUE)
@@ -31,7 +31,7 @@ load(path_data)
 # Functions
 prep.dat = function(m){
   n = rownames(m)
-  if(length(n) > 300) subber = sample(length(n), 300) else subber = 1:length(n)
+  if(length(n) > 500) subber = sample(length(n), 500) else subber = 1:length(n)
   inds = as.integer(as.factor(st[n,]$bird[subber]))
   recs = as.integer(as.factor(paste(st[n,]$bird[subber], st[n,]$file[subber])))
   dates = st[n,]$file %>% str_sub(1, 10) %>% str_replace_all('_', '-') %>% as.Date %>% as.numeric
