@@ -9,7 +9,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
-libraries = c('rethinking', 'warbleR', 'MASS', 'tidyverse', 'readxl', 'umap', 'ape')
+libraries = c('tidyverse', 'cmdstanr')
 for(lib in libraries){
   if(! lib %in% installed.packages()) lapply(lib, install.packages)
   lapply(libraries, require, character.only = TRUE)
@@ -26,6 +26,12 @@ source('ANALYSIS/CODE/paths.R')
 
 # Load data
 load(path_data_sets_date)
+data_sets_date$mfcc$other = NULL
+data_sets_date$spcc$other = NULL
+data_sets_date$specan$other = NULL
+data_sets_date$mfcc$frill = NULL
+data_sets_date$spcc$frill = NULL
+data_sets_date$specan$frill = NULL
 
 # Functions to run models
 run.model = function(data_set){

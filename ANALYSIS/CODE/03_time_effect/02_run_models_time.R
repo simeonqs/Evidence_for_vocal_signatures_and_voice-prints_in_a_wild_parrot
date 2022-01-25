@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 14-10-2021
-# Date last modified: 21-01-2022
+# Date last modified: 24-01-2022
 # Author: Simeon Q. Smeele
 # Description: Running time model on all datasets. 
 # This version is updated for the 2021 data with new structure and the cmdstanr model. 
@@ -9,7 +9,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
-libraries = c('rethinking', 'warbleR', 'cmdstanr', 'tidyverse', 'readxl', 'umap', 'ape')
+libraries = c('cmdstanr', 'tidyverse')
 for(lib in libraries){
   if(! lib %in% installed.packages()) lapply(lib, install.packages)
   lapply(libraries, require, character.only = TRUE)
