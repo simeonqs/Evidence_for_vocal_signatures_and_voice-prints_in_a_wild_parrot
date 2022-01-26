@@ -7,7 +7,7 @@ path_annotations_2021 = 'ANALYSIS/DATA/overview recordings/annotations - 2021.xl
 path_call_type_classification = 'ANALYSIS/CODE/call type classification.R'
 path_traces = 'ANALYSIS/DATA/luscinia/all_2021_temp_4.csv'
 path_bad_traces = '/Users/ssmeele/OFFLINE/luscinia/bad_files_2021.xlsx'
-path_audio = '/Volumes/Elements 4/BARCELONA_2021/audio'
+path_audio = '/Users/ssmeele/Desktop/BARCELONA_2021/audio'
 path_sorted_loud_contact = 'ANALYSIS/RESULTS/contact call sorting - done'
 
 path_data_sets_time = 'ANALYSIS/RESULTS/03_time_effect/data_sets_time.RData'
@@ -35,3 +35,6 @@ path_pdf_test_traces = 'ANALYSIS/RESULTS/test output/test traces.pdf'
 path_pdf_test_dtw = 'ANALYSIS/RESULTS/test output/test dtw.pdf'
 path_pdf_test_mfcc = 'ANALYSIS/RESULTS/test output/test mfcc.pdf'
 path_pdf_test_spcc = 'ANALYSIS/RESULTS/test output/test spcc.pdf'
+path_pdf_test_specan = 'ANALYSIS/RESULTS/test output/test specan.pdf'
+
+
