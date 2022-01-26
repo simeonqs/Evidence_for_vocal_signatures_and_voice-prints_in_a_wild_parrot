@@ -58,12 +58,12 @@ write.title = function(label){
 }
 
 # Order call types
-call_types = c('contact', 'trruup', 'tja', 'tjup', 'alarm', 'growl')
+call_types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'alarm', 'growl', 'growl_low')
 
 # Plot beta parameter per call type
 {
-  pdf(path_pdf_time_results, 12, 10)
-  par(mfrow = c(4, 7), oma = c(2, 0, 2, 1), mgp = c(1, 0.75, 0))
+  pdf(path_pdf_time_results, 14, 10)
+  par(mfrow = c(4, 8), oma = c(2, 0, 2, 1), mgp = c(1, 0.75, 0))
   
   write.title('DTW')
   for(type in c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja')){
