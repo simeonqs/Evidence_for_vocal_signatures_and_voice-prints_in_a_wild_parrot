@@ -69,5 +69,5 @@ all_models_out = lapply(c(path_dtw_m_list, path_mfcc_m_list, path_spcc_m_list, p
 names(all_models_out) = c('dtw', 'mfcc', 'spcc', 'specan')
 
 # Save
-save(all_models_out, file = path_ind_models)
+save(all_models_out, file = path_ind_model_results)
 message('Finished, saved all results.')
