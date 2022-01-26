@@ -1,9 +1,10 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: monk parakeets
 # Date started: 20-10-2021
-# Date last modified: 18-01-2022
+# Date last modified: 25-01-2022
 # Author: Simeon Q. Smeele
 # Description: Loads wave from selection table and audio file. Filters, checks for clipping. 
+# This version has no filter. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 require(warbleR)
@@ -19,7 +20,6 @@ load.wave = function(path_audio_file,
   
   if(max(abs(wave@left)) == 32768) wave@left = wave@right # if clipping use right channel
   if(max(abs(wave@left)) == 32768) warning(sprintf('Clipping in file %s!', path_audio_file))
-  wave = ffilter(wave, from = 500, output = 'Wave')
   
   return(wave)
   
