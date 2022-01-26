@@ -66,7 +66,7 @@ call_types = c('contact', 'trruup', 'tja', 'tjup', 'alarm', 'growl')
   par(mfrow = c(4, 7), oma = c(2, 0, 2, 1), mgp = c(1, 0.75, 0))
   
   write.title('DTW')
-  for(type in c('contact', 'trruup', 'tja', 'tjup')){
+  for(type in c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja')){
     plot(data_sets_date$dtw[[type]]$date/5,data_sets_date$dtw[[type]]$d, 
          pch = 16, col = alpha('darkorange', 0.3),
          xlim = c(0, 0.2), ylim = c(-3, 3),

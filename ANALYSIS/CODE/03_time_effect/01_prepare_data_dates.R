@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 16-10-2021
-# Date last modified: 21-10-2021
+# Date last modified: 26-10-2021
 # Author: Simeon Q. Smeele
 # Description: Prepare data for the date models.
 # This version is updated for the 2021 data and the new data structure. 
@@ -31,6 +31,7 @@ load(path_data)
 # Functions
 prep.dat = function(m){
   n = rownames(m)
+  print(length(n))
   if(length(n) > 500) subber = sample(length(n), 500) else subber = 1:length(n)
   inds = as.integer(as.factor(st[n,]$bird[subber]))
   recs = as.integer(as.factor(paste(st[n,]$bird[subber], st[n,]$file[subber])))
@@ -42,9 +43,11 @@ prep.dat = function(m){
 }
 
 run.all.prep = function(path){
+  print(path)
   load(path)
   m_list$kaw = NULL
   m_list$contact_mix = NULL
+  m_list$frill = NULL
   out = lapply(m_list, prep.dat)
   names(out) = names(m_list)
   return(out)
