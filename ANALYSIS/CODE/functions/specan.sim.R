@@ -1,14 +1,16 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 19-01-2022
-# Date last modified: 19-01-2022
+# Date last modified: 25-01-2022
 # Author: Simeon Q. Smeele
 # Description: Spectral measurements. 
+# This version has a filter. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 specan.sim = function(wave){
   
   # Measure
+  wave = ffilter(wave, from = 500, to = 6000, output = 'Wave')
   out = data.frame(duration = length(wave@left)/wave@samp.rate)
   spec_wave = spec(wave, plot = F)
   out$peak_freq_khz = spec_wave[which(spec_wave[,2] == 1), 1]
