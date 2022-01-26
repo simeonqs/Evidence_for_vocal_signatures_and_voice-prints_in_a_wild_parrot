@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: chapter II
 # Date started: 26-08-2021
-# Date last modified: 24-01-2022
+# Date last modified: 25-01-2022
 # Author: Simeon Q. Smeele
 # Description: Creating spec objects for all calls from 2020.
 # This version adds the names to the spec_objects. 
@@ -25,10 +25,7 @@ for(lib in libraries){
 rm(list=ls()) 
 
 # Paths
-path_functions = 'ANALYSIS/CODE/functions'
-path_data = 'ANALYSIS/RESULTS/00_run_methods/all_data.RData'
-path_spec_objects = 'ANALYSIS/RESULTS/00_run_methods/spcc/spec_objects.RData'
-path_waves = 'ANALYSIS/RESULTS/00_run_methods/waves.RData'
+source('ANALYSIS/CODE/paths.R')
 
 # Import functions
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
