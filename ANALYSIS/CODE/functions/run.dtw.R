@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 18-01-2022
-# Date last modified: 18-01-2022
+# Date last modified: 27-01-2022
 # Author: Simeon Q. Smeele
 # Description: Running DTW for a set of smooth traces and returning a named, normalised distance matrix.
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -24,7 +24,6 @@ run.dtw = function(smooth_traces){
   o = out
   o = o / max(o)
   o = log(o)
-  hist(o)
   m = o.to.m(o, names(smooth_traces))
   rownames(m) = colnames(m) = names(smooth_traces)
   
