@@ -51,7 +51,7 @@ dev.off()
 # Run tests
 message('Running tests...')
 if(length(spec_objects) != length(st$fs)) stop('Spec objects and seletction table do not match!')
-if(all(names(spec_objects) != names(st$fsa))) stop('Names spec objects and seletction do not match!')
+if(all(names(spec_objects) != st$fs)) stop('Names spec objects and selection table do not match!')
 
 # Report success if nothing breaks
 message('No problems to report. All fine.')
