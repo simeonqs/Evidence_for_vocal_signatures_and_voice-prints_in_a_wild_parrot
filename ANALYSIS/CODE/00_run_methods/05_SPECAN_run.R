@@ -33,7 +33,7 @@ load(path_data)
 load(path_waves)
 
 # Run specan
-specan_out = lapply(waves, specan.sim)
+specan_out = mclapply(waves, specan.sim, mc.cores = 4)
 specan_out = bind_rows(specan_out)
 rownames(specan_out) = names(waves)
 
