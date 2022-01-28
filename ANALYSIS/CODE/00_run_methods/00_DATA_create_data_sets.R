@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 19-10-2021
-# Date last modified: 25-01-2022
+# Date last modified: 27-01-2022
 # Author: Simeon Q. Smeele
 # Description: Loading the selection tables and subsetting per call type. Saves subsetted data frames in 
 # one object to be used in further steps. 
@@ -29,7 +29,7 @@ source('ANALYSIS/CODE/paths.R')
 
 # Load data 
 st = load.selection.tables(path_selection_tables, path_annotations_2021 = path_annotations_2021)
-traces = load.traces(path_traces, path_bad_traces)
+traces = load.traces(path_traces_2021, path_bad_traces_2021)
 
 # Remove handling and release for now
 st = st[!str_detect(st$file, '10_26'),]
@@ -57,6 +57,9 @@ st = st[!st$fs %in% not_luscinia,]
 
 # Names rows
 rownames(st) = st$fs
+
+# Run checks
+if(any(is.na(st$bird))) stop('Missing IDs!')
 
 # Remove all traces that are not any longer in the selection tables and report them
 not_st = names(smooth_traces)[!names(smooth_traces) %in% st$fs]
