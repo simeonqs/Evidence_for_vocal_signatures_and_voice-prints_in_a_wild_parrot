@@ -52,14 +52,14 @@ call_types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'ala
 
 # Plot beta parameter per call type
 {
-  pdf(path_pdf, 16, 10)
+  pdf(path_pdf, 16, 9)
   par(mfrow = c(4, 9), oma = c(2, 0, 2, 0), mgp = c(1, 0.75, 0))
   
   write.title('DTW')
   plot.model(all_models_out$dtw$contact, yaxt = 'l')
   mtext('contact', 3, 1, font = 2)
   mtext('density', 2, 2, cex = 0.75)
-  plot.model(all_models_out$dtw$loud_contact, yaxt = 'l')
+  plot.model(all_models_out$dtw$loud_contact)
   mtext('loud contact', 3, 1, font = 2)
   plot.model(all_models_out$dtw$short_contact)
   mtext('short contact', 3, 1, font = 2)
