@@ -7,6 +7,7 @@
 # This version includes all call types. 
 # This version also includes the date results. 
 # This version is updated for the 2021 data and new structure. 
+# This version switches to acoustic similarity rather than distance. 
 # source('ANALYSIS/CODE/03_time_effect/04_plot_results.R')
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -35,20 +36,20 @@ load(path_data_sets_date_21)
 # Functions to plot
 plot.model.time = function(post, dat){
   post_flat = apply(post, 3, rbind)
-  points((dat$time + 2) * 7.5, dat$d, pch = 16, col = alpha('purple', 0.3))
-  shade(apply(sapply(seq_along(post_flat[,'a_bar']), 
+  points((dat$time + 2) * 7.5, -dat$d, pch = 16, col = alpha('purple', 0.3))
+  shade(-apply(sapply(seq_along(post_flat[,'a_bar']), 
                      function(i) 
                        post_flat[,'a_bar'][i] + c(-2, 2) * post_flat[,'b_bar'][i]), 1, PI),         
         (c(-2, 2) + 2) * 7.5, col = alpha('purple', 0.2))
-  lines((c(-2, 2) + 2) * 7.5, mean(post_flat[,'a_bar']) + c(-2, 2) * mean(post_flat[,'b_bar']), 
+  lines((c(-2, 2) + 2) * 7.5, -(mean(post_flat[,'a_bar']) + c(-2, 2) * mean(post_flat[,'b_bar'])), 
         col = alpha('purple', 1), lwd = 5, lty = 1)
 }
 plot.model.dates = function(post, dat){
   post_flat = apply(post, 3, rbind)
-  shade(apply(sapply(seq_along(post_flat[,'a_bar']), 
+  shade(-apply(sapply(seq_along(post_flat[,'a_bar']), 
                      function(i) post_flat[,'a_bar'][i] + c(0, 30) * post_flat[,'b_bar'][i]), 1, PI), 
         c(0, 30), col = alpha('darkorange', 0.2))
-  lines(c(0, 30), mean(post_flat[,'a_bar']) + c(0, 30) * mean(post_flat[,'b_bar']), 
+  lines(c(0, 30), -(mean(post_flat[,'a_bar']) + c(0, 30) * mean(post_flat[,'b_bar'])), 
         col = alpha('darkorange', 1), lwd = 5, lty = 1)
 }
 write.title = function(label){
@@ -69,7 +70,7 @@ call_types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'ala
   
   write.title('DTW')
   for(type in c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja')){
-    plot(data_sets_date_21$dtw[[type]]$date, data_sets_date_21$dtw[[type]]$d, 
+    plot(data_sets_date_21$dtw[[type]]$date, -data_sets_date_21$dtw[[type]]$d, 
          pch = 16, col = alpha('darkorange', 0.3),
          xlim = c(0, 30), ylim = c(-3, 3),
          xlab = '', ylab = '', xaxt = 'n', yaxt = 'n')
@@ -79,7 +80,7 @@ call_types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'ala
                      data_sets_date_21$dtw[[type]])
     if(type == call_types[1]){
       axis(2)
-      mtext('accoustic distance', 2, 2, cex = 0.75)
+      mtext('accoustic similarity', 2, 2, cex = 0.75)
     } 
     mtext(str_replace(type, '_', ' '), 3, 1, font = 2)
   }
@@ -92,7 +93,7 @@ call_types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'ala
   
   write.title('SPCC')
   for(type in call_types){
-    plot(data_sets_date_21$spcc[[type]]$date/5,data_sets_date_21$spcc[[type]]$d, 
+    plot(data_sets_date_21$spcc[[type]]$date, -data_sets_date_21$spcc[[type]]$d, 
          pch = 16, col = alpha('darkorange', 0.3),
          xlim = c(0, 30), ylim = c(-3, 3),
          xlab = '', ylab = '', xaxt = 'n', yaxt = 'n')
@@ -102,13 +103,13 @@ call_types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'ala
                      data_sets_date_21$spcc[[type]])
     if(type == call_types[1]){
       axis(2)
-      mtext('accoustic distance', 2, 2, cex = 0.75)
+      mtext('accoustic similarity', 2, 2, cex = 0.75)
     } 
   }
   
   write.title('SPECAN')
   for(type in call_types){
-    plot(data_sets_date_21$specan[[type]]$date/5,data_sets_date_21$specan[[type]]$d, 
+    plot(data_sets_date_21$specan[[type]]$date, -data_sets_date_21$specan[[type]]$d, 
          pch = 16, col = alpha('darkorange', 0.3),
          xlim = c(0, 30), ylim = c(-3, 3),
          xlab = '', ylab = '', xaxt = 'n', yaxt = 'n')
@@ -118,13 +119,13 @@ call_types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'ala
                      data_sets_date_21$specan[[type]])
     if(type == call_types[1]){
       axis(2)
-      mtext('accoustic distance', 2, 2, cex = 0.75)
+      mtext('accoustic similarity', 2, 2, cex = 0.75)
     } 
   }
   
   write.title('MFCC')
   for(type in call_types){
-    plot(data_sets_date_21$mfcc[[type]]$date/5,data_sets_date_21$mfcc[[type]]$d, 
+    plot(data_sets_date_21$mfcc[[type]]$date, -data_sets_date_21$mfcc[[type]]$d, 
          pch = 16, col = alpha('darkorange', 0.3),
          xlim = c(0, 30), ylim = c(-3, 3),
          xlab = '', ylab = '', xaxt = 'n', yaxt = 'n', main = '')
@@ -134,7 +135,7 @@ call_types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'ala
                      data_sets_date_21$mfcc[[type]])
     if(type == call_types[1]){
       axis(2)
-      mtext('accoustic distance', 2, 2, cex = 0.75)
+      mtext('accoustic similarity', 2, 2, cex = 0.75)
     } 
     axis(1, (seq(-2, 2, 1) + 2) * 7.5, 10^seq(-2, 2, 1))
     axis(3, seq(0, 30, 5), seq(0, 30, 5))
