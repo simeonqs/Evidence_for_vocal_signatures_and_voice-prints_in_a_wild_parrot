@@ -1,9 +1,10 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: monk parakeets
 # Date started: 21-10-2021
-# Date last modified: 21-10-2021
+# Date last modified: 29-01-2022
 # Author: Simeon Q. Smeele
 # Description: Prepares the clean_dat for the date model. Subsets to different recordings, but same ind.
+# This version has date in day rather than month. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 prep.dat.dates = function(clean_dat,
@@ -16,7 +17,7 @@ prep.dat.dates = function(clean_dat,
                    call_j = clean_dat$call_j[subber] %>% as.factor %>% as.integer,
                    rec_pair = clean_dat$rec_pair[subber] %>% as.factor %>% as.integer,
                    ind = clean_dat$ind_i[subber] %>% as.factor %>% as.integer,
-                   date = clean_dat$date[subber]/30,
+                   date = clean_dat$date[subber],
                    d = clean_dat$d[subber] %>% scale %>% as.numeric,
                    N_obs = length(subber),
                    N_call = length(unique(c(clean_dat$call_i[subber],
