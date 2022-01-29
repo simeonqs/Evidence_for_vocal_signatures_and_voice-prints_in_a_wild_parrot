@@ -1,10 +1,11 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 16-10-2021
-# Date last modified: 21-01-2022
+# Date last modified: 29-01-2022
 # Author: Simeon Q. Smeele
 # Description: Running date model on all datasets. 
 # This version is updated for the 2021 data with new structure and the cmdstanr model. 
+# This version is updated for the renamed objects (partially).
 # source('ANALYSIS/CODE/03_time_effect/03_run_models_dates.R')
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -25,13 +26,13 @@ source('ANALYSIS/CODE/paths.R')
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
 
 # Load data
-load(path_data_sets_date)
-data_sets_date$mfcc$other = NULL
-data_sets_date$spcc$other = NULL
-data_sets_date$specan$other = NULL
-data_sets_date$mfcc$frill = NULL
-data_sets_date$spcc$frill = NULL
-data_sets_date$specan$frill = NULL
+load(path_data_sets_date_21)
+data_sets_date_21$mfcc$other = NULL
+data_sets_date_21$spcc$other = NULL
+data_sets_date_21$specan$other = NULL
+data_sets_date_21$mfcc$frill = NULL
+data_sets_date_21$spcc$frill = NULL
+data_sets_date_21$specan$frill = NULL
 
 # Functions to run models
 run.model = function(data_set){
@@ -54,9 +55,9 @@ run.models = function(data_sets_date_sub){
 
 # Run models
 model = cmdstan_model(path_date_model)
-all_models_out_date = lapply(data_sets_date, run.models)
-names(all_models_out_date) = c('dtw', 'mfcc', 'spcc', 'specan')
+all_models_out_date_21 = lapply(data_sets_date_21, run.models)
+names(all_models_out_date_21) = c('dtw', 'mfcc', 'spcc', 'specan')
 
 # Save and message
-save(all_models_out_date, file = path_date_model_results)
+save(all_models_out_date_21, file = path_date_model_results_21)
 message('Finished all models.')

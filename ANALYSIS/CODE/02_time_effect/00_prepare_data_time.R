@@ -1,10 +1,12 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 13-10-2021
-# Date last modified: 26-01-2022
+# Date last modified: 29-01-2022
 # Author: Simeon Q. Smeele
 # Description: Prepare data for the time and date models.
 # This version is updated for the 2021 data and the new data structure. 
+# This version is updated to work with the renamed objects (partially). 
+# source('ANALYSIS/CODE/02_time_effect/00_prepare_data_time.R')
 # NOTE: subsetting for now and removing kaws. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -27,20 +29,22 @@ source('ANALYSIS/CODE/paths.R')
 # Load data
 load(path_data)
 
+# Settings
+n_sub = 300
+
 # Functions
-prep.dat = function(m){
+prep.dat = function(m, st){
   
   n = rownames(m)
   print(length(n))
-  if(length(n) > 500) subber = sample(length(n), 500) else subber = 1:length(n)
+  if(length(n) > n_sub) subber = sample(length(n), n_sub) else subber = 1:length(n)
   inds = as.integer(as.factor(st[n,]$bird[subber]))
   recs = as.integer(as.factor(paste(st[n,]$bird[subber], st[n,]$file[subber])))
   
-  time_saver = st[n,]$Begin.Time..s.[subber]/60/60
-  # if(length(time_saver) == 0) time_saver = d_sub$time[subber]/60/60
+  time_saver = st[n,]$Begin.Time..s.[subber]/60 # time in minutes, gets log_10 transformed later
   
   clean_dat = m.to.df(m[subber, subber], inds, recs, time_saver = time_saver, clean_data = T)
-  
+
   subber = which(clean_dat$same_rec[clean_dat$rec_pair] == 1)
   if(any(clean_dat$ind_i[subber] != clean_dat$ind_j[subber])) stop('Problem subsetting!')
   sub_dat = list(call_i = clean_dat$call_i[subber] %>% as.factor %>% as.integer,
@@ -58,21 +62,21 @@ prep.dat = function(m){
   # plot(sub_dat$time, sub_dat$d, col = sub_dat$ind, pch = 16)
   return(sub_dat)
 }
-run.all.prep = function(path){
+run.all.prep = function(path, st){
   print(path)
   load(path)
   m_list$kaw = NULL
   m_list$frill = NULL
-  out = lapply(m_list, prep.dat)
+  out = lapply(m_list, prep.dat, st)
   names(out) = names(m_list)
   return(out)
 }
 
 # Clean up data
-data_sets_time = lapply(c(path_dtw_m_list, path_mfcc_m_list, path_spcc_m_list, path_specan_m_list), 
-                       run.all.prep)
-names(data_sets_time) = c('dtw', 'mfcc', 'spcc', 'specan')
+data_sets_time_21 = lapply(c(path_dtw_m_list, path_mfcc_m_list, path_spcc_m_list, path_specan_m_list), 
+                           run.all.prep, st_21)
+names(data_sets_time_21) = c('dtw', 'mfcc', 'spcc', 'specan')
 
 # Save
-save(data_sets_time, file = path_data_sets_time)
+save(data_sets_time_21, file = path_data_sets_time_21)
 message('Saved all datasets.')

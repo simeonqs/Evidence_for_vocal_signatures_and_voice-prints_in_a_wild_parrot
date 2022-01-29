@@ -1,11 +1,12 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 14-10-2021
-# Date last modified: 24-01-2022
+# Date last modified: 29-01-2022
 # Author: Simeon Q. Smeele
 # Description: Running time model on all datasets. 
 # This version is updated for the 2021 data with new structure and the cmdstanr model. 
-# source('ANALYSIS/CODE/03_time_effect/02_run_models_time.R')
+# This version is updated to work with the renamed objects (partially). 
+# source('ANALYSIS/CODE/02_time_effect/02_run_models_time.R')
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
@@ -25,7 +26,7 @@ source('ANALYSIS/CODE/paths.R')
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
 
 # Load data
-load(path_data_sets_time)
+load(path_data_sets_time_21)
 
 # Functions to run models
 run.model = function(data_set){
@@ -48,9 +49,9 @@ run.models = function(data_sets_time_sub){
 
 # Run models
 model = cmdstan_model(path_time_model)
-all_models_out_time = lapply(data_sets_time, run.models)
-names(all_models_out_time) = c('dtw', 'mfcc', 'spcc', 'specan')
+all_models_out_time_21 = lapply(data_sets_time_21, run.models)
+names(all_models_out_time_21) = c('dtw', 'mfcc', 'spcc', 'specan')
 
 # Save and message
-save(all_models_out_time, file = path_time_model_results)
+save(all_models_out_time_21, file = path_time_model_results_21)
 message('Finished all models.')

@@ -1,12 +1,13 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 12-10-2021
-# Date last modified: 21-01-2022
+# Date last modified: 29-01-2022
 # Author: Simeon Q. Smeele
 # Description: Plotting model results per method.  
 # This version includes all call types. 
 # This version also includes the date results. 
 # This version is updated for the 2021 data and new structure. 
+# source('ANALYSIS/CODE/03_time_effect/04_plot_results.R')
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
@@ -26,27 +27,28 @@ source('ANALYSIS/CODE/paths.R')
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
 
 # Load data
-load(path_time_model_results)
-load(path_data_sets_time)
-load(path_date_model_results)
-load(path_data_sets_date)
+load(path_time_model_results_21)
+load(path_data_sets_time_21)
+load(path_date_model_results_21)
+load(path_data_sets_date_21)
 
 # Functions to plot
 plot.model.time = function(post, dat){
   post_flat = apply(post, 3, rbind)
-  points(dat$time, dat$d, pch = 16, col = alpha('purple', 0.3))
+  points((dat$time + 2) * 7.5, dat$d, pch = 16, col = alpha('purple', 0.3))
   shade(apply(sapply(seq_along(post_flat[,'a_bar']), 
-                     function(i) post_flat[,'a_bar'][i] + c(0, 1) * post_flat[,'b_bar'][i]), 1, PI),         
-        c(0, 0.2), col = alpha('purple', 0.2))
-  lines(c(0, 0.2), mean(post_flat[,'a_bar']) + c(0, 1) * mean(post_flat[,'b_bar']), 
+                     function(i) 
+                       post_flat[,'a_bar'][i] + c(-2, 2) * post_flat[,'b_bar'][i]), 1, PI),         
+        (c(-2, 2) + 2) * 7.5, col = alpha('purple', 0.2))
+  lines((c(-2, 2) + 2) * 7.5, mean(post_flat[,'a_bar']) + c(-2, 2) * mean(post_flat[,'b_bar']), 
         col = alpha('purple', 1), lwd = 5, lty = 1)
 }
 plot.model.dates = function(post, dat){
   post_flat = apply(post, 3, rbind)
   shade(apply(sapply(seq_along(post_flat[,'a_bar']), 
-                     function(i) post_flat[,'a_bar'][i] + c(0, 1) * post_flat[,'b_bar'][i]), 1, PI), 
-        c(0, 0.2), col = alpha('darkorange', 0.2))
-  lines(c(0, 0.2), mean(post_flat[,'a_bar']) + c(0, 1) * mean(post_flat[,'b_bar']), 
+                     function(i) post_flat[,'a_bar'][i] + c(0, 30) * post_flat[,'b_bar'][i]), 1, PI), 
+        c(0, 30), col = alpha('darkorange', 0.2))
+  lines(c(0, 30), mean(post_flat[,'a_bar']) + c(0, 30) * mean(post_flat[,'b_bar']), 
         col = alpha('darkorange', 1), lwd = 5, lty = 1)
 }
 write.title = function(label){
@@ -67,14 +69,14 @@ call_types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'ala
   
   write.title('DTW')
   for(type in c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja')){
-    plot(data_sets_date$dtw[[type]]$date/5,data_sets_date$dtw[[type]]$d, 
+    plot(data_sets_date_21$dtw[[type]]$date, data_sets_date_21$dtw[[type]]$d, 
          pch = 16, col = alpha('darkorange', 0.3),
-         xlim = c(0, 0.2), ylim = c(-3, 3),
+         xlim = c(0, 30), ylim = c(-3, 3),
          xlab = '', ylab = '', xaxt = 'n', yaxt = 'n')
-    plot.model.time(all_models_out_time$dtw[[type]], 
-                    data_sets_time$dtw[[type]])
-    plot.model.dates(all_models_out_date$dtw[[type]], 
-                     data_sets_date$dtw[[type]])
+    plot.model.time(all_models_out_time_21$dtw[[type]], 
+                    data_sets_time_21$dtw[[type]])
+    plot.model.dates(all_models_out_date_21$dtw[[type]], 
+                     data_sets_date_21$dtw[[type]])
     if(type == call_types[1]){
       axis(2)
       mtext('accoustic distance', 2, 2, cex = 0.75)
@@ -90,14 +92,14 @@ call_types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'ala
   
   write.title('SPCC')
   for(type in call_types){
-    plot(data_sets_date$spcc[[type]]$date/5,data_sets_date$spcc[[type]]$d, 
+    plot(data_sets_date_21$spcc[[type]]$date/5,data_sets_date_21$spcc[[type]]$d, 
          pch = 16, col = alpha('darkorange', 0.3),
-         xlim = c(0, 0.2), ylim = c(-3, 3),
+         xlim = c(0, 30), ylim = c(-3, 3),
          xlab = '', ylab = '', xaxt = 'n', yaxt = 'n')
-    plot.model.time(all_models_out_time$spcc[[type]], 
-                    data_sets_time$spcc[[type]])
-    plot.model.dates(all_models_out_date$spcc[[type]], 
-                     data_sets_date$spcc[[type]])
+    plot.model.time(all_models_out_time_21$spcc[[type]], 
+                    data_sets_time_21$spcc[[type]])
+    plot.model.dates(all_models_out_date_21$spcc[[type]], 
+                     data_sets_date_21$spcc[[type]])
     if(type == call_types[1]){
       axis(2)
       mtext('accoustic distance', 2, 2, cex = 0.75)
@@ -106,14 +108,14 @@ call_types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'ala
   
   write.title('SPECAN')
   for(type in call_types){
-    plot(data_sets_date$specan[[type]]$date/5,data_sets_date$specan[[type]]$d, 
+    plot(data_sets_date_21$specan[[type]]$date/5,data_sets_date_21$specan[[type]]$d, 
          pch = 16, col = alpha('darkorange', 0.3),
-         xlim = c(0, 0.2), ylim = c(-3, 3),
+         xlim = c(0, 30), ylim = c(-3, 3),
          xlab = '', ylab = '', xaxt = 'n', yaxt = 'n')
-    plot.model.time(all_models_out_time$specan[[type]], 
-                    data_sets_time$specan[[type]])
-    plot.model.dates(all_models_out_date$specan[[type]], 
-                     data_sets_date$specan[[type]])
+    plot.model.time(all_models_out_time_21$specan[[type]], 
+                    data_sets_time_21$specan[[type]])
+    plot.model.dates(all_models_out_date_21$specan[[type]], 
+                     data_sets_date_21$specan[[type]])
     if(type == call_types[1]){
       axis(2)
       mtext('accoustic distance', 2, 2, cex = 0.75)
@@ -122,22 +124,22 @@ call_types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'ala
   
   write.title('MFCC')
   for(type in call_types){
-    plot(data_sets_date$mfcc[[type]]$date/5,data_sets_date$mfcc[[type]]$d, 
+    plot(data_sets_date_21$mfcc[[type]]$date/5,data_sets_date_21$mfcc[[type]]$d, 
          pch = 16, col = alpha('darkorange', 0.3),
-         xlim = c(0, 0.2), ylim = c(-3, 3),
+         xlim = c(0, 30), ylim = c(-3, 3),
          xlab = '', ylab = '', xaxt = 'n', yaxt = 'n', main = '')
-    plot.model.time(all_models_out_time$mfcc[[type]], 
-                    data_sets_time$mfcc[[type]])
-    plot.model.dates(all_models_out_date$mfcc[[type]], 
-                     data_sets_date$mfcc[[type]])
+    plot.model.time(all_models_out_time_21$mfcc[[type]], 
+                    data_sets_time_21$mfcc[[type]])
+    plot.model.dates(all_models_out_date_21$mfcc[[type]], 
+                     data_sets_date_21$mfcc[[type]])
     if(type == call_types[1]){
       axis(2)
       mtext('accoustic distance', 2, 2, cex = 0.75)
     } 
-    axis(1, seq(0, 0.2, 0.05), seq(0, 0.2, 0.05))
-    axis(3, seq(0, 0.2, 0.05), seq(0, 0.2, 0.05)*5)
-    mtext('difference [hours]', 1, 2, cex = 0.75)
-    mtext('difference [months]', 3, 2, cex = 0.75)
+    axis(1, (seq(-2, 2, 1) + 2) * 7.5, 10^seq(-2, 2, 1))
+    axis(3, seq(0, 30, 5), seq(0, 30, 5))
+    mtext('difference [minutes]', 1, 2, cex = 0.75)
+    mtext('difference [days]', 3, 2, cex = 0.75)
   }
   
   dev.off()
