@@ -15,16 +15,16 @@ path_audio_20 = '/Volumes/Elements 4/BARCELONA_2020/audio'
 path_audio_21 = '/Users/ssmeele/Desktop/BARCELONA_2021/audio'
 path_sorted_loud_contact_21 = 'ANALYSIS/RESULTS/contact call sorting - done'
 
-path_data_sets_time = 'ANALYSIS/RESULTS/02_time_effect/data_sets_time.RData'
-path_data_sets_date = 'ANALYSIS/RESULTS/02_time_effect/data_sets_date.RData'
+path_data_sets_time_21 = 'ANALYSIS/RESULTS/02_time_effect/data_sets_time_21.RData'
+path_data_sets_date_21 = 'ANALYSIS/RESULTS/02_time_effect/data_sets_date_21.RData'
 
 path_model_10 = 'ANALYSIS/CODE/social networks model/m_10.stan'
 path_time_model = 'ANALYSIS/CODE/social networks model/m_time_2.stan'
 path_date_model = 'ANALYSIS/CODE/social networks model/m_date_2.stan'
 
 path_ind_model_results = 'ANALYSIS/RESULTS/01_compare_call_types/all_models_out.RData'
-path_time_model_results = 'ANALYSIS/RESULTS/02_time_effect/all_models_out_time.RData'
-path_date_model_results = 'ANALYSIS/RESULTS/02_time_effect/all_models_out_date.RData'
+path_time_model_results_21 = 'ANALYSIS/RESULTS/02_time_effect/all_models_out_time.RData'
+path_date_model_results_21 = 'ANALYSIS/RESULTS/02_time_effect/all_models_out_date.RData'
 
 path_data = 'ANALYSIS/RESULTS/00_run_methods/all_data.RData'
 path_waves = 'ANALYSIS/RESULTS/00_run_methods/waves.RData'
