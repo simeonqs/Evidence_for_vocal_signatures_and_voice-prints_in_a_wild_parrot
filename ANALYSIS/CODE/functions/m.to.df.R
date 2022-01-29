@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: social networks
 # Date started: 24-08-2021
-# Date last modified: 12-10-2021
+# Date last modified: 28-01-2022
 # Author: Simeon Q. Smeele
 # Description: Taking matrix with distances and making it into a dataframe that can be analysed with stan 
 # model. 
@@ -11,6 +11,7 @@
 # This version includes the option to include time between recordings.  
 # This version made recordings unique per ind. 
 # This version includes the option to further clean the data. 
+# This version has the time difference on a log_10 scale rather than natural. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 m.to.df = function(m, 
@@ -42,7 +43,7 @@ m.to.df = function(m,
           rec_j = paste(recs[j], inds[j]),
           rec_pair = paste(recs[i], inds[i], recs[j], inds[j], sep = '-')))
       }
-      if(!is.null(time_saver)) new$time = c(time_saver[i], time_saver[j]) %>% diff %>% abs
+      if(!is.null(time_saver)) new$time = c(time_saver[i], time_saver[j]) %>% diff %>% abs %>% log10
       if(!is.null(day_saver)) new$date = c(day_saver[i], day_saver[j]) %>% diff %>% abs
       d = rbind(d, new)
     }
