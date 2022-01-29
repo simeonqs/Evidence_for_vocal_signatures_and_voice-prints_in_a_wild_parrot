@@ -1,6 +1,6 @@
 // Project: chapter II
 // Date started: 02-10-2021
-// Date last modified: 11-10-2021
+// Date last modified: 29-01-2022
 // Author: Simeon Q. Smeele
 // Description: Multi-level model for date between recording effect. 
 data{
@@ -35,7 +35,7 @@ model{
     sigma_z_ind ~ exponential(1);
     sigma_b_ind ~ exponential(1);
     sigma ~ exponential(1);
-    b_bar ~ normal(0, 1);
+    b_bar ~ normal(0, 0.05);
     b_ind ~ normal(0, 1);
     z_call ~ normal(0, 1);
     // explaining the recording means with distance in months between

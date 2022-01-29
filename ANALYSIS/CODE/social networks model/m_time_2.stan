@@ -1,6 +1,6 @@
 // Project: chapter II
 // Date started: 30-09-2021
-// Date last modified: 30-09-2021
+// Date last modified: 28-01-2022
 // Author: Simeon Q. Smeele
 // Description: Multi-level model for time within recording effect. 
 // This version also has varying intercepts. 
@@ -41,7 +41,7 @@ model{
     sigma_ind_b ~ exponential(1);
     b_ind ~ normal(0, 1);
     b_rec ~ normal(0, 1);
-    b_bar ~ normal(0, 1);
+    b_bar ~ normal(0, 0.3);
     z_call ~ normal(0, 1);
     z_rec ~ normal(0, 1);
     z_ind ~ normal(0, 1);
