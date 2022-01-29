@@ -14,6 +14,8 @@
 # This version has the time difference on a log_10 scale rather than natural. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
+require(parallel)
+
 m.to.df = function(m, 
                    inds,
                    recs = NULL,
