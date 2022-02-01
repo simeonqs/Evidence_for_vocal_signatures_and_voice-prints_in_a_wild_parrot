@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 28-01-2022
-# Date last modified: 28-01-2022
+# Date last modified: 30-01-2022
 # Author: Simeon Q. Smeele
 # Description: Fills gaps and smoothens traces for DTW. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -17,5 +17,6 @@ smooth.traces = function(traces){
     return(new_trace)
   }, mc.cores = 4)
   names(smooth_traces) = str_remove(calls, '.wav')
+  return(smooth_traces)
   message('Done.')
 }
