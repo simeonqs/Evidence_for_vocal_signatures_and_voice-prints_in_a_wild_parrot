@@ -32,7 +32,9 @@ source('ANALYSIS/CODE/paths.R')
 st_20 = load.selection.tables(path_selection_tables, path_annotations = path_annotations_2020,
                               path_context = path_context)
 st_21 = load.selection.tables(path_selection_tables, path_annotations_2021 = path_annotations_2021)
-traces_20 = load.traces(path_traces_2020, path_bad_traces_2020)
+traces_20_contact = load.traces(path_traces_2020_contact, path_bad_traces_2020)
+traces_20_remaining = load.traces(path_traces_2020_remaining, path_bad_traces_2020)
+traces_20 = rbind(traces_20_contact, traces_20_remaining)
 traces_21 = load.traces(path_traces_2021, path_bad_traces_2021)
 
 # Remove handling and release from 2021 data
