@@ -40,6 +40,7 @@ path_mfcc_m_list = 'ANALYSIS/RESULTS/00_run_methods/mfcc/m_list.RData'
 path_specan_m_list = 'ANALYSIS/RESULTS/00_run_methods/specan/m_list.RData'
 
 path_dtw_year = 'ANALYSIS/RESULTS/03_year_comparison/dtw/m_list.RData'
+path_spcc_year = 'ANALYSIS/RESULTS/03_year_comparison/spcc/m_list.RData'
 
 path_pdf_time_results = 'ANALYSIS/RESULTS/02_time_effect/model results.pdf'
 path_pdf_test_traces = 'ANALYSIS/RESULTS/test output/test traces.pdf'
