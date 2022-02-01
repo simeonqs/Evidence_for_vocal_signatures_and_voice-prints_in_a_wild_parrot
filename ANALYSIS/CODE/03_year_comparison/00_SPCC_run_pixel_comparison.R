@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: chapter II
 # Date started: 31-01-2022
-# Date last modified: 31-01-2022
+# Date last modified: 01-02-2022
 # Author: Simeon Q. Smeele
 # Description: Running pixel comparison on all calls from both years. 
 # Note: This script takes a long time. Best to run on HPC and use many cores.
@@ -21,10 +21,7 @@ rm(list=ls())
 n_cores = 40
 
 # Paths
-path_functions = 'ANALYSIS/CODE/functions'
-path_spec_objects = 'ANALYSIS/RESULTS/00_run_methods/spcc/spec_objects.RData'
-path_out = 'ANALYSIS/RESULTS/03_year_comparison/spcc/m_list.RData'
-path_data = 'ANALYSIS/RESULTS/00_run_methods/all_data.RData'
+source('ANALYSIS/CODE/paths.R')
 
 # Import functions
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
@@ -37,6 +34,7 @@ load(path_data)
 types = c('contact', 'short_contact', 'trruup', 'tja', 'kaw', 'alarm', 'growl', 'growl_low')
 data_sets = lapply(types, function(type) unlist(c(data_sets_20[type], data_sets_21[type])))
 names(data_sets) = types
+spec_objects = append(spec_objects_20, spec_objects_21)
 
 # Get combinations and run function
 m_list = lapply(data_sets, function(data_set){
@@ -56,5 +54,5 @@ m_list = lapply(data_sets, function(data_set){
 names(m_list) = names(data_sets)
 
 # Save
-save(m_list, file = path_out)
+save(m_list, file = path_spcc_year)
 message('Done!')
