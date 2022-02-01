@@ -32,7 +32,7 @@ st_21$...8 = NA
 st = rbind(st_20, st_21)
 
 # Settings
-n_sub = 1000
+n_sub = 500
 
 # Import functions
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
@@ -51,21 +51,18 @@ prep.dat = function(m, st){
   return(sub_dat)
 }
 
-# run.all.prep = function(path, st){
-#   print(path)
-#   load(path)
-#   out = lapply(m_list, prep.dat, st)
-#   names(out) = names(m_list)
-#   return(out)
-# }
+run.all.prep = function(path, st){
+  print(path)
+  load(path)
+  out = lapply(m_list, prep.dat, st)
+  names(out) = names(m_list)
+  return(out)
+}
 
 # Clean up data
-# data_sets_year = lapply(c(path_dtw_m_list, path_mfcc_m_list, path_spcc_m_list, path_specan_m_list), 
-#                            run.all.prep, st)
-# names(data_sets_year) = c('dtw', 'mfcc', 'spcc', 'specan')
-
-# Run for just contact calls
-data_sets_year = prep.dat(m, st)
+data_sets_year = lapply(c(path_dtw_year, path_mfcc_year, path_spcc_year, path_specan_year),
+                           run.all.prep, st)
+names(data_sets_year) = c('dtw', 'mfcc', 'spcc', 'specan')
 
 # Save
 save(data_sets_year, file = path_data_sets_year)

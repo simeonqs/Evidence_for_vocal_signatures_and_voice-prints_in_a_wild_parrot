@@ -26,6 +26,7 @@ source('ANALYSIS/CODE/paths.R')
 # Load data
 load(path_data_sets_year)
 
+
 # Functions to run models
 run.model = function(data_set){
   if(length(data_set) == 1) return(NA) else {
@@ -40,6 +41,7 @@ run.model = function(data_set){
 }
 
 run.models = function(data_sets_year_sub){
+  data_sets_year_sub$kaw = NULL
   models_out = lapply(data_sets_year_sub, run.model)
   names(models_out) = names(data_sets_year_sub)
   return(models_out)
@@ -47,9 +49,8 @@ run.models = function(data_sets_year_sub){
 
 # Run models
 model = cmdstan_model(path_year_model)
-all_models_out_year = run.model(data_sets_year)
-# all_models_out_year = lapply(data_sets_date_21, run.models)
-# names(all_models_out_year) = c('dtw', 'mfcc', 'spcc', 'specan')
+all_models_out_year = lapply(data_sets_year, run.models)
+names(all_models_out_year) = c('dtw', 'mfcc', 'spcc', 'specan')
 
 # Save and message
 save(all_models_out_year, file = path_year_model_results)
