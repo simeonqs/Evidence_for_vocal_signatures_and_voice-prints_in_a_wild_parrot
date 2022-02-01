@@ -41,6 +41,8 @@ path_specan_m_list = 'ANALYSIS/RESULTS/00_run_methods/specan/m_list.RData'
 
 path_dtw_year = 'ANALYSIS/RESULTS/03_year_comparison/dtw/m_list.RData'
 path_spcc_year = 'ANALYSIS/RESULTS/03_year_comparison/spcc/m_list.RData'
+path_mfcc_year = 'ANALYSIS/RESULTS/03_year_comparison/mfcc/m_list.RData'
+path_specan_year = 'ANALYSIS/RESULTS/03_year_comparison/specan/m_list.RData'
 
 path_pdf_time_results = 'ANALYSIS/RESULTS/02_time_effect/model results.pdf'
 path_pdf_test_traces = 'ANALYSIS/RESULTS/test output/test traces.pdf'
@@ -48,5 +50,5 @@ path_pdf_test_dtw = 'ANALYSIS/RESULTS/test output/test dtw.pdf'
 path_pdf_test_mfcc = 'ANALYSIS/RESULTS/test output/test mfcc.pdf'
 path_pdf_test_spcc = 'ANALYSIS/RESULTS/test output/test spcc.pdf'
 path_pdf_test_specan = 'ANALYSIS/RESULTS/test output/test specan.pdf'
-
+path_pdf_year_results = 'ANALYSIS/RESULTS/03_year_comparison/model results.pdf'
 
