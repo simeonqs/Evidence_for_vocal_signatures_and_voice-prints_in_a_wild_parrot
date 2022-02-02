@@ -1,4 +1,5 @@
 # This script can be sourced to have all the paths handy.
+## source('ANALYSIS/CODE/paths.R')
 
 path_functions = 'ANALYSIS/CODE/functions'
 
