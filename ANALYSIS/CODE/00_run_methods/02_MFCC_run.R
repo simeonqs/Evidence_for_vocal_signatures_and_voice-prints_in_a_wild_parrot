@@ -1,12 +1,13 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 22-09-2021
-# Date last modified: 19-01-2022
+# Date last modified: 02_02-2022
 # Author: Simeon Q. Smeele
 # Description: Running mfcc per call type and saving data as long distance for SN model. 
 # This version saves objects together. 
 # This version is updated for the 2021 data. 
 # This version moves out the reading of the waves. 
+# This version also includes the 2020 data. 
 # source('ANALYSIS/CODE/00_run_methods/02_MFCC_run.R')
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -25,10 +26,7 @@ for(i in libraries){
 rm(list=ls()) 
 
 # Paths
-path_data = 'ANALYSIS/RESULTS/00_run_methods/all_data.RData'
-path_functions = 'ANALYSIS/CODE/functions'
-path_out = 'ANALYSIS/RESULTS/00_run_methods/mfcc/m_list.RData'
-path_waves = 'ANALYSIS/RESULTS/00_run_methods/waves.RData'
+source('ANALYSIS/CODE/paths.R')
 
 # Import functions
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
@@ -42,18 +40,26 @@ load(path_waves)
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Run mfcc
-mfcc_out = lapply(waves, run.mfcc)
-names(mfcc_out) = names(waves)
+mfcc_out_20 = lapply(waves_20, run.mfcc)
+names(mfcc_out_20) = names(waves_20)
+mfcc_out_21 = lapply(waves_21, run.mfcc)
+names(mfcc_out_21) = names(waves_21)
 
 # Calculate distance matrices
 ## make sure this dist is correct - move function out and write unit tests
-m_list = lapply(data_sets, function(data_set){
-  mfcc_sub = mfcc_out[data_set] %>% bind_rows
+m_list_20 = lapply(data_sets_20, function(data_set){
+  mfcc_sub = mfcc_out_20[data_set] %>% bind_rows
+  m = as.matrix(dist(scale(mfcc_sub)))
+  rownames(m) = colnames(m) = data_set
+  return(m)
+} )
+m_list_21 = lapply(data_sets_21, function(data_set){
+  mfcc_sub = mfcc_out_21[data_set] %>% bind_rows
   m = as.matrix(dist(scale(mfcc_sub)))
   rownames(m) = colnames(m) = data_set
   return(m)
 } )
 
 # Save
-save(m_list, file = path_out)
+save(m_list_20, m_list_21, file = path_mfcc_m_list)
 message('Done.')
