@@ -30,7 +30,7 @@ source('ANALYSIS/CODE/paths.R')
 load(path_data)
 
 # Function to run single model
-run.single.model = function(m){
+run.single.model = function(m, st){
   # Clean data, REMEMBER TO REMOVE SUBSETTING
   n = rownames(m)
   subber = 1:length(n)
@@ -55,9 +55,8 @@ run.models = function(path){
   message(sprintf('Running models for %s...', path))
   
   # Run through all datasets and save model output
-  model = cmdstan_model(path_model_10)
-  models_out_20 = lapply(m_list_20, run.single.model)
-  models_out_21 = lapply(m_list_21, run.single.model)
+  models_out_20 = lapply(m_list_20, run.single.model, st_20)
+  models_out_21 = lapply(m_list_21, run.single.model, st_21)
   models_out = list(models_out_20 = models_out_20, 
                     models_out_21 = models_out_21)
   
@@ -68,6 +67,7 @@ run.models = function(path){
 } # end run.models
 
 # Run through all methods
+model = cmdstan_model(path_model_10)
 all_models_out = lapply(c(path_dtw_m_list, path_mfcc_m_list, path_spcc_m_list, path_specan_m_list), 
                         run.models)
 names(all_models_out) = c('dtw', 'mfcc', 'spcc', 'specan')
