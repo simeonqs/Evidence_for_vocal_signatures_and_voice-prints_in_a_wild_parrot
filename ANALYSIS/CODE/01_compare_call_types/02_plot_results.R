@@ -1,11 +1,12 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 12-10-2021
-# Date last modified: 25-01-2022
+# Date last modified: 03-02-2022
 # Author: Simeon Q. Smeele
 # Description: Plotting model results per method.  
 # This version includes not all call types, but more than before. 
 # This version works for the 2021 data and the cmdstanr model output. 
+# This version plots a page per year. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
@@ -19,15 +20,13 @@ for(lib in libraries){
 rm(list=ls()) 
 
 # Paths
-path_models = 'ANALYSIS/RESULTS/02_compare_call_types/all_models_out.RData'
-path_functions = 'ANALYSIS/CODE/functions'
-path_pdf = 'ANALYSIS/RESULTS/02_compare_call_types/model results.pdf'
+source('ANALYSIS/CODE/paths.R')
 
 # Import functions
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
 
 # Load data
-load(path_models)
+load(path_ind_model_results)
 
 # Functions to plot
 plot.model = function(post, yaxt = 'n', xaxt = 'n'){
@@ -52,68 +51,75 @@ call_types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'ala
 
 # Plot beta parameter per call type
 {
-  pdf(path_pdf, 16, 9)
+  pdf(path_pdf_ind_results, 16, 9)
   par(mfrow = c(4, 9), oma = c(2, 0, 2, 0), mgp = c(1, 0.75, 0))
   
-  write.title('DTW')
-  plot.model(all_models_out$dtw$contact, yaxt = 'l')
-  mtext('contact', 3, 1, font = 2)
-  mtext('density', 2, 2, cex = 0.75)
-  plot.model(all_models_out$dtw$loud_contact)
-  mtext('loud contact', 3, 1, font = 2)
-  plot.model(all_models_out$dtw$short_contact)
-  mtext('short contact', 3, 1, font = 2)
-  plot.model(all_models_out$dtw$trruup)
-  mtext('trruup', 3, 1, font = 2)
-  plot.model(all_models_out$dtw$tja)
-  mtext('tja', 3, 1, font = 2)
-  plot.new()
-  mtext('alarm', 3, 1, font = 2)
-  plot.new()
-  mtext('growl', 3, 1, font = 2)
-  plot.new()
-  mtext('growl low', 3, 1, font = 2)
-  
-  write.title('SPCC')
-  plot.model(all_models_out$spcc$contact, yaxt = 'l')
-  mtext('density', 2, 2, cex = 0.75)
-  plot.model(all_models_out$spcc$loud_contact)
-  plot.model(all_models_out$spcc$short_contact)
-  plot.model(all_models_out$spcc$trruup)
-  plot.model(all_models_out$spcc$tja)
-  plot.model(all_models_out$spcc$alarm)
-  plot.model(all_models_out$spcc$growl)
-  plot.model(all_models_out$spcc$growl_low)
-  
-  write.title('SPECAN')
-  plot.model(all_models_out$specan$contact, yaxt = 'l')
-  mtext('density', 2, 2, cex = 0.75)
-  plot.model(all_models_out$specan$loud_contact)
-  plot.model(all_models_out$specan$short_contact)
-  plot.model(all_models_out$specan$trruup)
-  plot.model(all_models_out$specan$tja)
-  plot.model(all_models_out$specan$alarm)
-  plot.model(all_models_out$specan$growl)
-  plot.model(all_models_out$specan$growl_low)
-  
-  write.title('MFCC')
-  plot.model(all_models_out$mfcc$contact, yaxt = 'l', xaxt = 'l')
-  mtext('density', 2, 2, cex = 0.75)
-  mtext('beta', 1, 2, cex = 0.75)
-  plot.model(all_models_out$mfcc$loud_contact, xaxt = 'l')
-  mtext('beta', 1, 2, cex = 0.75)
-  plot.model(all_models_out$mfcc$short_contact, xaxt = 'l')
-  mtext('beta', 1, 2, cex = 0.75)
-  plot.model(all_models_out$mfcc$trruup, xaxt = 'l')
-  mtext('beta', 1, 2, cex = 0.75)
-  plot.model(all_models_out$mfcc$tja, xaxt = 'l')
-  mtext('beta', 1, 2, cex = 0.75)
-  plot.model(all_models_out$mfcc$alarm, xaxt = 'l')
-  mtext('beta', 1, 2, cex = 0.75)
-  plot.model(all_models_out$mfcc$growl, xaxt = 'l')
-  mtext('beta', 1, 2, cex = 0.75)
-  plot.model(all_models_out$mfcc$growl_low, xaxt = 'l')
-  mtext('beta', 1, 2, cex = 0.75)
+  for(year in c(20, 21)){
+    write.title('DTW')
+    plot.model(all_models_out$dtw[[sprintf('models_out_%s', year)]]$contact, yaxt = 'l')
+    mtext('contact', 3, 1, font = 2)
+    mtext('density', 2, 2, cex = 0.75)
+    if(year == 20) plot.new() else 
+      plot.model(all_models_out$dtw[[sprintf('models_out_%s', year)]]$loud_contact)
+    mtext('loud contact', 3, 1, font = 2)
+    plot.model(all_models_out$dtw[[sprintf('models_out_%s', year)]]$short_contact)
+    mtext('short contact', 3, 1, font = 2)
+    plot.model(all_models_out$dtw[[sprintf('models_out_%s', year)]]$trruup)
+    mtext('trruup', 3, 1, font = 2)
+    plot.model(all_models_out$dtw[[sprintf('models_out_%s', year)]]$tja)
+    mtext('tja', 3, 1, font = 2)
+    plot.new()
+    mtext('alarm', 3, 1, font = 2)
+    plot.new()
+    mtext('growl', 3, 1, font = 2)
+    plot.new()
+    mtext('growl low', 3, 1, font = 2)
+    
+    write.title('SPCC')
+    plot.model(all_models_out$spcc[[sprintf('models_out_%s', year)]]$contact, yaxt = 'l')
+    mtext('density', 2, 2, cex = 0.75)
+    if(year == 20) plot.new() else
+      plot.model(all_models_out$spcc[[sprintf('models_out_%s', year)]]$loud_contact)
+    plot.model(all_models_out$spcc[[sprintf('models_out_%s', year)]]$short_contact)
+    plot.model(all_models_out$spcc[[sprintf('models_out_%s', year)]]$trruup)
+    plot.model(all_models_out$spcc[[sprintf('models_out_%s', year)]]$tja)
+    plot.model(all_models_out$spcc[[sprintf('models_out_%s', year)]]$alarm)
+    plot.model(all_models_out$spcc[[sprintf('models_out_%s', year)]]$growl)
+    plot.model(all_models_out$spcc[[sprintf('models_out_%s', year)]]$growl_low)
+    
+    write.title('SPECAN')
+    plot.model(all_models_out$specan[[sprintf('models_out_%s', year)]]$contact, yaxt = 'l')
+    mtext('density', 2, 2, cex = 0.75)
+    if(year == 20) plot.new() else
+      plot.model(all_models_out$specan[[sprintf('models_out_%s', year)]]$loud_contact)
+    plot.model(all_models_out$specan[[sprintf('models_out_%s', year)]]$short_contact)
+    plot.model(all_models_out$specan[[sprintf('models_out_%s', year)]]$trruup)
+    plot.model(all_models_out$specan[[sprintf('models_out_%s', year)]]$tja)
+    plot.model(all_models_out$specan[[sprintf('models_out_%s', year)]]$alarm)
+    plot.model(all_models_out$specan[[sprintf('models_out_%s', year)]]$growl)
+    plot.model(all_models_out$specan[[sprintf('models_out_%s', year)]]$growl_low)
+    
+    write.title('MFCC')
+    plot.model(all_models_out$mfcc[[sprintf('models_out_%s', year)]]$contact, yaxt = 'l', xaxt = 'l')
+    mtext('density', 2, 2, cex = 0.75)
+    mtext('beta', 1, 2, cex = 0.75)
+    if(year == 20) plot.new() else {
+      plot.model(all_models_out$mfcc[[sprintf('models_out_%s', year)]]$loud_contact, xaxt = 'l')
+      mtext('beta', 1, 2, cex = 0.75)
+    }
+    plot.model(all_models_out$mfcc[[sprintf('models_out_%s', year)]]$short_contact, xaxt = 'l')
+    mtext('beta', 1, 2, cex = 0.75)
+    plot.model(all_models_out$mfcc[[sprintf('models_out_%s', year)]]$trruup, xaxt = 'l')
+    mtext('beta', 1, 2, cex = 0.75)
+    plot.model(all_models_out$mfcc[[sprintf('models_out_%s', year)]]$tja, xaxt = 'l')
+    mtext('beta', 1, 2, cex = 0.75)
+    plot.model(all_models_out$mfcc[[sprintf('models_out_%s', year)]]$alarm, xaxt = 'l')
+    mtext('beta', 1, 2, cex = 0.75)
+    plot.model(all_models_out$mfcc[[sprintf('models_out_%s', year)]]$growl, xaxt = 'l')
+    mtext('beta', 1, 2, cex = 0.75)
+    plot.model(all_models_out$mfcc[[sprintf('models_out_%s', year)]]$growl_low, xaxt = 'l')
+    mtext('beta', 1, 2, cex = 0.75)
+  }
   
   dev.off()
 }
