@@ -45,6 +45,7 @@ path_spcc_year = 'ANALYSIS/RESULTS/03_year_comparison/spcc/m_list.RData'
 path_mfcc_year = 'ANALYSIS/RESULTS/03_year_comparison/mfcc/m_list.RData'
 path_specan_year = 'ANALYSIS/RESULTS/03_year_comparison/specan/m_list.RData'
 
+path_pdf_ind_results = 'ANALYSIS/RESULTS/01_compare_call_types/model results.pdf'
 path_pdf_time_results = 'ANALYSIS/RESULTS/02_time_effect/model results.pdf'
 path_pdf_test_traces = 'ANALYSIS/RESULTS/test output/test traces.pdf'
 path_pdf_test_dtw = 'ANALYSIS/RESULTS/test output/test dtw.pdf'
