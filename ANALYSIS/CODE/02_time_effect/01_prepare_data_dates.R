@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 16-10-2021
-# Date last modified: 29-10-2021
+# Date last modified: 03-02-2022
 # Author: Simeon Q. Smeele
 # Description: Prepare data for the date models.
 # NOTE: subsetting for now and removing kaws. 
@@ -9,6 +9,7 @@
 # This version is updated for the 2021 data and the new data structure. 
 # This version moves some code out into a function. 
 # This version is updated for the renamed objects (partially).
+# This version also includes the 2020 data. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
@@ -47,9 +48,10 @@ prep.dat = function(m, st){
   return(sub_dat)
 }
 
-run.all.prep = function(path, st){
+run.all.prep = function(path, st, year){
   print(path)
   load(path)
+  m_list = get(sprintf('m_list_%s', year))
   m_list$kaw = NULL
   m_list$contact_mix = NULL
   m_list$frill = NULL
@@ -59,10 +61,13 @@ run.all.prep = function(path, st){
 }
 
 # Clean up data
+data_sets_date_20 = lapply(c(path_dtw_m_list, path_mfcc_m_list, path_spcc_m_list, path_specan_m_list), 
+                           run.all.prep, st_20, 20)
+names(data_sets_date_20) = c('dtw', 'mfcc', 'spcc', 'specan')
 data_sets_date_21 = lapply(c(path_dtw_m_list, path_mfcc_m_list, path_spcc_m_list, path_specan_m_list), 
-                        run.all.prep, st_21)
+                        run.all.prep, st_21, 21)
 names(data_sets_date_21) = c('dtw', 'mfcc', 'spcc', 'specan')
 
 # Save
-save(data_sets_date_21, file = path_data_sets_date_21)
+save(data_sets_date_20, data_sets_date_21, file = path_data_sets_date)
 message('Saved all datasets.')

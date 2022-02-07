@@ -1,11 +1,12 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 13-10-2021
-# Date last modified: 29-01-2022
+# Date last modified: 03-02-2022
 # Author: Simeon Q. Smeele
 # Description: Prepare data for the time and date models.
 # This version is updated for the 2021 data and the new data structure. 
 # This version is updated to work with the renamed objects (partially). 
+# This version also includes the 2020 data. 
 # source('ANALYSIS/CODE/02_time_effect/00_prepare_data_time.R')
 # NOTE: subsetting for now and removing kaws. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -62,9 +63,10 @@ prep.dat = function(m, st){
   # plot(sub_dat$time, sub_dat$d, col = sub_dat$ind, pch = 16)
   return(sub_dat)
 }
-run.all.prep = function(path, st){
+run.all.prep = function(path, st, year){
   print(path)
   load(path)
+  m_list = get(sprintf('m_list_%s', year))
   m_list$kaw = NULL
   m_list$frill = NULL
   out = lapply(m_list, prep.dat, st)
@@ -73,10 +75,13 @@ run.all.prep = function(path, st){
 }
 
 # Clean up data
+data_sets_time_20 = lapply(c(path_dtw_m_list, path_mfcc_m_list, path_spcc_m_list, path_specan_m_list), 
+                           run.all.prep, st_20, 20)
+names(data_sets_time_20) = c('dtw', 'mfcc', 'spcc', 'specan')
 data_sets_time_21 = lapply(c(path_dtw_m_list, path_mfcc_m_list, path_spcc_m_list, path_specan_m_list), 
-                           run.all.prep, st_21)
+                           run.all.prep, st_21, 21)
 names(data_sets_time_21) = c('dtw', 'mfcc', 'spcc', 'specan')
 
 # Save
-save(data_sets_time_21, file = path_data_sets_time_21)
+save(data_sets_time_20, data_sets_time_21, file = path_data_sets_time)
 message('Saved all datasets.')
