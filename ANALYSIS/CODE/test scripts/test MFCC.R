@@ -1,9 +1,10 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 25-01-2022
-# Date last modified: 25-01-2022
+# Date last modified: 14-02-2022
 # Author: Simeon Q. Smeele
 # Description: Test if the mfcc output is correct. 
+# This version includes the 2020 data. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
@@ -26,6 +27,14 @@ source('ANALYSIS/CODE/paths.R')
 load(path_data)
 load(path_waves)
 load(path_mfcc_m_list)
+
+# Choose the year
+waves = waves_20
+smooth_traces = smooth_traces_20
+st = st_20
+data_sets = data_sets_20
+m_list = m_list_20
+path_audio = path_audio_20
 
 # Plot most extreme case per call type
 pdf(path_pdf_test_mfcc)
