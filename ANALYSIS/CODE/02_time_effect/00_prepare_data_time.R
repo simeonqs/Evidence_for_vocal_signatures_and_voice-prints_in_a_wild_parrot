@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 13-10-2021
-# Date last modified: 03-02-2022
+# Date last modified: 14-02-2022
 # Author: Simeon Q. Smeele
 # Description: Prepare data for the time and date models.
 # This version is updated for the 2021 data and the new data structure. 
@@ -31,7 +31,7 @@ source('ANALYSIS/CODE/paths.R')
 load(path_data)
 
 # Settings
-n_sub = 300
+n_sub = 500
 
 # Functions
 prep.dat = function(m, st){

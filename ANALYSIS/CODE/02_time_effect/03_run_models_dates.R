@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 16-10-2021
-# Date last modified: 04-02-2022
+# Date last modified: 14-02-2022
 # Author: Simeon Q. Smeele
 # Description: Running date model on all datasets. 
 # This version is updated for the 2021 data with new structure and the cmdstanr model. 
@@ -34,15 +34,6 @@ data_sets_date_21$specan$other = NULL
 data_sets_date_21$mfcc$frill = NULL
 data_sets_date_21$spcc$frill = NULL
 data_sets_date_21$specan$frill = NULL
-data_sets_date_20$mfcc$short_contact = NULL
-data_sets_date_20$spcc$short_contact = NULL
-data_sets_date_20$specan$short_contact = NULL
-data_sets_date_20$dtw$short_contact = NULL
-data_sets_date_20$dtw$alarm = NULL
-data_sets_date_20$mfcc$alarm = NULL
-data_sets_date_20$spcc$alarm = NULL
-data_sets_date_20$specan$alarm = NULL
-data_sets_date_20$dtw$alarm = NULL
 
 # Functions to run models
 run.model = function(data_set){
