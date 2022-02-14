@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 19-10-2021
-# Date last modified: 28-01-2022
+# Date last modified: 14-02-2022
 # Author: Simeon Q. Smeele
 # Description: Loading the selection tables and subsetting per call type. Saves subsetted data frames in 
 # one object to be used in further steps. 
@@ -81,7 +81,15 @@ waves_21 = mclapply(1:nrow(st_21), function(i)
             to = st_21$End.Time..s.[i]), mc.cores = 4)
 names(waves_21) = st_21$fs
 message('Done!')
-  
+
+# Test duration of waves
+durs_20 =  sapply(waves_20, function(x) length(x@left))
+durs_21 =  sapply(waves_21, function(x) length(x@left))
+if(any(durs_20 < 0.02 * 44100)) stop('Waves 20 too short.')
+if(any(durs_21 < 0.02 * 44100)) stop('Waves 21 too short.')
+if(any(durs_20 > 2 * 44100)) stop('Waves 20 too long.')
+if(any(durs_21 > 2 * 44100)) stop('Waves 21 too long.')
+
 # Save
 save(st_20, st_21, smooth_traces_20, smooth_traces_21, data_sets_20, data_sets_21, file = path_data)
 save(waves_20, waves_21, file = path_waves)
