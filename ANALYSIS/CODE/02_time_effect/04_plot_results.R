@@ -67,7 +67,7 @@ call_types = c('contact', 'trruup', 'tja', 'growl', 'growl_low')
 
 # Plot beta parameter per call type
 {
-  pdf(path_pdf_time_results, 9, 10)
+  pdf(path_pdf_time_results, 9, 9)
   par(mfrow = c(4, 6), oma = c(2, 0, 2, 1), mgp = c(1, 0.75, 0))
   
   for(year in c(20, 21)){
@@ -83,7 +83,7 @@ call_types = c('contact', 'trruup', 'tja', 'growl', 'growl_low')
     for(type in c('contact', 'trruup', 'tja')){
       plot(data_sets_date$dtw[[type]]$date, -data_sets_date$dtw[[type]]$d, 
            pch = 16, col = alpha('darkorange', 0),
-           xlim = c(0, 30), ylim = c(-3, 3),
+           xlim = c(0, 30), ylim = c(-2, 2),
            xlab = '', ylab = '', xaxt = 'n', yaxt = 'n')
       plot.model.time(all_models_out_time$dtw[[type]], 
                       data_sets_time$dtw[[type]])
@@ -106,7 +106,7 @@ call_types = c('contact', 'trruup', 'tja', 'growl', 'growl_low')
     for(type in call_types){
       plot(data_sets_date$spcc[[type]]$date, -data_sets_date$spcc[[type]]$d, 
            pch = 16, col = alpha('darkorange', 0),
-           xlim = c(0, 30), ylim = c(-3, 3),
+           xlim = c(0, 30), ylim = c(-2, 2),
            xlab = '', ylab = '', xaxt = 'n', yaxt = 'n')
       plot.model.time(all_models_out_time$spcc[[type]], 
                       data_sets_time$spcc[[type]])
@@ -126,7 +126,7 @@ call_types = c('contact', 'trruup', 'tja', 'growl', 'growl_low')
     for(type in call_types){
       plot(data_sets_date$specan[[type]]$date, -data_sets_date$specan[[type]]$d, 
            pch = 16, col = alpha('darkorange', 0),
-           xlim = c(0, 30), ylim = c(-3, 3),
+           xlim = c(0, 30), ylim = c(-2, 2),
            xlab = '', ylab = '', xaxt = 'n', yaxt = 'n')
       plot.model.time(all_models_out_time$specan[[type]], 
                       data_sets_time$specan[[type]])
@@ -142,7 +142,7 @@ call_types = c('contact', 'trruup', 'tja', 'growl', 'growl_low')
     for(type in call_types){
       plot(data_sets_date$mfcc[[type]]$date, -data_sets_date$mfcc[[type]]$d, 
            pch = 16, col = alpha('darkorange', 0),
-           xlim = c(0, 30), ylim = c(-3, 3),
+           xlim = c(0, 30), ylim = c(-2, 2),
            xlab = '', ylab = '', xaxt = 'n', yaxt = 'n', main = '')
       plot.model.time(all_models_out_time$mfcc[[type]], 
                       data_sets_time$mfcc[[type]])
