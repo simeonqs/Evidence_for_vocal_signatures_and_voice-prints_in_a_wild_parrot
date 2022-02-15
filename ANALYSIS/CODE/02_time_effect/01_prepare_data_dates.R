@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 16-10-2021
-# Date last modified: 03-02-2022
+# Date last modified: 14-02-2022
 # Author: Simeon Q. Smeele
 # Description: Prepare data for the date models.
 # NOTE: subsetting for now and removing kaws. 
@@ -29,7 +29,7 @@ source('ANALYSIS/CODE/paths.R')
 load(path_data)
 
 # Settings
-n_sub = 300
+n_sub = 500
 
 # Import functions
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
@@ -65,7 +65,7 @@ data_sets_date_20 = lapply(c(path_dtw_m_list, path_mfcc_m_list, path_spcc_m_list
                            run.all.prep, st_20, 20)
 names(data_sets_date_20) = c('dtw', 'mfcc', 'spcc', 'specan')
 data_sets_date_21 = lapply(c(path_dtw_m_list, path_mfcc_m_list, path_spcc_m_list, path_specan_m_list), 
-                        run.all.prep, st_21, 21)
+                           run.all.prep, st_21, 21)
 names(data_sets_date_21) = c('dtw', 'mfcc', 'spcc', 'specan')
 
 # Save
