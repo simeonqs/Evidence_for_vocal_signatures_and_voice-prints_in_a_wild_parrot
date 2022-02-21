@@ -28,7 +28,8 @@ load(path_data)
 
 # Which data sets make sense for DTW
 set.seed(1)
-types = c('contact', 'short_contact', 'trruup', 'tja', 'kaw')
+types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'kaw') # 'alarm', 'growl', 'growl_low')
+
 data_sets = lapply(types, function(type) unlist(c(data_sets_20[type], data_sets_21[type])))
 names(data_sets) = types
 

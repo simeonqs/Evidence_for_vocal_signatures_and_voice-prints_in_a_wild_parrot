@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 12-10-2021
-# Date last modified: 04-02-2022
+# Date last modified: 15-02-2022
 # Author: Simeon Q. Smeele
 # Description: Plotting model results per method.  
 # This version includes all call types. 
@@ -62,13 +62,12 @@ write.title = function(label){
 }
 
 # Order call types
-# 'loud_contact', 'short_contact', 'alarm', 
-call_types = c('contact', 'trruup', 'tja', 'growl', 'growl_low')
+call_types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'alarm', 'growl', 'growl_low')
 
 # Plot beta parameter per call type
 {
-  pdf(path_pdf_time_results, 9, 9)
-  par(mfrow = c(4, 6), oma = c(2, 0, 2, 1), mgp = c(1, 0.75, 0))
+  pdf(path_pdf_time_results, 16, 9)
+  par(mfrow = c(4, 9), oma = c(2, 0, 2, 1), mgp = c(1, 0.75, 0))
   
   for(year in c(20, 21)){
     
@@ -79,8 +78,12 @@ call_types = c('contact', 'trruup', 'tja', 'growl', 'growl_low')
     all_models_out_time = get(sprintf('all_models_out_time_%s', year))
     
     write.title('DTW')
-    # 'loud_contact', 'short_contact', 
-    for(type in c('contact', 'trruup', 'tja')){
+    for(type in c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja')){
+      if(type == 'loud_contact' & year == 20){
+        plot.new()
+        mtext(str_replace(call_types[2], '_', ' '), 3, 1, font = 2)
+        next
+      }
       plot(data_sets_date$dtw[[type]]$date, -data_sets_date$dtw[[type]]$d, 
            pch = 16, col = alpha('darkorange', 0),
            xlim = c(0, 30), ylim = c(-2, 2),
@@ -99,11 +102,15 @@ call_types = c('contact', 'trruup', 'tja', 'growl', 'growl_low')
     mtext(str_replace(call_types[6], '_', ' '), 3, 1, font = 2)
     plot.new()
     mtext(str_replace(call_types[7], '_', ' '), 3, 1, font = 2)
-    # plot.new()
-    # mtext(str_replace(call_types[8], '_', ' '), 3, 1, font = 2)
+    plot.new()
+    mtext(str_replace(call_types[8], '_', ' '), 3, 1, font = 2)
     
     write.title('SPCC')
     for(type in call_types){
+      if(type == 'loud_contact' & year == 20){
+        plot.new()
+        next
+      }
       plot(data_sets_date$spcc[[type]]$date, -data_sets_date$spcc[[type]]$d, 
            pch = 16, col = alpha('darkorange', 0),
            xlim = c(0, 30), ylim = c(-2, 2),
@@ -124,6 +131,10 @@ call_types = c('contact', 'trruup', 'tja', 'growl', 'growl_low')
     
     write.title('SPECAN')
     for(type in call_types){
+      if(type == 'loud_contact' & year == 20){
+        plot.new()
+        next
+      }
       plot(data_sets_date$specan[[type]]$date, -data_sets_date$specan[[type]]$d, 
            pch = 16, col = alpha('darkorange', 0),
            xlim = c(0, 30), ylim = c(-2, 2),
@@ -140,6 +151,10 @@ call_types = c('contact', 'trruup', 'tja', 'growl', 'growl_low')
     
     write.title('MFCC')
     for(type in call_types){
+      if(type == 'loud_contact' & year == 20){
+        plot.new()
+        next
+      }
       plot(data_sets_date$mfcc[[type]]$date, -data_sets_date$mfcc[[type]]$d, 
            pch = 16, col = alpha('darkorange', 0),
            xlim = c(0, 30), ylim = c(-2, 2),
