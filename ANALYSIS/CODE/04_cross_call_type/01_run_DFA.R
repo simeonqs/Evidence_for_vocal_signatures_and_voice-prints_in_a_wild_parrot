@@ -44,31 +44,22 @@ st$main_type = sapply(st$`call type`, function(type){
 })
 
 # Run full permuted dfa
-train_set = 'contact'
-test_set = c('growl', 'alarm', 'growl_low', 'trruup')
-pdfa_out = lapply(1:100, function(i){
-  
-  out = subset.dfa(N_train = 15, N_test = 10, train_set = train_set, test_set = test_set)
-
-  names_train = st$fs[which(st$bird %in% out$inds_include & st$main_type %in% train_set & 
-                              st$file %in% out$recs_train)]
-  names_test = st$fs[which(st$bird %in% out$inds_include & st$main_type %in% test_set & 
-                             st$file %in% out$recs_test)]
-  dfa_out = run.dfa(names_train, names_test)
-  
-  return(dfa_out)
-  
-}) %>% bind_rows
-
-plot(density(pdfa_out$score_random), lwd = 3, col = 4, main = '', 
-     xlab = 'proportion correct classified', ylab = 'density', xlim = c(0, 0.5))
-lines(density(pdfa_out$score), lwd = 3, col = 3)
+pdf(path_pdf_pdfa, 10, 10)
+par(mfrow = c(2, 2))
+run.pdfa(train_set = 'contact', 
+         test_set = c('growl', 'alarm', 'growl_low', 'trruup'),
+         main = 'contact to growly')
+run.pdfa(train_set = c('growl', 'alarm', 'growl_low', 'trruup'), 
+         test_set = 'contact',
+         main = 'growly to contact')
+run.pdfa(train_set = 'contact', 
+         test_set = 'contact', 
+         main = 'contact to contact')
+run.pdfa(train_set = c('growl', 'alarm', 'growl_low', 'trruup'), 
+         test_set = c('growl', 'alarm', 'growl_low', 'trruup'), 
+         main = 'growly to growly')
+dev.off()
 
 
-# # Now subset training to only include 10 calls per individual
-# names_train_slim = c()
-# for(ind in out$inds_include){
-#   sub_names = names_train[st[names_train,]$bird == ind]
-#   names_train_slim = c(names_train_slim, sample(sub_names, 10))
-# }
-# run.dfa(names_train_slim, names_test)
+
+
