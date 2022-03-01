@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 19-10-2021
-# Date last modified: 14-02-2022
+# Date last modified: 01-03-2022
 # Author: Simeon Q. Smeele
 # Description: Loading the selection tables and subsetting per call type. Saves subsetted data frames in 
 # one object to be used in further steps. 
@@ -65,7 +65,7 @@ st_20 = adjust.times(st_20, traces_20)
 st_21 = adjust.times(st_21, traces_21)
 
 # Subset per call type and save
-data_sets_20 = create.data.sets(st_20, path_call_type_classification)
+data_sets_20 = create.data.sets(st_20, path_call_type_classification, path_sorted_loud_contact_20)
 data_sets_21 = create.data.sets(st_21, path_call_type_classification, path_sorted_loud_contact_21)
 
 # Load waves
