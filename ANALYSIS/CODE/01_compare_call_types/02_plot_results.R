@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 12-10-2021
-# Date last modified: 03-02-2022
+# Date last modified: 15-02-2022
 # Author: Simeon Q. Smeele
 # Description: Plotting model results per method.  
 # This version includes not all call types, but more than before. 
@@ -47,12 +47,13 @@ write.title = function(label){
 }
 
 # Order call types
-call_types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'alarm', 'growl', 'growl_low')
+call_types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 
+               'alarm', 'growl', 'growl_low', 'kaw', 'frill')
 
 # Plot beta parameter per call type
 {
-  pdf(path_pdf_ind_results, 16, 9)
-  par(mfrow = c(4, 9), oma = c(2, 0, 2, 0), mgp = c(1, 0.75, 0))
+  pdf(path_pdf_ind_results, 19, 9)
+  par(mfrow = c(4, 11), oma = c(2, 0, 2, 0), mgp = c(1, 0.75, 0))
   
   for(year in c(20, 21)){
     write.title('DTW')
@@ -74,6 +75,10 @@ call_types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'ala
     mtext('growl', 3, 1, font = 2)
     plot.new()
     mtext('growl low', 3, 1, font = 2)
+    plot.new()
+    mtext('kaw', 3, 1, font = 2)
+    plot.new()
+    mtext('frill', 3, 1, font = 2)
     
     write.title('SPCC')
     plot.model(all_models_out$spcc[[sprintf('models_out_%s', year)]]$contact, yaxt = 'l')
@@ -86,6 +91,8 @@ call_types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'ala
     plot.model(all_models_out$spcc[[sprintf('models_out_%s', year)]]$alarm)
     plot.model(all_models_out$spcc[[sprintf('models_out_%s', year)]]$growl)
     plot.model(all_models_out$spcc[[sprintf('models_out_%s', year)]]$growl_low)
+    plot.model(all_models_out$spcc[[sprintf('models_out_%s', year)]]$kaw)
+    plot.model(all_models_out$spcc[[sprintf('models_out_%s', year)]]$frill)
     
     write.title('SPECAN')
     plot.model(all_models_out$specan[[sprintf('models_out_%s', year)]]$contact, yaxt = 'l')
@@ -98,6 +105,8 @@ call_types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'ala
     plot.model(all_models_out$specan[[sprintf('models_out_%s', year)]]$alarm)
     plot.model(all_models_out$specan[[sprintf('models_out_%s', year)]]$growl)
     plot.model(all_models_out$specan[[sprintf('models_out_%s', year)]]$growl_low)
+    plot.model(all_models_out$specan[[sprintf('models_out_%s', year)]]$kaw)
+    plot.model(all_models_out$specan[[sprintf('models_out_%s', year)]]$frill)
     
     write.title('MFCC')
     plot.model(all_models_out$mfcc[[sprintf('models_out_%s', year)]]$contact, yaxt = 'l', xaxt = 'l')
@@ -118,6 +127,10 @@ call_types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'ala
     plot.model(all_models_out$mfcc[[sprintf('models_out_%s', year)]]$growl, xaxt = 'l')
     mtext('beta', 1, 2, cex = 0.75)
     plot.model(all_models_out$mfcc[[sprintf('models_out_%s', year)]]$growl_low, xaxt = 'l')
+    mtext('beta', 1, 2, cex = 0.75)
+    plot.model(all_models_out$mfcc[[sprintf('models_out_%s', year)]]$kaw, xaxt = 'l')
+    mtext('beta', 1, 2, cex = 0.75)
+    plot.model(all_models_out$mfcc[[sprintf('models_out_%s', year)]]$frill, xaxt = 'l')
     mtext('beta', 1, 2, cex = 0.75)
   }
   
