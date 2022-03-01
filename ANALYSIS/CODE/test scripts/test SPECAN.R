@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 25-01-2022
-# Date last modified: 25-01-2022
+# Date last modified: 01-03-2022
 # Author: Simeon Q. Smeele
 # Description: Test if the specan output is correct. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -26,6 +26,14 @@ source('ANALYSIS/CODE/paths.R')
 load(path_data)
 load(path_waves)
 load(path_specan_m_list)
+
+# Choose the year
+waves = waves_20
+smooth_traces = smooth_traces_20
+st = st_20
+data_sets = data_sets_20
+m_list = m_list_20
+path_audio = path_audio_20
 
 # Run specan
 specan_out = mclapply(waves, specan.sim, mc.cores = 4)
