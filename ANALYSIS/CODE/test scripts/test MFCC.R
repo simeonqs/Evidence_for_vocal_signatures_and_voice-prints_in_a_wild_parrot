@@ -1,14 +1,14 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 25-01-2022
-# Date last modified: 14-02-2022
+# Date last modified: 28-02-2022
 # Author: Simeon Q. Smeele
 # Description: Test if the mfcc output is correct. 
 # This version includes the 2020 data. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
-libraries = c('tidyverse', 'dtw', 'parallel')
+libraries = c('tidyverse', 'parallel')
 for(lib in libraries){
   if(! lib %in% installed.packages()) lapply(lib, install.packages)
   lapply(lib, require, character.only = TRUE)
