@@ -5,15 +5,16 @@
 # Author: Simeon Q. Smeele
 # Description: Subsets recordings per individual for DFA.  
 # This version includes options for test and train set. 
+# This version includes the option the balance the data set. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-subset.dfa = function(N_train, N_test, train_set, test_set){
+subset.dfa = function(N_train, N_test, train_set, test_set, balance = T){
   
   # Subset recordings
   inds = unique(st$bird)
   inds_include = c()
-  recs_train = c()
-  recs_test = c()
+  names_train = c()
+  names_test = c()
   
   ## Run through ids
   for(ind in inds){
@@ -23,8 +24,8 @@ subset.dfa = function(N_train, N_test, train_set, test_set){
     
     # Try to subset into train and test
     cont = T
-    rec_train = c()
-    rec_test = c()
+    recs_train = c()
+    recs_test = c()
     n_test = 0
     ii = 0
     while(cont){
@@ -32,37 +33,58 @@ subset.dfa = function(N_train, N_test, train_set, test_set){
       # Test if enough testing calls
       if(n_test < N_test){
         # If not add one recording to the testing set
-        rec_test = c(rec_test, sample(recs[!recs %in% rec_test], 1))
+        recs_test = c(recs_test, sample(recs[!recs %in% recs_test], 1))
       } else {
         # If yes
-        rec_train = recs[!recs %in% rec_train]
+        recs_train = recs[!recs %in% recs_test]
       }
       # Test if enough
-      n_test = length(which(st_sub$file %in% rec_test & st_sub$main_type %in% test_set))
-      n_train = length(which(st_sub$file %in% rec_train & st_sub$main_type %in% train_set))
+      n_test = length(which(st_sub$file %in% recs_test & st_sub$main_type %in% test_set))
+      n_train = length(which(st_sub$file %in% recs_train & st_sub$main_type %in% train_set))
       # Test if continue
-      if(length(rec_test) == length(recs)) cont = F # stop if not enough recordings at all
-      if(length(rec_train) > 0 & n_train < N_train) { # reset if not enough left
-        rec_test = rec_train = c()
+      if(length(recs_test) == length(recs)) cont = F # stop if not enough recordings at all
+      if(length(recs_train) > 0 & n_train < N_train) { # reset if not enough left
+        recs_test = recs_train = c()
         n_test = 0
       } 
       if(ii > 1000) cont = F # stop if not able to resolve
       if(n_test >= N_test & n_train >= N_train){cont = F; inds_include = c(inds_include, ind)}
     }
     
-    # If successfull save the train and test recording names
+    # Test for problems
+    if(any(recs_train %in% recs_test) | any(recs_test %in% recs_train)) 
+      stop('Some recordings go across sets!')
+    
+    # If successful save the train and test recording names
     if(ind %in% inds_include){
-      recs_train = c(recs_train, rec_train)
-      recs_test = c(recs_test, rec_test)
+      names_train = c(names_train,
+                      st$fs[which(st$bird == ind & st$main_type %in% train_set & 
+                                    st$file %in% recs_train)])
+      names_test = c(names_test, 
+                     st$fs[which(st$bird == ind & st$main_type %in% test_set & 
+                                   st$file %in% recs_test)])
     }
     
   } # end ind loop
   
-  if(any(recs_train %in% recs_test) | any(recs_test %in% recs_train)) 
-    stop('Some recordings go across sets!')
+  # Balance
+  if(balance){
+    names_train_slim = c()
+    names_test_slim = c()
+    for(ind in inds_include){
+      sub_names_train = names_train[st[names_train,]$bird == ind]
+      names_train_slim = c(names_train_slim, sample(sub_names_train, N_train))
+      sub_names_test = names_test[st[names_test,]$bird == ind]
+      names_test_slim = c(names_test_slim, sample(sub_names_test, N_test))
+    }
+    names_train = names_train_slim
+    names_test = names_test_slim
+  }
   
-  return(list(recs_train = recs_train, 
-              recs_test = recs_test, 
-              inds_include = inds_include))
+  if(any(names_train %in% names_test) | any(names_test %in% names_train)) 
+    stop('Some calls go across sets!')
+  
+  return(list(names_train = names_train, 
+              names_test = names_test))
   
 }
