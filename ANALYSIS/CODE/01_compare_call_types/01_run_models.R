@@ -1,17 +1,18 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 11-10-2021
-# Date last modified: 02-02-2022
+# Date last modified: 02-03-2022
 # Author: Simeon Q. Smeele
 # Description: Modelling the data. 
 # This version is updated for the 2021 data. 
 # This version also includes the 2020 data. 
+# This version saves diagnostics, data and post in normal format. 
 # NOTE: subsetting for now. 
 # source('ANALYSIS/CODE/02_compare_call_types/01_run_models.R')
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
-libraries = c('cmdstanr')
+libraries = c('cmdstanr', 'rstan', 'rethinking')
 for(lib in libraries){
   if(! lib %in% installed.packages()) lapply(lib, install.packages)
   lapply(libraries, require, character.only = TRUE)
@@ -34,7 +35,7 @@ run.single.model = function(m, st){
   # Clean data, REMEMBER TO REMOVE SUBSETTING
   n = rownames(m)
   subber = 1:length(n)
-  if(length(n) > 300) subber = sample(length(n), 300) else subber = 1:length(n)
+  if(length(n) > 200) subber = sample(length(n), 200) else subber = 1:length(n)
   inds = as.integer(as.factor(st[n,]$bird[subber]))
   recs = as.integer(as.factor(paste(st[n,]$bird[subber], st[n,]$file[subber])))
   d = m.to.df(m[subber, subber], inds, recs, clean_data = T)
@@ -42,8 +43,16 @@ run.single.model = function(m, st){
                      seed = 1, 
                      chains = 4, 
                      parallel_chains = 4,
-                     refresh = 2000)
-  return(fit$draws())
+                     refresh = 2000, 
+                     adapt_delta = 0.95)
+  diag = fit$cmdstan_diagnose()  
+  post = fit$output_files() |>
+    rstan::read_stan_csv() |>
+    rethinking::extract.samples()
+  out = list(post = post,
+             diag = diag, 
+             d = d)
+  return(out)
 }
 
 
