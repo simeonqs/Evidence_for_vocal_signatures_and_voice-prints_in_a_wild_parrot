@@ -1,12 +1,13 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 12-10-2021
-# Date last modified: 03-02-2022
+# Date last modified: 01-03-2022
 # Author: Simeon Q. Smeele
 # Description: Plotting model results per method.  
 # This version includes not all call types, but more than before. 
 # This version works for the 2021 data and the cmdstanr model output. 
 # This version plots a page per year. 
+# This version includes code to plot some other parameters to test. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
@@ -123,5 +124,12 @@ call_types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'ala
   
   dev.off()
 }
+
+# Plot other parameters
+pdf(path_pdf_model_parameters)
+post = all_models_out$dtw$contact
+post_flat = apply(post, 3, rbind)
+post_b_ind_pair = post_flat[,str_detect(colnames(post_flat), 'b_ind_pair')]
+dev.off()
 
 message('Done.')
