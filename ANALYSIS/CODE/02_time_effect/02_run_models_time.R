@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 14-10-2021
-# Date last modified: 03-02-2022
+# Date last modified: 02-03-2022
 # Author: Simeon Q. Smeele
 # Description: Running time model on all datasets. 
 # This version is updated for the 2021 data with new structure and the cmdstanr model. 
@@ -11,7 +11,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
-libraries = c('cmdstanr', 'tidyverse')
+libraries = c('cmdstanr', 'tidyverse', 'rethinking', 'stanr')
 for(lib in libraries){
   if(! lib %in% installed.packages()) lapply(lib, install.packages)
   lapply(libraries, require, character.only = TRUE)
@@ -37,8 +37,15 @@ run.model = function(data_set){
                        seed = 1, 
                        chains = 4, 
                        parallel_chains = 4,
-                       refresh = 2000)
-    return(fit$draws())
+                       refresh = 2000, 
+                       adapt_delta = 0.95)
+    diag = fit$cmdstan_diagnose()  
+    post = fit$output_files() %>%
+      rstan::read_stan_csv() %>%
+      rethinking::extract.samples()
+    out = list(post = post,
+               diag = diag)
+    return(out)
   }
 }
 

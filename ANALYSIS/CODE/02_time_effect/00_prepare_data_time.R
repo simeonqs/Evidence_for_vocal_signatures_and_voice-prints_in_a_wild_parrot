@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 13-10-2021
-# Date last modified: 14-02-2022
+# Date last modified: 02-03-2022
 # Author: Simeon Q. Smeele
 # Description: Prepare data for the time and date models.
 # This version is updated for the 2021 data and the new data structure. 
@@ -67,8 +67,8 @@ run.all.prep = function(path, st, year){
   print(path)
   load(path)
   m_list = get(sprintf('m_list_%s', year))
-  m_list$kaw = NULL
-  m_list$frill = NULL
+  # m_list$kaw = NULL
+  # m_list$frill = NULL
   out = lapply(m_list, prep.dat, st)
   names(out) = names(m_list)
   return(out)
