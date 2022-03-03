@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 16-10-2021
-# Date last modified: 14-02-2022
+# Date last modified: 03-03-2022
 # Author: Simeon Q. Smeele
 # Description: Running date model on all datasets. 
 # This version is updated for the 2021 data with new structure and the cmdstanr model. 
@@ -11,7 +11,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
-libraries = c('tidyverse', 'cmdstanr')
+libraries = c('tidyverse', 'cmdstanr', 'stanr', 'rethinking')
 for(lib in libraries){
   if(! lib %in% installed.packages()) lapply(lib, install.packages)
   lapply(libraries, require, character.only = TRUE)
@@ -28,12 +28,28 @@ source('ANALYSIS/CODE/paths.R')
 
 # Load data
 load(path_data_sets_date)
-data_sets_date_21$mfcc$other = NULL
-data_sets_date_21$spcc$other = NULL
-data_sets_date_21$specan$other = NULL
+data_sets_date_20$mfcc$frill = NULL
+data_sets_date_20$spcc$frill = NULL
+data_sets_date_20$specan$frill = NULL
+data_sets_date_20$mfcc$kaw = NULL
+data_sets_date_20$spcc$kaw = NULL
+data_sets_date_20$specan$kaw = NULL
+data_sets_date_20$dtw$kaw = NULL
+data_sets_date_20$dtw$other_tonal = NULL
+data_sets_date_20$mfcc$other_tonal = NULL
+data_sets_date_20$spcc$other_tonal = NULL
+data_sets_date_20$specan$other_tonal = NULL
 data_sets_date_21$mfcc$frill = NULL
 data_sets_date_21$spcc$frill = NULL
 data_sets_date_21$specan$frill = NULL
+data_sets_date_21$mfcc$kaw = NULL
+data_sets_date_21$spcc$kaw = NULL
+data_sets_date_21$specan$kaw = NULL
+data_sets_date_21$dtw$kaw = NULL
+data_sets_date_21$dtw$other_tonal = NULL
+data_sets_date_21$mfcc$other_tonal = NULL
+data_sets_date_21$spcc$other_tonal = NULL
+data_sets_date_21$specan$other_tonal = NULL
 
 # Functions to run models
 run.model = function(data_set){
@@ -44,8 +60,15 @@ run.model = function(data_set){
                        seed = 1, 
                        chains = 4, 
                        parallel_chains = 4,
-                       refresh = 2000)
-    return(fit$draws())
+                       refresh = 2000, 
+                       adapt_delta = 0.95)
+    diag = fit$cmdstan_diagnose()  
+    post = fit$output_files() %>%
+      rstan::read_stan_csv() %>%
+      rethinking::extract.samples()
+    out = list(post = post,
+               diag = diag)
+    return(out)
   }
 }
 
