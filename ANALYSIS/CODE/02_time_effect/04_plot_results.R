@@ -37,7 +37,7 @@ load(path_data_sets_date)
 
 # Functions to plot
 plot.model.time = function(post, dat){
-  points((dat$time + 2) * 7.5, -dat$d, pch = 16, col = alpha('purple', 0))
+  points((dat$time + 2) * 7.5, -dat$d, pch = 16, col = alpha('purple', 0.1))
   shade(-apply(sapply(1:length(post[['a_bar']]), 
                      function(i) 
                        post[['a_bar']][i] + c(-2, 2) * post[['b_bar']][i]), 1, PI),         
@@ -78,13 +78,8 @@ call_types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'tju
     
     write.title('DTW')
     for(type in c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'tjup')){
-      if(type == 'loud_contact' & year == 20){
-        plot.new()
-        mtext(str_replace(call_types[2], '_', ' '), 3, 1, font = 2)
-        next
-      }
       plot(data_sets_date$dtw[[type]]$date, -data_sets_date$dtw[[type]]$d, 
-           pch = 16, col = alpha('darkorange', 0),
+           pch = 16, col = alpha('darkorange', 0.1),
            xlim = c(0, 30), ylim = c(-3, 3),
            xlab = '', ylab = '', xaxt = 'n', yaxt = 'n')
       plot.model.time(all_models_out_time$dtw[[type]]$post, 
@@ -106,12 +101,8 @@ call_types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'tju
     
     write.title('SPCC')
     for(type in call_types){
-      if(type == 'loud_contact' & year == 20){
-        plot.new()
-        next
-      }
       plot(data_sets_date$spcc[[type]]$date, -data_sets_date$spcc[[type]]$d, 
-           pch = 16, col = alpha('darkorange', 0),
+           pch = 16, col = alpha('darkorange', 0.1),
            xlim = c(0, 30), ylim = c(-2, 2),
            xlab = '', ylab = '', xaxt = 'n', yaxt = 'n')
       plot.model.time(all_models_out_time$spcc[[type]]$post, 
@@ -130,12 +121,8 @@ call_types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'tju
     
     write.title('SPECAN')
     for(type in call_types){
-      if(type == 'loud_contact' & year == 20){
-        plot.new()
-        next
-      }
       plot(data_sets_date$specan[[type]]$date, -data_sets_date$specan[[type]]$d, 
-           pch = 16, col = alpha('darkorange', 0),
+           pch = 16, col = alpha('darkorange', 0.1),
            xlim = c(0, 30), ylim = c(-2, 2),
            xlab = '', ylab = '', xaxt = 'n', yaxt = 'n')
       plot.model.time(all_models_out_time$specan[[type]]$post, 
@@ -150,12 +137,8 @@ call_types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'tju
     
     write.title('MFCC')
     for(type in call_types){
-      if(type == 'loud_contact' & year == 20){
-        plot.new()
-        next
-      }
       plot(data_sets_date$mfcc[[type]]$date, -data_sets_date$mfcc[[type]]$d, 
-           pch = 16, col = alpha('darkorange', 0),
+           pch = 16, col = alpha('darkorange', 0.1),
            xlim = c(0, 30), ylim = c(-2, 2),
            xlab = '', ylab = '', xaxt = 'n', yaxt = 'n', main = '')
       plot.model.time(all_models_out_time$mfcc[[type]]$post, 
