@@ -46,8 +46,8 @@ run.single.model = function(m, st){
                      refresh = 2000, 
                      adapt_delta = 0.95)
   diag = fit$cmdstan_diagnose()  
-  post = fit$output_files() |>
-    rstan::read_stan_csv() |>
+  post = fit$output_files() %>%
+    rstan::read_stan_csv() %>%
     rethinking::extract.samples()
   out = list(post = post,
              diag = diag, 
