@@ -1,9 +1,9 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
-# Date started: 06-02-2022
-# Date last modified: 03-03-2022
+# Date started: 07-03-2022
+# Date last modified: 07-03-2022
 # Author: Simeon Q. Smeele
-# Description: Running mfcc per call type and saving data for DFA. 
+# Description: Running specan per call type and saving data for DFA. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
@@ -28,14 +28,14 @@ load(path_waves)
 # Merge datasets
 waves = append(waves_20, waves_21)
 
-# Run mfcc
-message(sprintf('Running mfcc on %s waves...', length(waves)))
-mfcc_out = lapply(waves, run.mfcc, numcep = 15)
-message(sprintf('Running mfcc on %s waves...', length(waves_20)))
-mfcc_out_20 = lapply(waves_20, run.mfcc, numcep = 15)
-message(sprintf('Running mfcc on %s waves...', length(waves_21)))
-mfcc_out_21 = lapply(waves_21, run.mfcc, numcep = 15)
+# Run specan
+message(sprintf('Running specan on %s waves...', length(waves)))
+specan_out = lapply(waves, run.specan)
+message(sprintf('Running specan on %s waves...', length(waves_20)))
+specan_out_20 = lapply(waves_20, run.specan)
+message(sprintf('Running specan on %s waves...', length(waves_21)))
+specan_out_21 = lapply(waves_21, run.specan)
 
 # Save
-save(mfcc_out, mfcc_out_20, mfcc_out_21, file = path_mfcc_out)
+save(specan_out, specan_out_20, specan_out_21, file = path_specan_out)
 message('Done.')

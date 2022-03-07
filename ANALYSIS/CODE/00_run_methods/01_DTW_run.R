@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 27-09-2021
-# Date last modified: 01-03-2022
+# Date last modified: 02-03-2022
 # Author: Simeon Q. Smeele
 # Description: Running DTW on the traces of isolated contact calls. 
 # This version includes the 2020 data as well. 
@@ -28,6 +28,7 @@ source('ANALYSIS/CODE/paths.R')
 load(path_data)
 
 # Which data sets make sense for DTW
+loud_20 = data_sets_20$loud_contact
 data_sets_20 = data_sets_20[c('contact',
                               'short_contact', 
                               'trruup', 
@@ -35,6 +36,7 @@ data_sets_20 = data_sets_20[c('contact',
                               'other_tonal',
                               'kaw', 
                               'tja')]
+loud_21 = data_sets_21$loud_contact
 data_sets_21 = data_sets_21[c('contact',
                               'short_contact', 
                               'trruup', 
@@ -57,8 +59,8 @@ m_list_21 = lapply(data_sets_21, function(data_set)
   run.dtw(smooth_traces_21[which(names(smooth_traces_21) %in% data_set)]))
 
 # Add loud contact calls
-m_list_20$loud_contact = m_list_20$contact[data_sets_20$loud_contact, data_sets_20$loud_contact]
-m_list_21$loud_contact = m_list_21$contact[data_sets_21$loud_contact, data_sets_21$loud_contact]
+m_list_20$loud_contact = m_list_20$contact[loud_20, loud_20]
+m_list_21$loud_contact = m_list_21$contact[loud_21, loud_21]
 
 # Save
 save(m_list_20, m_list_21, file = path_dtw_m_list)
