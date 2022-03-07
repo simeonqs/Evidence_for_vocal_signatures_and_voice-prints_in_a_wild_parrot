@@ -6,7 +6,7 @@
 # Description: Running DFA. Assumes multiple objects are loaded, very specific to this chapter. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-run.dfa = function(names_train, names_test){
+run.dfa = function(names_train, names_test, mfcc_out){
   
   # Prepare data
   mfcc_scale = scale(bind_rows(mfcc_out))
