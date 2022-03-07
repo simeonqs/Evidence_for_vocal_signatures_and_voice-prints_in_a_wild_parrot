@@ -1,14 +1,17 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 15-02-2022
-# Date last modified: 21-02-2022
+# Date last modified: 02-03-2022
 # Author: Simeon Q. Smeele
 # Description: Subsets recordings per individual for DFA.  
 # This version includes options for test and train set. 
 # This version includes the option the balance the data set. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-subset.dfa = function(N_train, N_test, train_set, test_set, balance = T){
+subset.dfa = function(N_train, N_test, 
+                      train_set, test_set, 
+                      st,
+                      balance = T){
   
   # Subset recordings
   inds = unique(st$bird)
@@ -42,8 +45,11 @@ subset.dfa = function(N_train, N_test, train_set, test_set, balance = T){
       n_test = length(which(st_sub$file %in% recs_test & st_sub$main_type %in% test_set))
       n_train = length(which(st_sub$file %in% recs_train & st_sub$main_type %in% train_set))
       # Test if continue
-      if(length(recs_test) == length(recs)) cont = F # stop if not enough recordings at all
-      if(length(recs_train) > 0 & n_train < N_train) { # reset if not enough left
+      if(length(recs_test) == length(recs)){ # reset if not enough left
+        recs_test = recs_train = c()
+        n_test = 0
+      } 
+      if(length(recs_train) > 0 & n_train < N_train){ # reset if not enough left
         recs_test = recs_train = c()
         n_test = 0
       } 
@@ -85,6 +91,8 @@ subset.dfa = function(N_train, N_test, train_set, test_set, balance = T){
     stop('Some calls go across sets!')
   
   return(list(names_train = names_train, 
-              names_test = names_test))
+              names_test = names_test,
+              inds_include = inds_include,
+              N = length(inds_include)))
   
 }
