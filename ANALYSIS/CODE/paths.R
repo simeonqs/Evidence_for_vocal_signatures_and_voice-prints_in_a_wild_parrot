@@ -36,7 +36,8 @@ path_data = 'ANALYSIS/RESULTS/00_run_methods/all_data.RData'
 path_waves = 'ANALYSIS/RESULTS/00_run_methods/waves.RData'
 path_spec_objects = 'ANALYSIS/RESULTS/00_run_methods/spcc/spec_objects.RData'
 path_mfcc_out = 'ANALYSIS/RESULTS/04_cross_call_type/mfcc_out.RData'
-
+path_specan_out = 'ANALYSIS/RESULTS/04_cross_call_type/specan_out.RData'
+  
 path_dtw_m_list = 'ANALYSIS/RESULTS/00_run_methods/dtw/m_list.RData'
 path_spcc_m_list = 'ANALYSIS/RESULTS/00_run_methods/spcc/m_list.RData'
 path_mfcc_m_list = 'ANALYSIS/RESULTS/00_run_methods/mfcc/m_list.RData'
