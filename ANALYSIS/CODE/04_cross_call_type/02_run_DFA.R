@@ -82,7 +82,7 @@ run.pdfa(train_set = c('tja', 'tjup', 'kaw'),
          main = 'combined, other tonal to other tonal',
          mfcc_out = mfcc_out, st = st)
 run.pdfa(train_set = c('growl'), 
-         N_train = 10, N_test = 5,
+         N_train = 5, N_test = 5,
          test_set = c('growl'), 
          main = 'combined, growl to growl',
          mfcc_out = mfcc_out, st = st)
@@ -91,7 +91,6 @@ par(mfrow = c(2,2))
 run.pdfa(train_set = 'contact', 
          N_train = N_train, N_test = N_test,
          test_set = c('growl', 'alarm', 'growl_low', 'trruup'),
-         N_train = N_train, N_test = N_test,
          main = '2020, contact to growly',
          mfcc_out = mfcc_out_20, st = st_20)
 run.pdfa(train_set = c('growl', 'alarm', 'growl_low', 'trruup'), 
