@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 16-10-2021
-# Date last modified: 08-03-2022
+# Date last modified: 09-03-2022
 # Author: Simeon Q. Smeele
 # Description: Prepare data for the date models.
 # NOTE: subsetting for now and removing kaws. 
@@ -30,7 +30,7 @@ source('ANALYSIS/CODE/paths.R')
 load(path_data)
 
 # Settings
-n_sub = 700
+n_sub = 1000
 
 # Import functions
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
@@ -42,10 +42,9 @@ prep.dat = function(m, st){
   if(length(n) > n_sub) subber = sample(length(n), n_sub) else subber = 1:length(n)
   inds = as.integer(as.factor(st[n,]$bird[subber]))
   recs = as.integer(as.factor(paste(st[n,]$bird[subber], st[n,]$file[subber])))
-  dates = st[n,]$file %>% str_sub(1, 10) %>% str_replace_all('_', '-') %>% as.Date %>% as.numeric
-  clean_dat = m.to.df(m[subber, subber], inds, recs, day_saver = dates, clean_data = T)
+  day_saver = st[n,]$file %>% str_sub(1, 10) %>% str_replace_all('_', '-') %>% as.Date %>% as.numeric
+  clean_dat = m.to.df(m[subber, subber], inds, recs, day_saver = day_saver, clean_data = T)
   sub_dat = prep.dat.dates(clean_dat, plot_it = F)
-  sub_dat$settings = NULL
   return(sub_dat)
 }
 
