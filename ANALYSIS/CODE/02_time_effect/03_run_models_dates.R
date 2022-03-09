@@ -1,12 +1,13 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 16-10-2021
-# Date last modified: 03-03-2022
+# Date last modified: 08-03-2022
 # Author: Simeon Q. Smeele
 # Description: Running date model on all datasets. 
 # This version is updated for the 2021 data with new structure and the cmdstanr model. 
 # This version is updated for the renamed objects (partially).
 # This version also includes the 2020 data. 
+# This version runs on combined data. 
 # source('ANALYSIS/CODE/02_time_effect/03_run_models_dates.R')
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -28,28 +29,17 @@ source('ANALYSIS/CODE/paths.R')
 
 # Load data
 load(path_data_sets_date)
-data_sets_date_20$mfcc$frill = NULL
-data_sets_date_20$spcc$frill = NULL
-data_sets_date_20$specan$frill = NULL
-data_sets_date_20$mfcc$kaw = NULL
-data_sets_date_20$spcc$kaw = NULL
-data_sets_date_20$specan$kaw = NULL
-data_sets_date_20$dtw$kaw = NULL
-data_sets_date_20$dtw$other_tonal = NULL
-data_sets_date_20$mfcc$other_tonal = NULL
-data_sets_date_20$spcc$other_tonal = NULL
-data_sets_date_20$specan$other_tonal = NULL
-data_sets_date_21$mfcc$frill = NULL
-data_sets_date_21$spcc$frill = NULL
-data_sets_date_21$specan$frill = NULL
-data_sets_date_21$mfcc$kaw = NULL
-data_sets_date_21$spcc$kaw = NULL
-data_sets_date_21$specan$kaw = NULL
-data_sets_date_21$dtw$kaw = NULL
-data_sets_date_21$dtw$other_tonal = NULL
-data_sets_date_21$mfcc$other_tonal = NULL
-data_sets_date_21$spcc$other_tonal = NULL
-data_sets_date_21$specan$other_tonal = NULL
+data_sets_date$mfcc$frill = NULL
+data_sets_date$spcc$frill = NULL
+data_sets_date$specan$frill = NULL
+data_sets_date$mfcc$kaw = NULL
+data_sets_date$spcc$kaw = NULL
+data_sets_date$specan$kaw = NULL
+data_sets_date$dtw$kaw = NULL
+data_sets_date$dtw$other_tonal = NULL
+data_sets_date$mfcc$other_tonal = NULL
+data_sets_date$spcc$other_tonal = NULL
+data_sets_date$specan$other_tonal = NULL
 
 # Functions to run models
 run.model = function(data_set){
@@ -80,11 +70,9 @@ run.models = function(data_sets_date_sub){
 
 # Run models
 model = cmdstan_model(path_date_model)
-all_models_out_date_20 = lapply(data_sets_date_20, run.models)
-names(all_models_out_date_20) = c('dtw', 'mfcc', 'spcc', 'specan')
-all_models_out_date_21 = lapply(data_sets_date_21, run.models)
-names(all_models_out_date_21) = c('dtw', 'mfcc', 'spcc', 'specan')
+all_models_out_date = lapply(data_sets_date, run.models)
+names(all_models_out_date) = c('dtw', 'mfcc', 'spcc', 'specan')
 
 # Save and message
-save(all_models_out_date_20, all_models_out_date_21, file = path_date_model_results)
+save(all_models_out_date, file = path_date_model_results)
 message('Finished all models.')

@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 16-10-2021
-# Date last modified: 02-03-2022
+# Date last modified: 08-03-2022
 # Author: Simeon Q. Smeele
 # Description: Prepare data for the date models.
 # NOTE: subsetting for now and removing kaws. 
@@ -10,6 +10,7 @@
 # This version moves some code out into a function. 
 # This version is updated for the renamed objects (partially).
 # This version also includes the 2020 data. 
+# This version runs on combined data. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
@@ -29,7 +30,7 @@ source('ANALYSIS/CODE/paths.R')
 load(path_data)
 
 # Settings
-n_sub = 500
+n_sub = 700
 
 # Import functions
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
@@ -48,25 +49,19 @@ prep.dat = function(m, st){
   return(sub_dat)
 }
 
-run.all.prep = function(path, st, year){
+run.all.prep = function(path, st){
   print(path)
   load(path)
-  m_list = get(sprintf('m_list_%s', year))
-  # m_list$kaw = NULL
-  # m_list$frill = NULL
   out = lapply(m_list, prep.dat, st)
   names(out) = names(m_list)
   return(out)
 }
 
 # Clean up data
-data_sets_date_20 = lapply(c(path_dtw_m_list, path_mfcc_m_list, path_spcc_m_list, path_specan_m_list), 
-                           run.all.prep, st_20, 20)
-names(data_sets_date_20) = c('dtw', 'mfcc', 'spcc', 'specan')
-data_sets_date_21 = lapply(c(path_dtw_m_list, path_mfcc_m_list, path_spcc_m_list, path_specan_m_list), 
-                           run.all.prep, st_21, 21)
-names(data_sets_date_21) = c('dtw', 'mfcc', 'spcc', 'specan')
+data_sets_date = lapply(c(path_dtw_m_list, path_mfcc_m_list, path_spcc_m_list, path_specan_m_list), 
+                           run.all.prep, st)
+names(data_sets_date) = c('dtw', 'mfcc', 'spcc', 'specan')
 
 # Save
-save(data_sets_date_20, data_sets_date_21, file = path_data_sets_date)
+save(data_sets_date, file = path_data_sets_date)
 message('Saved all datasets.')
