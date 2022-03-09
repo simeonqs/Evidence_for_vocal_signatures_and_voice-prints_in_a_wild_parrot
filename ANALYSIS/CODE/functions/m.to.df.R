@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: social networks
 # Date started: 24-08-2021
-# Date last modified: 30-01-2022
+# Date last modified: 09-03-2022
 # Author: Simeon Q. Smeele
 # Description: Taking matrix with distances and making it into a dataframe that can be analysed with stan 
 # model. 
@@ -14,6 +14,7 @@
 # This version has the time difference on a log_10 scale rather than natural. 
 # This version uses mclapply with four threads rather than two for loops. 
 # This version includes an option to have year difference saved. 
+# This version works for data from both years combined. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 require(parallel)
@@ -51,6 +52,9 @@ m.to.df = function(m,
     return(new)
     
   }, mc.cores = 4) %>% bind_rows # end running through the combinations
+  
+  # Exclude across year if it occurs
+  if(!is.null(day_saver)) d = d[d$date < 30,]
   
   d$ind_pair = as.integer(as.factor(d$ind_pair))
   if(!is.null(recs)){
