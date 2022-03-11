@@ -43,7 +43,7 @@ m.to.df = function(m,
       new = cbind(new, data.frame(
         rec_i = paste(recs[c[1,x]], inds[c[1,x]]),
         rec_j = paste(recs[c[2,x]], inds[c[2,x]]),
-        rec_pair = paste(recs[c[1,x]], inds[c[1,x]], recs[c[2,x]], inds[c[2,x]], sep = '-')))
+        rec_pair = paste(recs[c[1,x]], recs[c[2,x]])))
     }
     if(!is.null(time_saver)) new$time = c(time_saver[c[1,x]], time_saver[c[2,x]]) %>% diff %>% abs %>% log10
     if(!is.null(day_saver)) new$date = c(day_saver[c[1,x]], day_saver[c[2,x]]) %>% diff %>% abs
@@ -53,17 +53,20 @@ m.to.df = function(m,
     
   }, mc.cores = 4) %>% bind_rows # end running through the combinations
   
-  # Exclude across year if it occurs
-  if(!is.null(day_saver)) d = d[d$date < 30,]
-  
-  d$ind_pair = as.integer(as.factor(d$ind_pair))
   if(!is.null(recs)){
+    year_1 = d$rec_pair %>% str_split(' ') %>% sapply(`[`, 2) %>% str_split('_') %>% sapply(`[`, 1)
+    year_2 = d$rec_pair %>% str_split(' ') %>% sapply(`[`, 4) %>% str_split('_') %>% sapply(`[`, 1)
+    d = d[year_1 == year_2,]
     trans_recs = seq_along(unique(c(d$rec_i, d$rec_j)))
     names(trans_recs) = unique(c(d$rec_i, d$rec_j))
     d$rec_i = trans_recs[d$rec_i]
     d$rec_j = trans_recs[d$rec_j]
     d$rec_pair = as.integer(as.factor(d$rec_pair))
   }
+  d$ind_pair = as.integer(as.factor(d$ind_pair))
+  
+  # Test if across years still occurs
+  if(!is.null(day_saver)) stop('Going across years.')
 
   if(clean_data){
     clean_dat = as.list(d)
