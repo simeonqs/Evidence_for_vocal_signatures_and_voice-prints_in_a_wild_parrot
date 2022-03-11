@@ -39,7 +39,7 @@ run.single.model = function(m, st){
   subber = 1:length(n)
   if(length(n) > 300) subber = sample(length(n), 300) else subber = 1:length(n)
   inds = as.integer(as.factor(st[n,]$bird[subber]))
-  recs = as.integer(as.factor(paste(st[n,]$bird[subber], st[n,]$file[subber])))
+  recs = paste(st[n,]$bird[subber], st[n,]$file[subber])
   d = m.to.df(m[subber, subber], inds, recs, clean_data = T)
   fit = model$sample(data = d, 
                      seed = 1, 
