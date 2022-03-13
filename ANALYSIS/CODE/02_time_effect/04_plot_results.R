@@ -73,7 +73,7 @@ call_types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'tju
   for(type in c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'tjup')){
     plot(data_sets_date$dtw[[type]]$date, -data_sets_date$dtw[[type]]$d, 
          pch = 16, col = alpha('darkorange', 0.1),
-         xlim = c(0, 30), ylim = c(-3, 3),
+         xlim = c(0, 25), ylim = c(-3, 3),
          xlab = '', ylab = '', xaxt = 'n', yaxt = 'n')
     plot.model.time(all_models_out_time$dtw[[type]]$post, 
                     data_sets_time$dtw[[type]])
