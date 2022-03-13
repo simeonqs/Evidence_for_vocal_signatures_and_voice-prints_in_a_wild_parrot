@@ -1,12 +1,14 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 11-10-2021
-# Date last modified: 02-03-2022
+# Date last modified: 08-03-2022
 # Author: Simeon Q. Smeele
 # Description: Modelling the data. 
 # This version is updated for the 2021 data. 
 # This version also includes the 2020 data. 
 # This version saves diagnostics, data and post in normal format. 
+# This version loads data from both years and renames all objects with year subscript.
+# This version combines data from both years. 
 # NOTE: subsetting for now. 
 # source('ANALYSIS/CODE/02_compare_call_types/01_run_models.R')
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -35,9 +37,9 @@ run.single.model = function(m, st){
   # Clean data, REMEMBER TO REMOVE SUBSETTING
   n = rownames(m)
   subber = 1:length(n)
-  if(length(n) > 200) subber = sample(length(n), 200) else subber = 1:length(n)
+  if(length(n) > 300) subber = sample(length(n), 300) else subber = 1:length(n)
   inds = as.integer(as.factor(st[n,]$bird[subber]))
-  recs = as.integer(as.factor(paste(st[n,]$bird[subber], st[n,]$file[subber])))
+  recs = paste(st[n,]$bird[subber], st[n,]$file[subber])
   d = m.to.df(m[subber, subber], inds, recs, clean_data = T)
   fit = model$sample(data = d, 
                      seed = 1, 
@@ -64,11 +66,9 @@ run.models = function(path){
   message(sprintf('Running models for %s...', path))
   
   # Run through all datasets and save model output
-  models_out_20 = lapply(m_list_20, run.single.model, st_20)
-  models_out_21 = lapply(m_list_21, run.single.model, st_21)
-  models_out = list(models_out_20 = models_out_20, 
-                    models_out_21 = models_out_21)
-  
+  models_out = lapply(m_list, run.single.model, st)
+  names(models_out) = names(m_list)
+
   return(models_out)
   
   message('Done!')
