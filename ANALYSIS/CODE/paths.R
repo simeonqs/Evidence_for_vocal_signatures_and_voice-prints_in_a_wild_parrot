@@ -19,7 +19,7 @@ path_sorted_loud_contact_21 = 'ANALYSIS/RESULTS/contact call sorting 21 - done'
 path_sorted_loud_contact_20 = 'ANALYSIS/RESULTS/contact call sorting 20 - done'
 
 path_data_sets_time = 'ANALYSIS/RESULTS/02_time_effect/data_sets_time.RData'
-path_data_sets_date = 'ANALYSIS/RESULTS/02_time_effect/data_sets_date_21.RData'
+path_data_sets_date = 'ANALYSIS/RESULTS/02_time_effect/data_sets_date.RData'
 path_data_sets_year = 'ANALYSIS/RESULTS/03_year_comparison/data_sets_year.RData'
   
 path_model_10 = 'ANALYSIS/CODE/social networks model/m_10.stan'
@@ -58,3 +58,6 @@ path_pdf_test_specan = 'ANALYSIS/RESULTS/test output/test specan.pdf'
 path_pdf_year_results = 'ANALYSIS/RESULTS/03_year_comparison/model results.pdf'
 path_pdf_pdfa = 'ANALYSIS/RESULTS/04_cross_call_type/scores.pdf'
 path_pdf_model_parameters = 'ANALYSIS/RESULTS/01_compare_call_types/parameters.pdf'
+
+path_final_figure_ind = 'ANALYSIS/RESULTS/final_figure_ind.pdf'
+path_final_figure_time = 'ANALYSIS/RESULTS/final_figure_time.pdf'
