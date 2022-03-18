@@ -1,13 +1,14 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: chapter II
 # Date started: 26-08-2021
-# Date last modified: 31-01-2022
+# Date last modified: 08-03-2022
 # Author: Simeon Q. Smeele
 # Description: Creating spec objects for all calls from 2020.
 # This version adds the names to the spec_objects. 
 # This version is updated for the 2021 data. 
 # This version moves out the reading of the waves. 
 # This version was updated to include the 2020 data as well. 
+# This version combines data from both years. 
 # source('ANALYSIS/CODE/00_run_methods/03_SPCC_create_spec_objects.R')
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -57,12 +58,11 @@ create.spec.objects = function(waves){
 }
 
 # Generate spec_ojects
-spec_objects_20 = create.spec.objects(waves_20)
-spec_objects_21 = create.spec.objects(waves_21)
+spec_objects = create.spec.objects(waves)
 
 # Plot example
-image(t(spec_objects_20[[1]]), col = hcl.colors(12, 'Blue-Yellow', rev = T)) 
+image(t(spec_objects[[1]]), col = hcl.colors(12, 'Blue-Yellow', rev = T)) 
 
 # Save spec_objects
-save(spec_objects_20, spec_objects_21, file = path_spec_objects)
+save(spec_objects, file = path_spec_objects)
 message('All objects are saved.')

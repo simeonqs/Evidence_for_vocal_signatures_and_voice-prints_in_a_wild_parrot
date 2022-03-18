@@ -1,10 +1,11 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 27-09-2021
-# Date last modified: 02-03-2022
+# Date last modified: 08-03-2022
 # Author: Simeon Q. Smeele
 # Description: Running DTW on the traces of isolated contact calls. 
 # This version includes the 2020 data as well. 
+# This version combines data from both years. 
 # source('ANALYSIS/CODE/00_run_methods/01_DTW_run.R')
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -28,42 +29,30 @@ source('ANALYSIS/CODE/paths.R')
 load(path_data)
 
 # Which data sets make sense for DTW
-loud_20 = data_sets_20$loud_contact
-data_sets_20 = data_sets_20[c('contact',
-                              'short_contact', 
-                              'trruup', 
-                              'tjup',
-                              'other_tonal',
-                              'kaw', 
-                              'tja')]
-loud_21 = data_sets_21$loud_contact
-data_sets_21 = data_sets_21[c('contact',
-                              'short_contact', 
-                              'trruup', 
-                              'tjup',
-                              'other_tonal',
-                              'kaw', 
-                              'tja')]
+loud = data_sets$loud_contact
+data_sets = data_sets[c('contact',
+                        'short_contact', 
+                        'trruup', 
+                        'tjup',
+                        'other_tonal',
+                        'kaw', 
+                        'tja')]
 
 # Check if all loud contacts are also contact calls
-if(!all(data_sets_20$loud_contact %in% data_sets_20$contact)) stop('Missing some loud contacts in contact!')
-if(!all(data_sets_21$loud_contact %in% data_sets_21$contact)) stop('Missing some loud contacts in contact!')
+if(!all(data_sets$loud_contact %in% data_sets$contact)) stop('Missing some loud contacts in contact!')
 
 # Import functions
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
 
 # Run DTW per dataset
-m_list_20 = lapply(data_sets_20, function(data_set) 
-  run.dtw(smooth_traces_20[which(names(smooth_traces_20) %in% data_set)]))
-m_list_21 = lapply(data_sets_21, function(data_set) 
-  run.dtw(smooth_traces_21[which(names(smooth_traces_21) %in% data_set)]))
+m_list = lapply(data_sets, function(data_set) 
+  run.dtw(smooth_traces[which(names(smooth_traces) %in% data_set)]))
 
 # Add loud contact calls
-m_list_20$loud_contact = m_list_20$contact[loud_20, loud_20]
-m_list_21$loud_contact = m_list_21$contact[loud_21, loud_21]
+m_list$loud_contact = m_list$contact[loud, loud]
 
 # Save
-save(m_list_20, m_list_21, file = path_dtw_m_list)
+save(m_list, file = path_dtw_m_list)
 
 # Report
 message('Saved dtw results.')

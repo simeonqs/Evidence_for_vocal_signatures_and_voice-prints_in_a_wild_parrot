@@ -1,12 +1,13 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 06-02-2022
-# Date last modified: 02-03-2022
+# Date last modified: 12-03-2022
 # Author: Simeon Q. Smeele
 # Description: Running DFA.  
 # This version also takes recording into account. 
 # This version moves code to functions and iterates. 
 # This version has additional testing code. 
+# This version uses the combined dataset and removes the code for 2020. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
@@ -29,24 +30,12 @@ source('ANALYSIS/CODE/paths.R')
 load(path_data)
 load(path_mfcc_out)
 
-# Merge datasets
-st_20$`complete sequence` = NA
-st_20$notes = NA
-st_21$notes.x = NA
-st_21$notes.y = NA
-st_21$...8 = NA
-st = rbind(st_20, st_21)
-
 # Test if st and wave match
 if(!all(st$fs == names(mfcc_out))) stop('Problem waves and st.')
 
 # Add column with broad call type
 source(path_call_type_classification)
 st$main_type = sapply(st$`call type`, function(type){
-  y = names(types_include)[sapply(types_include, function(x) type %in% x)]
-  return(ifelse(length(y) == 0, NA, y))
-})
-st_20$main_type = sapply(st_20$`call type`, function(type){
   y = names(types_include)[sapply(types_include, function(x) type %in% x)]
   return(ifelse(length(y) == 0, NA, y))
 })
@@ -57,11 +46,12 @@ N_test = 10
 pdf(path_pdf_pdfa, 7, 7)
 par(mfrow = c(3, 3))
 # Combined
-run.pdfa(train_set = 'contact', 
-         test_set = c('growl', 'alarm', 'growl_low', 'trruup'),
-         N_train = N_train, N_test = N_test,
-         main = 'combined, contact to growly',
-         mfcc_out = mfcc_out, st = st)
+pdfa_out = run.pdfa(train_set = 'contact', 
+                    test_set = c('growl', 'alarm', 'growl_low', 'trruup'),
+                    N_train = 30, N_test = N_test,
+                    main = 'combined, contact to growly',
+                    mfcc_out = mfcc_out, st = st)
+length(which(pdfa_out$score_diff < 0))/length(pdfa_out$score_diff)
 run.pdfa(train_set = c('growl', 'alarm', 'growl_low', 'trruup'), 
          test_set = 'contact',
          main = 'combined, growly to contact',
@@ -86,28 +76,6 @@ run.pdfa(train_set = c('growl'),
          test_set = c('growl'), 
          main = 'combined, growl to growl',
          mfcc_out = mfcc_out, st = st)
-# 2020
-par(mfrow = c(2,2))
-run.pdfa(train_set = 'contact', 
-         N_train = N_train, N_test = N_test,
-         test_set = c('growl', 'alarm', 'growl_low', 'trruup'),
-         main = '2020, contact to growly',
-         mfcc_out = mfcc_out_20, st = st_20)
-run.pdfa(train_set = c('growl', 'alarm', 'growl_low', 'trruup'), 
-         N_train = N_train, N_test = N_test,
-         test_set = 'contact',
-         main = '2020, growly to contact',
-         mfcc_out = mfcc_out_20, st = st_20)
-run.pdfa(train_set = 'contact', 
-         N_train = N_train, N_test = N_test,
-         test_set = 'contact', 
-         main = '2020, contact to contact',
-         mfcc_out = mfcc_out_20, st = st_20)
-run.pdfa(train_set = c('growl', 'alarm', 'growl_low', 'trruup'), 
-         N_train = N_train, N_test = N_test,
-         test_set = c('growl', 'alarm', 'growl_low', 'trruup'), 
-         main = '2020, growly to growly',
-         mfcc_out = mfcc_out_20, st = st_20)
 dev.off()
 
 

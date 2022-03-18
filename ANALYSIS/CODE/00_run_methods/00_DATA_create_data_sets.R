@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 19-10-2021
-# Date last modified: 01-03-2022
+# Date last modified: 08-03-2022
 # Author: Simeon Q. Smeele
 # Description: Loading the selection tables and subsetting per call type. Saves subsetted data frames in 
 # one object to be used in further steps. 
@@ -10,6 +10,7 @@
 # This version switches to the 2021 data with all start and end coming from Luscinia. 
 # This version also reads in the waves and saves them in a separate object. 
 # This version loads data from both years and renames all objects with year subscript.
+# This version combines data from both years. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
@@ -90,7 +91,19 @@ if(any(durs_21 < 0.02 * 44100)) stop('Waves 21 too short.')
 if(any(durs_20 > 2 * 44100)) stop('Waves 20 too long.')
 if(any(durs_21 > 2 * 44100)) stop('Waves 21 too long.')
 
+# Combine years
+st_20$`complete sequence` = NA
+st_20$notes = NA
+st_21$notes.x = NA
+st_21$notes.y = NA
+st_21$...8 = NA
+st = rbind(st_20, st_21)
+waves = append(waves_20, waves_21)
+data_sets = lapply(names(data_sets_20), function(type) c(data_sets_20[[type]], data_sets_21[[type]]))
+names(data_sets) = names(data_sets_20)
+smooth_traces = append(smooth_traces_20, smooth_traces_21)
+
 # Save
-save(st_20, st_21, smooth_traces_20, smooth_traces_21, data_sets_20, data_sets_21, file = path_data)
-save(waves_20, waves_21, file = path_waves)
+save(st, smooth_traces, data_sets, file = path_data)
+save(waves, file = path_waves)
 message('Saved all data!')
