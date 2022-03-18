@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 21-02-2022
-# Date last modified: 03-03-2022
+# Date last modified: 14-03-2022
 # Author: Simeon Q. Smeele
 # Description: Running and plotting all functions for DFA.
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -24,11 +24,17 @@ run.pdfa = function(train_set, test_set,
   
   if(min(pdfa_out$N) != max(pdfa_out$N)) warning('Samp sizes do not match.')
   
-  plot(density(pdfa_out$score_random), lwd = 3, col = 4, main = main, 
-       xlab = 'proportion correct classified', ylab = 'density', xlim = c(0, 0.5))
+  # plot(density(pdfa_out$score_random), lwd = 3, col = 4, main = main, 
+  #      xlab = 'proportion correct classified', ylab = 'density', xlim = c(0, 0.5))
+  # text(0.43, 
+  #      max(density(pdfa_out$score_random)$y) - max(density(pdfa_out$score_random)$y)/10, 
+  #      sprintf('N = %s', round(mean(pdfa_out$N[1]), 2)))
+  # lines(density(pdfa_out$score), lwd = 3, col = 3)
+  plot(density(pdfa_out$score_diff), lwd = 3, col = 4, main = main, 
+       xlab = 'difference proportion correct classified', ylab = 'density', xlim = c(-0.2, 0.5))
+  abline(v = 0, lty = 2, lwd = 3, col = alpha('black', 0.3))
   text(0.43, 
-       max(density(pdfa_out$score_random)$y) - max(density(pdfa_out$score_random)$y)/10, 
+       9, 
        sprintf('N = %s', round(mean(pdfa_out$N[1]), 2)))
-  lines(density(pdfa_out$score), lwd = 3, col = 3)
-  
+  return(pdfa_out)
 }
