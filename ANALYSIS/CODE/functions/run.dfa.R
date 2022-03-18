@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 15-02-2022
-# Date last modified: 21-02-2022
+# Date last modified: 12-03-2022
 # Author: Simeon Q. Smeele
 # Description: Running DFA. Assumes multiple objects are loaded, very specific to this chapter. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -35,6 +35,7 @@ run.dfa = function(names_train, names_test, mfcc_out){
   score_random = mean(predictions$class == mfcc_random_test$inds)
   
   return(c(score = score, 
-           score_random = score_random))
+           score_random = score_random,
+           score_diff = score - score_random))
   
 }
