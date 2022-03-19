@@ -42,7 +42,8 @@ path_dtw_m_list = 'ANALYSIS/RESULTS/00_run_methods/dtw/m_list.RData'
 path_spcc_m_list = 'ANALYSIS/RESULTS/00_run_methods/spcc/m_list.RData'
 path_mfcc_m_list = 'ANALYSIS/RESULTS/00_run_methods/mfcc/m_list.RData'
 path_specan_m_list = 'ANALYSIS/RESULTS/00_run_methods/specan/m_list.RData'
-
+path_mfcccc_m_list = 'ANALYSIS/RESULTS/00_run_methods/mfcccc/m_list.RData'
+  
 path_dtw_year = 'ANALYSIS/RESULTS/03_year_comparison/dtw/m_list.RData'
 path_spcc_year = 'ANALYSIS/RESULTS/03_year_comparison/spcc/m_list.RData'
 path_mfcc_year = 'ANALYSIS/RESULTS/03_year_comparison/mfcc/m_list.RData'
@@ -61,3 +62,5 @@ path_pdf_model_parameters = 'ANALYSIS/RESULTS/01_compare_call_types/parameters.p
 
 path_final_figure_ind = 'ANALYSIS/RESULTS/final_figure_ind.pdf'
 path_final_figure_time = 'ANALYSIS/RESULTS/final_figure_time.pdf'
+
+path_out_vsrm = 'ANALYSIS/RESULTS/01_compare_call_types/vsrm'
