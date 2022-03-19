@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 11-10-2021
-# Date last modified: 08-03-2022
+# Date last modified: 18-03-2022
 # Author: Simeon Q. Smeele
 # Description: Modelling the data. 
 # This version is updated for the 2021 data. 
@@ -37,10 +37,11 @@ run.single.model = function(m, st){
   # Clean data, REMEMBER TO REMOVE SUBSETTING
   n = rownames(m)
   subber = 1:length(n)
-  if(length(n) > 300) subber = sample(length(n), 300) else subber = 1:length(n)
+  if(length(n) > 50) subber = sample(length(n), 50) else subber = 1:length(n)
   inds = as.integer(as.factor(st[n,]$bird[subber]))
   recs = paste(st[n,]$bird[subber], st[n,]$file[subber])
-  d = m.to.df(m[subber, subber], inds, recs, clean_data = T)
+  m = m[subber, subber]
+  d = m.to.df(m, inds, recs, clean_data = T)
   fit = model$sample(data = d, 
                      seed = 1, 
                      chains = 4, 
