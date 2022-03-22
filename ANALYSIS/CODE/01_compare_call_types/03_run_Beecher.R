@@ -7,7 +7,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
-libraries = c('tidyverse')
+libraries = c('tidyverse', 'ape')
 for(lib in libraries){
   if(! lib %in% installed.packages()) lapply(lib, install.packages)
   lapply(libraries, require, character.only = TRUE)
@@ -35,7 +35,7 @@ st_sub = st[st$fs %in% keep,]
 source(path_call_type_classification)
 st_sub = st_sub[st_sub$`call type` %in% types_include[[type]],]
 tab = table(st_sub$bird)
-n = 5
+n = 10
 bk = names(tab[tab>n])
 st_sub = st_sub[st_sub$bird %in% bk,]
 keep = unlist(sapply(unique(st_sub$bird), function(x) sample(st_sub$fs[st_sub$bird == x], n)))
@@ -58,3 +58,21 @@ calc.beecher = function(aov_out){
   return(log2(sqrt((f+n-1)/n)))
 }
 sum(sapply(list(aov_out_1, aov_out_2, aov_out_3), calc.beecher))
+
+
+# Try package
+library(IDmeasurer)
+dat_in = data.frame(id = st[rownames(m),]$bird, 
+                    pca_1 = pca_out$loadings[,1], 
+                    pca_2 = pca_out$loadings[,2], 
+                    pca_3 = pca_out$loadings[,3])
+
+# Try PCO
+pco_out = pcoa(m)
+dat_in = data.frame(id = st[rownames(m),]$bird, 
+                    pco_1 = pco_out$vectors[,1], 
+                    pco_2 = pco_out$vectors[,2], 
+                    pco_3 = pco_out$vectors[,3])
+calcHS(dat_in, sumHS=F)
+
+
