@@ -15,11 +15,11 @@ for(i in libraries){
 
 # Settings
 set.seed(1)
-settings = list(N_ind = 5,
-                N_var = 2,
+settings = list(N_ind = 10,
+                N_var = 5,
                 lambda_obs = 4,
                 lambda_rec = 5,
-                sigma_ind = 1,
+                sigma_ind = 0.3,
                 sigma_rec = 0.2,
                 sigma_obs = 0.1,
                 slope_time = 0.00,
@@ -29,7 +29,7 @@ settings = list(N_ind = 5,
 
 # Paths
 path_functions = 'ANALYSIS/CODE/functions'
-path_out = 'ANALYSIS/RESULTS/vectorised srm/sim_dat_date.RData'
+path_out = 'ANALYSIS/RESULTS/vectorised srm/sim_dat_dates.RData'
 
 # Import functions
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
