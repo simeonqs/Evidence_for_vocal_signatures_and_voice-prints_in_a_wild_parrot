@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 15-03-2022
-# Date last modified: 18-03-2022
+# Date last modified: 21-03-2022
 # Author: Simeon Q. Smeele
 # Description: Simple simulation of data that we might get from dtw. Data is stored in matrices.
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -32,7 +32,7 @@ path_out = 'ANALYSIS/RESULTS/vectorised srm/sim_dat.RData'
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
 
 # Simulate
-clean_dat = sim.sn.data.vec(settings, plot_it = plot_it)
+clean_dat = sim.vrsm.data(settings, plot_it = plot_it)
 
 # Save
 save(clean_dat, file = path_out)
