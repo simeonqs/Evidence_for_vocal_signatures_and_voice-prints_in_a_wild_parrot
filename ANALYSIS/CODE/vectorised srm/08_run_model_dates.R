@@ -4,7 +4,7 @@
 # Date last modified: 21-03-2022
 # Author: Simeon Q. Smeele
 # Description: Run the model for time. 
-# source('ANALYSIS/CODE/vectorised srm/06_run_model_time.R')
+# source('ANALYSIS/CODE/vectorised srm/08_run_model_dates.R')
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
@@ -16,9 +16,9 @@ for(lib in libraries){
 
 # Paths
 path_functions = 'ANALYSIS/CODE/functions'
-path_data = 'ANALYSIS/RESULTS/vectorised srm/sim_dat_time.RData'
-path_out = 'ANALYSIS/RESULTS/vectorised srm/model_time.RData'
-path_model = 'ANALYSIS/CODE/vectorised srm/m_time_1.stan'
+path_data = 'ANALYSIS/RESULTS/vectorised srm/sim_dat_dates.RData'
+path_out = 'ANALYSIS/RESULTS/vectorised srm/model_dates.RData'
+path_model = 'ANALYSIS/CODE/vectorised srm/m_dates_1.stan'
 
 # Import functions
 .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
