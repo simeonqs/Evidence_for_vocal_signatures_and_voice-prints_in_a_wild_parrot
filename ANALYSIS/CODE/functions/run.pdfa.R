@@ -17,7 +17,9 @@ run.pdfa = function(train_set, test_set,
                      train_set = train_set, test_set = test_set,
                      st = st,
                      balance = T)
-    dfa_out = run.dfa(out$names_train, out$names_test, mfcc_out = mfcc_out)
+    dfa_out = run.dfa(names_train = out$names_train, 
+                      names_test = out$names_test, 
+                      mfcc_out = mfcc_out)
     dfa_out['N'] = out$N
     return(dfa_out)
   }) %>% bind_rows
