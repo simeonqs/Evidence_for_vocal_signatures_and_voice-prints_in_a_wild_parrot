@@ -46,16 +46,18 @@ N_test = 10
 pdf(path_pdf_pdfa, 7, 7)
 par(mfrow = c(3, 3))
 # Combined
-pdfa_out = run.pdfa(train_set = 'contact', 
+pdfa_out_1 = run.pdfa(train_set = 'contact', 
                     test_set = c('growl', 'alarm', 'growl_low', 'trruup'),
                     N_train = 30, N_test = N_test,
                     main = 'combined, contact to growly',
                     mfcc_out = mfcc_out, st = st)
-length(which(pdfa_out$score_diff < 0))/length(pdfa_out$score_diff)
-run.pdfa(train_set = c('growl', 'alarm', 'growl_low', 'trruup'), 
+length(which(pdfa_out_1$score_diff < 0))/length(pdfa_out_1$score_diff)
+pdfa_out_2 = run.pdfa(train_set = c('growl', 'alarm', 'growl_low', 'trruup'), 
          test_set = 'contact',
          main = 'combined, growly to contact',
          mfcc_out = mfcc_out, st = st)
+length(which(pdfa_out_2$score_diff < 0))/length(pdfa_out_2$score_diff)
+table(pdfa_out_2$most_important)
 run.pdfa(train_set = 'contact', 
          N_train = N_train, N_test = N_test,
          test_set = 'contact', 
