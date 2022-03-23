@@ -50,15 +50,15 @@ points(2, mean(sapply(1:length(post$a_bar), function(i)
   post$a_bar[i] + post$z_same_rec[i, 2] * post$sigma_same_rec[i])),
   col = 'red', pch = 16)
 
-# Plot ind pairs
-plot(clean_dat$ind_pair, clean_dat$acc_dist)
-for(i in sample(1:length(post$a_bar), 10)) 
-  for(j in 1:ncol(post$z_ind_pair))
-    points(j, post$a_bar[i] + post$z_ind_pair[i, j] * post$sigma_ind_pair[i] + 
-             post$z_same_ind[i, clean_dat$same_ind[clean_dat$ind_pair == j][1]] * post$sigma_same_ind[i],
-           col = 'red')
-
 # # Plot ind pairs
+# plot(clean_dat$ind_pair, clean_dat$acc_dist)
+# for(i in sample(1:length(post$a_bar), 10)) 
+#   for(j in 1:ncol(post$z_ind_pair))
+#     points(j, post$a_bar[i] + post$z_ind_pair[i, j] * post$sigma_ind_pair[i] + 
+#              post$z_same_ind[i, clean_dat$same_ind[clean_dat$ind_pair == j][1]] * post$sigma_same_ind[i],
+#            col = 'red')
+
+# # Plot rec pairs
 # plot(clean_dat$rec_pair, clean_dat$acc_dist)
 # for(i in sample(1:length(post$a_bar), 10)) 
 #   for(j in 1:ncol(post$z_rec_pair))
@@ -72,9 +72,11 @@ plot(precis(post, depth = 1))
 
 # Plot difference
 par(mfrow = c(1, 1))
-diff_ind = sapply(1:length(post$a_bar), function(i) post$z_same_ind[i, 2] - post$z_same_ind[i, 1])
+diff_ind = sapply(1:length(post$a_bar), function(i) 
+  (post$z_same_ind[i, 2] - post$z_same_ind[i, 1]) * post$sigma_same_ind[i])
 dens(diff_ind)
-diff_rec = sapply(1:length(post$a_bar), function(i) post$z_same_rec[i, 2] - post$z_same_rec[i, 1])
+diff_rec = sapply(1:length(post$a_bar), function(i) 
+  (post$z_same_rec[i, 2] - post$z_same_rec[i, 1]) * post$sigma_same_ind[i])
 dens(diff_rec, col = 2, add = T)
 abline(v = 0, lty = 2, col = 'grey')
 

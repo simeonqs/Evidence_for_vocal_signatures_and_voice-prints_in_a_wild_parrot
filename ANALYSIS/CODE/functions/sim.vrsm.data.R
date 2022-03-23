@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: sna model
 # Date started: 29-08-2021
-# Date last modified: 16-03-2022
+# Date last modified: 21-03-2022
 # Author: Simeon Q. Smeele
 # Description: This function runs the simulation for the data that can be analysed with a social networks
 # model. 
@@ -10,7 +10,7 @@
 
 require(tidyverse)
 
-sim.sn.data.vec = function(settings = list(N_ind = 3,
+sim.vrsm.data = function(settings = list(N_ind = 3,
                                            N_var = 5,
                                            lambda_rec = 2,
                                            lambda_obs = 2,
