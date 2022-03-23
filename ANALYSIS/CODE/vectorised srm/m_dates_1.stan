@@ -13,7 +13,7 @@ data{
     int call_j[N_obs]; 
     int rec_pair[N_obs]; 
     int ind[N_obs];
-    real month_diff[N_rec_pair]; // time in months between recordings
+    real month_diff[N_obs]; // time in months between recordings
 }
 parameters{
     real a_bar;
@@ -34,7 +34,7 @@ model{
     z_ind ~ normal(0, 1);
     z_rec_pair ~ normal(0, 1);
     z_call ~ normal(0, 1);
-    b_bar ~ normal(0, 0.05);
+    b_bar ~ normal(0, 0.5);
     b_ind ~ normal(0, 1);
     sigma ~ exponential(1);
     sigma_z_call ~ exponential(2);
@@ -48,6 +48,7 @@ model{
         z_ind[ind[n]] * sigma_z_ind + 
         z_rec_pair[rec_pair[n]] * sigma_z_rec_pair + 
         (z_call[call_i[n]] + z_call[call_j[n]]) * sigma_z_call + 
+        // slope
         (b_bar + b_ind[ind[n]] * sigma_b_ind) * month_diff[n];
     }
     acc_dist ~ normal(mu, sigma);

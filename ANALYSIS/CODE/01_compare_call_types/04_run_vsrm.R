@@ -4,11 +4,11 @@
 # Date last modified: 19-03-2022
 # Author: Simeon Q. Smeele
 # Description: Running the vectorised (but actually slower) version of the social relations model. 
-# source('ANALYSIS/CODE/02_compare_call_types/04_run_vsrm.R')
+# source('ANALYSIS/CODE/01_compare_call_types/04_run_vsrm.R')
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
-libraries = c('cmdstanr', 'rstan', 'rethinking')
+libraries = c('cmdstanr', 'rstan', 'rethinking', 'tidyverse')
 for(lib in libraries){
   if(! lib %in% installed.packages()) lapply(lib, install.packages)
   lapply(libraries, require, character.only = TRUE)
@@ -20,20 +20,19 @@ rm(list=ls())
 # Paths
 source('ANALYSIS/CODE/paths.R')
 
-# Import functions
-.functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
-
 # Load data
 load(path_data)
 
 # Function to run single model
 run.single.model = function(m, st, path_out_vsrm, method, type){
   
+  message(sprintf('Running %s - %s with %s calls.', method, type, nrow(m)))
+  
   # Prep data
   set.seed(1)
   n = rownames(m)
   subber = 1:length(n)
-  if(length(n) > 200) subber = sample(length(n), 200) else subber = 1:length(n)
+  if(length(n) > 300) subber = sample(length(n), 300) else subber = 1:length(n)
   inds = st[n,]$bird[subber] %>% as.factor %>% as.integer
   recs = paste(st[n,]$bird[subber], st[n,]$file[subber]) %>% as.factor %>% as.integer
   m =  m[subber, subber]
@@ -53,10 +52,10 @@ run.single.model = function(m, st, path_out_vsrm, method, type){
   clean_dat$same_rec = sapply(1:ncol(c), function(x) ifelse(recs[c[1,x]] == recs[c[2,x]], 1, 2))
   ## ind pair
   clean_dat$ind_pair = sapply(1:ncol(c), function(x) 
-    paste(sort(c(inds[c[1,x]], inds[c[2,x]])), collapse = ' ')) |> as.factor() |> as.integer()
+    paste(sort(c(inds[c[1,x]], inds[c[2,x]])), collapse = ' ')) %>% as.factor() %>% as.integer()
   ## rec pair
   clean_dat$rec_pair = sapply(1:ncol(c), function(x) 
-    paste(sort(c(recs[c[1,x]], recs[c[2,x]])), collapse = ' ')) |> as.factor() |> as.integer()
+    paste(sort(c(recs[c[1,x]], recs[c[2,x]])), collapse = ' ')) %>% as.factor() %>% as.integer()
   
   # Remove across years
   year_1 = paste(st[n,]$bird[subber], st[n,]$file[subber])[c[1,]] %>% str_split(' ') %>% sapply(`[`, 2) %>% 
@@ -75,7 +74,6 @@ run.single.model = function(m, st, path_out_vsrm, method, type){
   clean_dat$N_obs = length(clean_dat$call_i)
   
   # Run model and save
-  model = cmdstan_model(path_model)
   fit = model$sample(data = clean_dat, 
                      seed = 1, 
                      chains = 4, 
@@ -84,15 +82,36 @@ run.single.model = function(m, st, path_out_vsrm, method, type){
                      adapt_delta = 0.99,
                      max_treedepth = 15)
   print(fit$summary())
-  fit$output_files() |>
-    rstan::read_stan_csv() |>
+  fit$output_files() %>%
+    rstan::read_stan_csv() %>%
     rethinking::extract.samples() -> post
   save(post, clean_dat, file = sprintf('%s_%s_%s.RData', path_out_vsrm, method, type))
   
 }
 
 # Run
+model = cmdstan_model(path_vsr_model)
 load(path_dtw_m_list)
-run.single.model(m_list$contact, st, path_out_vsrm, 'dtw', 'contact')
+# run.single.model(m_list$contact, st, path_out_vsrm, 'dtw', 'contact')
+# run.single.model(m_list$tja, st, path_out_vsrm, 'dtw', 'tja')
+# run.single.model(m_list$trruup, st, path_out_vsrm, 'dtw', 'trruup')
+# load(path_spcc_m_list)
+# run.single.model(m_list$contact, st, path_out_vsrm, 'spcc', 'contact')
+# run.single.model(m_list$tja, st, path_out_vsrm, 'spcc', 'tja')
+# run.single.model(m_list$trruup, st, path_out_vsrm, 'spcc', 'trruup')
+# run.single.model(m_list$alarm, st, path_out_vsrm, 'spcc', 'alarm')
+# run.single.model(m_list$growl, st, path_out_vsrm, 'spcc', 'growl')
+load(path_mfcccc_m_list)
+# run.single.model(m_list$contact, st, path_out_vsrm, 'mfcccc', 'contact')
+run.single.model(m_list$tja, st, path_out_vsrm, 'mfcccc', 'tja')
+run.single.model(m_list$trruup, st, path_out_vsrm, 'mfcccc', 'trruup')
+run.single.model(m_list$alarm, st, path_out_vsrm, 'mfcccc', 'alarm')
+run.single.model(m_list$growl, st, path_out_vsrm, 'mfcccc', 'growl')
+load(path_specan_m_list)
+run.single.model(m_list$contact, st, path_out_vsrm, 'specan', 'contact')
+run.single.model(m_list$tja, st, path_out_vsrm, 'specan', 'tja')
+run.single.model(m_list$trruup, st, path_out_vsrm, 'specan', 'trruup')
+run.single.model(m_list$alarm, st, path_out_vsrm, 'specan', 'alarm')
+run.single.model(m_list$growl, st, path_out_vsrm, 'specan', 'growl')
 
 message('Finished, saved all results.')
