@@ -1,12 +1,13 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: sn model
 # Date started: 24-09-2021
-# Date last modified: 27-09-2021
+# Date last modified: 21-10-2021
 # Author: Simeon Q. Smeele
 # Description: This function runs the simulation for the data that can be analysed with a social networks
 # model and includes time. 
 # This version also includes the rec level. 
 # This version adds time between recordings. 
+# This version includes an option to subset the data after simulation.
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 sim.sn.data.time = function(settings = list(N_ind = 3,
@@ -19,7 +20,8 @@ sim.sn.data.time = function(settings = list(N_ind = 3,
                                             slope_time = 0.00,
                                             slope_day = 0.05,
                                             dur_rec = 20,
-                                            dur_dates = 20),
+                                            dur_dates = 20,
+                                            N_sub = NULL),
                             plot_it = F
 ){
   
@@ -66,7 +68,10 @@ sim.sn.data.time = function(settings = list(N_ind = 3,
   recs = as.integer(as.factor(recs))
   names(dat) = paste0('x', 1:ncol(dat))
   m = as.matrix(dist(dat))
-  d = m.to.df(m, inds, recs, time_saver = time_saver, day_saver = day_saver)
+  if(settings$N_sub > nrow(m)) stop('Cannot take a larger subset than sample. Simulate more data.')
+  if(is.null(settings$N_sub)) subber = sample(nrow(m)) else subber = sample(nrow(m), settings$N_sub)
+  d = m.to.df(m[subber, subber], inds[subber], recs[subber], 
+              time_saver = time_saver[subber], day_saver = day_saver[subber])
   
   # List data
   clean_dat = as.list(d)

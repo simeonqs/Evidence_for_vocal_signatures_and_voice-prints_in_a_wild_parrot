@@ -5,6 +5,7 @@
 # Author: Simeon Q. Smeele
 # Description: Simple simulation of data that we might get from dtw including dates 
 # This version moves some code out into a function. 
+# This version subsets the simulated data. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
@@ -16,17 +17,18 @@ for(i in libraries){
 
 # Settings
 set.seed(1)
-settings = list(N_ind = 5,
+settings = list(N_ind = 10,
                 N_var = 2,
                 lambda_obs = 4,
                 lambda_rec = 5,
                 sigma_ind = 1,
-                sigma_rec = 0.2,
+                sigma_rec = 0.5,
                 sigma_obs = 0.1,
                 slope_time = 0.00,
-                slope_day = 0.05,
+                slope_day = 0.01,
                 dur_rec = 20,
-                dur_dates = 20)
+                dur_dates = 20,
+                N_sub = 100)
 
 # Paths
 path_functions = 'ANALYSIS/CODE/functions'
@@ -40,8 +42,6 @@ clean_dat = sim.sn.data.time(settings, plot_it = T)
 clean_dat$date = clean_dat$date
 
 # Subset data
-subber = which(clean_dat$same_ind[clean_dat$ind_pair] == 1)
-if(any(clean_dat$ind_i[subber] != clean_dat$ind_j[subber])) stop('Problem subsetting!')
 sub_dat = prep.dat.dates(clean_dat, plot_it = T)
 
 # Save
