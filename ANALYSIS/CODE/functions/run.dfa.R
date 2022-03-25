@@ -6,7 +6,7 @@
 # Description: Running DFA. Assumes multiple objects are loaded, very specific to this chapter. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-run.dfa = function(names_train, names_test, mfcc_out){
+run.dfa = function(names_train, names_test, mfcc_out, print_scaling = T){
   
   # Prepare data
   mfcc_scale = scale(bind_rows(mfcc_out))
@@ -25,6 +25,11 @@ run.dfa = function(names_train, names_test, mfcc_out){
   # print(ggplot(lda_data, aes(LD1, LD2)) +
   #         geom_point(aes(color = inds)))
   
+  # Print scaling
+  scaling = model$scaling
+  first = names(which(abs(scaling[,1]) == max(abs(scaling[,1]))))
+  print(first)
+  
   # Do randomised
   mfcc_random_train = mfcc_train
   mfcc_random_train$inds = sample(mfcc_random_train$inds)
@@ -36,6 +41,7 @@ run.dfa = function(names_train, names_test, mfcc_out){
   
   return(c(score = score, 
            score_random = score_random,
-           score_diff = score - score_random))
+           score_diff = score - score_random,
+           most_important = first))
   
 }
