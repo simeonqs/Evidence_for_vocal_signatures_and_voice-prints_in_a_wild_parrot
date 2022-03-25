@@ -96,7 +96,7 @@ call_types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'tju
   for(type in call_types){
     plot(data_sets_date$spcc[[type]]$date, -data_sets_date$spcc[[type]]$d, 
          pch = 16, col = alpha('darkorange', 0.1),
-         xlim = c(0, 30), ylim = c(-2, 2),
+         xlim = c(0, 25), ylim = c(-2, 2),
          xlab = '', ylab = '', xaxt = 'n', yaxt = 'n')
     plot.model.time(all_models_out_time$spcc[[type]]$post, 
                     data_sets_time$spcc[[type]])
@@ -116,7 +116,7 @@ call_types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'tju
   for(type in call_types){
     plot(data_sets_date$specan[[type]]$date, -data_sets_date$specan[[type]]$d, 
          pch = 16, col = alpha('darkorange', 0.1),
-         xlim = c(0, 30), ylim = c(-2, 2),
+         xlim = c(0, 25), ylim = c(-2, 2),
          xlab = '', ylab = '', xaxt = 'n', yaxt = 'n')
     plot.model.time(all_models_out_time$specan[[type]]$post, 
                     data_sets_time$specan[[type]])
@@ -132,7 +132,7 @@ call_types = c('contact', 'loud_contact', 'short_contact', 'trruup', 'tja', 'tju
   for(type in call_types){
     plot(data_sets_date$mfcc[[type]]$date, -data_sets_date$mfcc[[type]]$d, 
          pch = 16, col = alpha('darkorange', 0.1),
-         xlim = c(0, 30), ylim = c(-2, 2),
+         xlim = c(0, 25), ylim = c(-2, 2),
          xlab = '', ylab = '', xaxt = 'n', yaxt = 'n', main = '')
     plot.model.time(all_models_out_time$mfcc[[type]]$post, 
                     data_sets_time$mfcc[[type]])
