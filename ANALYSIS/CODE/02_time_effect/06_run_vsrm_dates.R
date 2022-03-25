@@ -23,7 +23,7 @@ path_out = 'ANALYSIS/RESULTS/02_time_effect/vsrm_dates'
 path_model = 'ANALYSIS/CODE/vectorised srm/m_dates_1.stan'
 
 # Import functions
-.functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
+# .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
 
 # Load data
 load(path_data)
@@ -95,8 +95,8 @@ run.model = function(m_list, st, method, type){
                      refresh = 2000, 
                      adapt_delta = 0.99,
                      max_treedepth = 15)
-  fit$output_files() |>
-    rstan::read_stan_csv() |>
+  fit$output_files() %>%
+    rstan::read_stan_csv() %>%
     rethinking::extract.samples() -> post
   save(post, clean_dat, file = sprintf('%s_%s_%s_post.RData', path_out, method, type))
   print(precis(post))
@@ -105,7 +105,21 @@ run.model = function(m_list, st, method, type){
 
 # Running models
 model = cmdstan_model(path_model)
-load(path_dtw_m_list)
-run.model(m_list, st, 'dtw', 'contact')
+# load(path_dtw_m_list)
+# run.model(m_list, st, 'dtw', 'contact')
+# run.model(m_list, st, 'dtw', 'tja')
 # run.model(m_list, st, 'dtw', 'trruup')
+load(path_spcc_m_list)
+run.model(m_list, st, 'spcc', 'contact')
+run.model(m_list, st, 'spcc', 'tja')
+run.model(m_list, st, 'spcc', 'trruup')
+run.model(m_list, st, 'spcc', 'alarm')
+run.model(m_list, st, 'spcc', 'growl')
+load(path_mfcccc_m_list)
+run.model(m_list, st, 'mfcccc', 'contact')
+run.model(m_list, st, 'mfcccc', 'tja')
+run.model(m_list, st, 'mfcccc', 'trruup')
+run.model(m_list, st, 'mfcccc', 'alarm')
+run.model(m_list, st, 'mfcccc', 'growl')
+
 message('All done!')
