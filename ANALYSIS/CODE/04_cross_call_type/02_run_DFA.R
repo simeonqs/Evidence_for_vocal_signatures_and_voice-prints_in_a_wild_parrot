@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 06-02-2022
-# Date last modified: 12-03-2022
+# Date last modified: 25-03-2022
 # Author: Simeon Q. Smeele
 # Description: Running DFA.  
 # This version also takes recording into account. 
@@ -41,45 +41,92 @@ st$main_type = sapply(st$`call type`, function(type){
 })
 
 # Run full permuted dfa
-N_train = 15
-N_test = 10
 pdf(path_pdf_pdfa, 7, 7)
 par(mfrow = c(3, 3))
 # Combined
 pdfa_out_1 = run.pdfa(train_set = 'contact', 
-                    test_set = c('growl', 'alarm', 'growl_low', 'trruup'),
-                    N_train = 30, N_test = N_test,
-                    main = 'combined, contact to growly',
-                    mfcc_out = mfcc_out, st = st)
-length(which(pdfa_out_1$score_diff < 0))/length(pdfa_out_1$score_diff)
+                      test_set = c('growl', 'alarm', 'growl_low', 'trruup'),
+                      N_train = 30, N_test = 10,
+                      main = 'combined, contact to growly',
+                      mfcc_out = mfcc_out, st = st)
 pdfa_out_2 = run.pdfa(train_set = c('growl', 'alarm', 'growl_low', 'trruup'), 
-         test_set = 'contact',
-         main = 'combined, growly to contact',
-         mfcc_out = mfcc_out, st = st)
-length(which(pdfa_out_2$score_diff < 0))/length(pdfa_out_2$score_diff)
-table(pdfa_out_2$most_important)
-run.pdfa(train_set = 'contact', 
-         N_train = N_train, N_test = N_test,
-         test_set = 'contact', 
-         main = 'combined, contact to contact',
-         mfcc_out = mfcc_out, st = st)
-run.pdfa(train_set = c('growl', 'alarm', 'growl_low', 'trruup'), 
-         N_train = N_train, N_test = N_test,
-         test_set = c('growl', 'alarm', 'growl_low', 'trruup'), 
-         main = 'combined, growly to growly',
-         mfcc_out = mfcc_out, st = st)
-run.pdfa(train_set = c('tja', 'tjup', 'kaw'), 
-         N_train = 10, N_test = 5,
-         test_set = c('tja', 'tjup', 'kaw'), 
-         main = 'combined, other tonal to other tonal',
-         mfcc_out = mfcc_out, st = st)
-run.pdfa(train_set = c('growl'), 
-         N_train = 5, N_test = 5,
-         test_set = c('growl'), 
-         main = 'combined, growl to growl',
-         mfcc_out = mfcc_out, st = st)
+                      test_set = 'contact',
+                      main = 'combined, growly to contact',
+                      mfcc_out = mfcc_out, st = st)
+pdfa_out_3 = run.pdfa(train_set = 'contact', 
+                      N_train = 10, N_test = 15,
+                      test_set = 'contact', 
+                      main = 'combined, contact to contact',
+                      mfcc_out = mfcc_out, st = st)
+pdfa_out_4 = run.pdfa(train_set = c('growl', 'alarm', 'growl_low', 'trruup'), 
+                      N_train = 5, N_test = 5,
+                      test_set = c('growl', 'alarm', 'growl_low', 'trruup'), 
+                      main = 'combined, growly to growly',
+                      mfcc_out = mfcc_out, st = st)
+pdfa_out_5 = run.pdfa(train_set = c('tja', 'tjup', 'kaw'), 
+                      N_train = 5, N_test = 2,
+                      test_set = c('tja', 'tjup', 'kaw'), 
+                      main = 'combined, other tonal to other tonal',
+                      mfcc_out = mfcc_out, st = st)
+pdfa_out_6 = run.pdfa(train_set = c('alarm'), 
+                      N_train = 5, N_test = 2,
+                      test_set = c('alarm'), 
+                      main = 'combined, alarm to alarm',
+                      mfcc_out = mfcc_out, st = st)
 dev.off()
 
+# Save results in txt
+sink(path_dfa_output)
+cat(sprintf('Score contact to growly: %s', round(mean(pdfa_out_1$score_diff), 2)), 
+    txt_file, sep="\n",append=TRUE)
+cat(sprintf('Overlap 0 contact to growly: %s', 
+                   round(mean(length(which(pdfa_out_1$score_diff < 0))/length(pdfa_out_1$score_diff)), 2)), 
+           txt_file, sep="\n",append=TRUE)
+cat(sprintf('N contact to growly: %s', round(mean(pdfa_out_1$N), 2)), txt_file, sep="\n",append=TRUE)
+cat(sprintf('Loadings contact to growly: %s', paste(pdfa_out_1$most_important, collapse = ', ')), 
+           txt_file, sep="\n",append=TRUE)
+cat(sprintf('Score growly to contact: %s', round(mean(pdfa_out_2$score_diff), 2)), 
+    txt_file, sep="\n",append=TRUE)
+cat(sprintf('Overlap 0 growly to contact: %s', 
+                   round(mean(length(which(pdfa_out_2$score_diff < 0))/length(pdfa_out_2$score_diff)), 2)), 
+           txt_file, sep="\n",append=TRUE)
+cat(sprintf('N growly to contact: %s', round(mean(pdfa_out_2$N), 2)), txt_file, sep="\n",append=TRUE)
+cat(sprintf('Loadings growly to contact: %s', paste(pdfa_out_2$most_important, collapse = ', ')), 
+           txt_file, sep="\n",append=TRUE)
+cat(sprintf('Score contact to contact: %s', round(mean(pdfa_out_3$score_diff), 2)), 
+    txt_file, sep="\n",append=TRUE)
+cat(sprintf('Overlap 0 contact to contact: %s', 
+                   round(mean(length(which(pdfa_out_3$score_diff < 0))/length(pdfa_out_3$score_diff)), 2)), 
+           txt_file, sep="\n",append=TRUE)
+cat(sprintf('N contact to contact: %s', round(mean(pdfa_out_3$N), 2)), txt_file, sep="\n",append=TRUE)
+cat(sprintf('Loadings contact to contact: %s', paste(pdfa_out_3$most_important, collapse = ', ')), 
+           txt_file, sep="\n",append=TRUE)
+cat(sprintf('Score growly to growly: %s', round(mean(pdfa_out_4$score_diff), 2)), 
+    txt_file, sep="\n",append=TRUE)
+cat(sprintf('Overlap 0 growly to growly: %s', 
+                   round(mean(length(which(pdfa_out_4$score_diff < 0))/length(pdfa_out_4$score_diff)), 2)), 
+           txt_file, sep="\n",append=TRUE)
+cat(sprintf('N growly to growly: %s', round(mean(pdfa_out_4$N), 2)), txt_file, sep="\n",append=TRUE)
+cat(sprintf('Loadings growly to growly: %s', paste(pdfa_out_4$most_important, collapse = ', ')), 
+           txt_file, sep="\n",append=TRUE)
+cat(sprintf('Score other tonal to other tonal: %s', round(mean(pdfa_out_5$score_diff), 2)), 
+    txt_file, sep="\n",append=TRUE)
+cat(sprintf('Overlap 0 other tonal to other tonal: %s', 
+                   round(mean(length(which(pdfa_out_5$score_diff < 0))/length(pdfa_out_5$score_diff)), 2)), 
+           txt_file, sep="\n",append=TRUE)
+cat(sprintf('N other tonal to other tonal: %s', round(mean(pdfa_out_5$N), 2)), txt_file, sep="\n",append=TRUE)
+cat(sprintf('Loadings other tonal to other tonal: %s', paste(pdfa_out_5$most_important, 
+                                                                    collapse = ', ')), 
+           txt_file, sep="\n",append=TRUE)
+cat(sprintf('Score alarm to alarm: %s', round(mean(pdfa_out_6$score_diff), 2)), 
+    txt_file, sep="\n",append=TRUE)
+cat(sprintf('Overlap 0 alarm to alarm: %s', 
+                   round(mean(length(which(pdfa_out_6$score_diff < 0))/length(pdfa_out_6$score_diff)), 2)), 
+           txt_file, sep="\n",append=TRUE)
+cat(sprintf('N alarm to alarm: %s', round(mean(pdfa_out_6$N), 2)), txt_file, sep="\n",append=TRUE)
+cat(sprintf('Loadings alarm to alarm: %s', paste(pdfa_out_6$most_important, collapse = ', ')), 
+           txt_file, sep="\n",append=TRUE)
+sink()
 
 
 
