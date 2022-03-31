@@ -31,7 +31,7 @@ models = list.files(str_remove(path_out_vsrm, '/vsrm'), '*vsrm*', full.names = T
 # Functions to plot
 plot.model = function(path_model, yaxt = 'n', xaxt = 'n'){
   load(path_model)
-  plot(NULL, xlim = c(-0.5, 1.5), ylim = c(0, 10), main = '', 
+  plot(NULL, xlim = c(-0.5, 1.5), ylim = c(0, 12), main = '', 
        xlab = '', ylab = '', xaxt = xaxt, yaxt = yaxt)
   abline(v = 0, col = alpha(1, 0.5), lwd = 5, lty = 2)
   sapply(1:2000, function(i) (post$z_same_rec[i,2] - post$z_same_rec[i,1]) * post$sigma_same_rec[i]) %>% 
@@ -45,7 +45,7 @@ plot.model = function(path_model, yaxt = 'n', xaxt = 'n'){
 call_types = c('contact', 'tja', 'trruup', 'alarm', 'growl')
 
 # Plot beta parameter per call type
-pdf(path_final_figure_ind, 10, 9)
+pdf(path_final_figure_ind, 10, 8)
 par(mfrow = c(4, 5), mar = c(1, 1, 0, 0), oma = c(3, 9, 3, 1), mgp = c(1, 0.75, 0))
 
 plot.model(models[str_detect(models, 'dtw_contact')], yaxt = 'l')
