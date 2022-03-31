@@ -22,11 +22,7 @@ path_data_sets_time = 'ANALYSIS/RESULTS/02_time_effect/data_sets_time.RData'
 path_data_sets_date = 'ANALYSIS/RESULTS/02_time_effect/data_sets_date.RData'
 path_data_sets_year = 'ANALYSIS/RESULTS/03_year_comparison/data_sets_year.RData'
   
-path_model_10 = 'ANALYSIS/CODE/social networks model/m_10.stan'
-path_time_model = 'ANALYSIS/CODE/social networks model/m_time_2.stan'
-path_date_model = 'ANALYSIS/CODE/social networks model/m_date_2.stan'
-path_year_model = 'ANALYSIS/CODE/social networks model/m_year_1.stan'
-path_vsr_model = 'ANALYSIS/CODE/vectorised srm/m_5.stan'
+path_ind_model = 'ANALYSIS/CODE/models/m_5.stan'
 
 path_ind_model_results = 'ANALYSIS/RESULTS/01_compare_call_types/all_models_out.RData'
 path_time_model_results = 'ANALYSIS/RESULTS/02_time_effect/all_models_out_time.RData'
