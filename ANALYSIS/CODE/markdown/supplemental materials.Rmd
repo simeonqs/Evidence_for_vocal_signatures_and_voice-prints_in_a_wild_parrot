@@ -1,0 +1,108 @@
+---
+title: "Voice paper"
+date: "March 2022"
+output:
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+header-includes:
+- \renewcommand{\figurename}{Figure S}
+- \makeatletter
+- \def\fnum@figure{\figurename\thefigure}
+- \makeatother
+bibliography: bibliography.bib
+---
+
+```{r setup, include=FALSE}
+# Set up
+library(tidyverse)
+
+# Clean environment
+rm(list = ls())
+```
+
+# Supplemental Methods
+
+## Statistical analysis
+
+### Model I: individual and recording signal
+
+We used the dis-similarity matrices from DTW, SPCC, MFCCCC or SPECAN to get a pairwise acoustic distance between all calls. We only included call pairs from the same year. We used a model similar to the Bayesian social relations model used in psychology. In our case the acoustic distance between any two calls was the response variable and was standardised before analysis. We included a global intercept and off-sets for: same vs different individual, same vs different recording, pair of individuals from which the calls came, pair of recordings from which the calls came and each call. The full model structure was as follows:
+
+$$
+\begin{aligned}
+\text{accoustic distance} & \sim \text{normal}(\mu,\ \sigma)\\
+\mu_n & = \bar\alpha + \alpha_\text{same ind[n]} + \alpha_\text{same rec[n]} +\\
+& \ \ \ \ \ \ \alpha_\text{ind pair[n]} + \alpha_\text{rec pair[n]} + \alpha_\text{call i[n]} + \alpha_\text{call i[n]}\\
+\bar\alpha & \sim \text{normal}(0,\ 0.25)\\
+\alpha_\text{same ind} & \sim \text{normal}(0,\ \sigma_\text{same ind})\\
+\alpha_\text{same rec} & \sim  \text{normal}(0,\ \sigma_\text{same rec})\\
+\alpha_\text{ind pair} & \sim  \text{normal}(0,\ \sigma_\text{ind pair})\\
+\alpha_\text{rec pair} & \sim  \text{normal}(0,\ \sigma_\text{rec pair})\\
+\alpha_\text{call} & \sim  \text{normal}(0,\ \sigma_\text{call})\\
+\sigma_\text{same ind},\ \sigma_\text{same rec},\ \sigma_\text{ind pair},\ \sigma_\text{rec pair} & \sim \text{exponential}(3)\\
+\sigma,\ \sigma_\text{call} & \sim \text{exponential}(5)
+\end{aligned}
+$$
+
+We fitted an un-centred version of the model using the package *cmdstanr* [@cmdstanr] with the No U-turn Sampler in Stan [@gelman2015stan] in from R [@R]. We ran 2000 iterations on four chains with adapt_delta = 0.99 and max_treedepth = 15. We used the difference between $\alpha_\text{same ind [same]}$ and $\alpha_\text{same ind [different]}$ as measure of individual signal and the difference between $\alpha_\text{same rec [same]}$ and $\alpha_\text{same rec [different]}$ as measure of recording signal. The other off-sets were included to control for unbalanced data and non-independence (e.g., some individuals might sound very much alike and we included multiple pairs of calls from the same two individuals). 
+
+### Model II: decay over time within recording
+
+To test how stable the individual signature is within a recording we subsetted the pairwise dis-similarities to only include comparisons between calls from the same individual and recording. We included log10 of the time (in minutes) between the calls. We then used a multi-level model with a global intercept, a slope for the time-effect, off-sets for the intercept pair of individuals from which the calls came, pair of recordings from which the calls came and each call. We also included off-sets on the slope for individual. The full model structure was as follows:
+
+$$
+\begin{aligned}
+\text{accoustic distance} & \sim \text{normal}(\mu,\ \sigma)\\
+\mu_n & = \bar\alpha + \alpha_\text{ind[n]} + \alpha_\text{rec[n]} + \alpha_\text{call i[n]} + \alpha_\text{call i[n]}\\
+& \ \ \ \ \ \ (\bar\beta + \beta_\text{ind[n]} + \beta_\text{rec[n]}) * \text{time} \\
+\bar\alpha & \sim \text{normal}(0,\ 0.5)\\
+\alpha_\text{ind} & \sim \text{normal}(0,\ \sigma_\text{ind})\\
+\alpha_\text{rec} & \sim  \text{normal}(0,\ \sigma_\text{rec})\\
+\alpha_\text{call} & \sim  \text{normal}(0,\ \sigma_\text{call})\\
+\bar\beta & \sim \text{normal}(0,\ 0.3)\\
+\beta_\text{ind} & \sim \text{normal}(0,\ \xi_\text{ind})\\
+\beta_\text{rec} & \sim  \text{normal}(0,\ \xi_\text{rec})\\
+\sigma,\ \sigma_\text{ind},\ \sigma_\text{rec},\ \xi_\text{ind},\ \xi_\text{rec} & \sim \text{exponential}(2)\\
+\sigma_\text{call} & \sim \text{exponential}(3)
+\end{aligned}
+
+$$
+
+The model was fitted in the same way as model I.
+
+### Model III: decay over days
+
+To test how stable the individual signature is across days we subsetted the pairwise dis-similarities to only include comparisons between calls from the same individual, but from different recording. We also included the difference in days between the calls. We then used a multi-level model with a global intercept, a slope for the time-effect, off-sets for the intercept for individual pa, recording and call, and off-sets on the slope for individual and recording. The full model structure was as follows:
+
+$$
+\begin{aligned}
+\text{accoustic distance} & \sim \text{normal}(\mu,\ \sigma)\\
+\mu_n & = \bar\alpha + \alpha_\text{ind pair[n]} + \alpha_\text{rec pair[n]} + \alpha_\text{call i[n]} + \alpha_\text{call i[n]}\\
+& \ \ \ \ \ \ (\bar\beta + \beta_\text{ind[n]})* \text{time} \\
+\bar\alpha & \sim \text{normal}(0,\ 0.5)\\
+\alpha_\text{ind pair} & \sim \text{normal}(0,\ \sigma_\text{ind pair})\\
+\alpha_\text{rec pair} & \sim  \text{normal}(0,\ \sigma_\text{rec pair})\\
+\alpha_\text{call} & \sim  \text{normal}(0,\ \sigma_\text{call})\\
+\bar\beta & \sim \text{normal}(0,\ 0.5)\\
+\beta_\text{ind} & \sim \text{normal}(0,\ \xi_\text{ind})\\
+\sigma,\ \sigma_\text{ind pair},\ \sigma_\text{rec pair},\ \sigma_\text{call},\ \xi_\text{ind} & \sim \text{exponential}(2)
+\end{aligned}
+$$
+
+The model was fitted in the same way as model I.
+
+### Model IV: difference between years
+
+
+
+\pagebreak
+
+# Supplemental Results
+
+```{r figure, include=TRUE, fig.align="center", fig.cap='Caption.', fig.height=7, fig.width=7, echo=FALSE}
+# knitr::include_graphics(path_phylo)
+```
+
+# References
