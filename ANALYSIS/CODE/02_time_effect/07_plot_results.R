@@ -37,8 +37,9 @@ plot.model.time = function(path){
 plot.model.dates = function(path){
   load(path)
   for(i in sample(1:length(post$a_bar), 20)) 
-    lines(c(0, 25), -(post[['a_bar']][i] + c(0, 25) * post[['b_bar']][i]), 
+    lines(c(0, 25), -(post[['a_bar']][i] + c(0, 25) * post[['b_bar']][i] / 30), 
           col = alpha('darkorange', 0.3), lwd = 5, lty = 1)
+  text(20, 1.5, sprintf('N = %s', clean_dat$N_call))
 }
 
 # Order call types
@@ -51,10 +52,10 @@ par(mfrow = c(3, 5), mar = c(2, 1, 2, 1), oma = c(1, 9, 2, 1), mgp = c(1, 0.75, 
 
 for(type in c('contact', 'tja', 'trruup')){
   plot(NULL, 
-       xlim = c(0, 25), ylim = c(-3, 3),
+       xlim = c(0, 25), ylim = c(-2, 2),
        xlab = '', ylab = '', xaxt = 'n', yaxt = 'n')
-  plot.model.time(files_time[str_detect(files_time, sprintf('dtw_%s', type))])
   plot.model.dates(files_dates[str_detect(files_dates, sprintf('dtw_%s', type))])
+  plot.model.time(files_time[str_detect(files_time, sprintf('dtw_%s', type))])
   if(type == call_types[1]){
     axis(2)
     mtext('accoustic similarity', 2, 2, cex = 0.75)
@@ -71,8 +72,8 @@ for(type in call_types){
   plot(NULL,
        xlim = c(0, 25), ylim = c(-2, 2),
        xlab = '', ylab = '', xaxt = 'n', yaxt = 'n')
-  plot.model.time(files_time[str_detect(files_time, sprintf('spcc_%s', type))])
   plot.model.dates(files_dates[str_detect(files_dates, sprintf('spcc_%s', type))])
+  plot.model.time(files_time[str_detect(files_time, sprintf('spcc_%s', type))])
   if(type == call_types[1]){
     axis(2)
     mtext('accoustic similarity', 2, 2, cex = 0.75)
@@ -88,8 +89,8 @@ for(type in call_types){
   plot(NULL,
        xlim = c(0, 25), ylim = c(-2, 2),
        xlab = '', ylab = '', xaxt = 'n', yaxt = 'n')
-  plot.model.time(files_time[str_detect(files_time, sprintf('mfcccc_%s', type))])
   plot.model.dates(files_dates[str_detect(files_dates, sprintf('mfcccc_%s', type))])
+  plot.model.time(files_time[str_detect(files_time, sprintf('mfcccc_%s', type))])
   if(type == call_types[1]){
     axis(2)
     mtext('accoustic similarity', 2, 2, cex = 0.75)
