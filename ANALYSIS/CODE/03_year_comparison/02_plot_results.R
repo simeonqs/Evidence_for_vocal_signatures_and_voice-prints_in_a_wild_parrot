@@ -70,7 +70,7 @@ plot.model(models[str_detect(models, 'spcc_trruup')])
 plot.model(models[str_detect(models, 'spcc_alarm')])
 plot.model(models[str_detect(models, 'spcc_growl')])
 
-plot.model(models[str_detect(models, 'mfcccc_contact')], yaxt = 'l')
+plot.model(models[str_detect(models, 'mfcccc_contact')], yaxt = 'l', xaxt = 'l')
 mtext('density', 2, 2, cex = 0.75)
 mtext('MFCCCC', 2, 7, font = 2, las = 2, adj = 0.5)
 mtext('beta', 1, 2, cex = 0.75)
