@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 15-02-2022
-# Date last modified: 25-03-2022
+# Date last modified: 23-04-2022
 # Author: Simeon Q. Smeele
 # Description: Running DFA. Assumes multiple objects are loaded, very specific to this chapter. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -15,6 +15,10 @@ run.dfa = function(names_train, names_test, mfcc_out, print_scaling = T){
   mfcc_test = as.data.frame(mfcc_scale[names_test,])
   mfcc_train$inds = st[names_train,]$bird
   mfcc_test$inds = st[names_test,]$bird
+  
+  # Test for problems
+  if(! nrow(mfcc_train) == length(names_train) |
+     ! nrow(mfcc_test) == length(names_test)) stop('Dimensions do not match!')
   
   # Run DFA
   model = lda(inds ~ ., data = mfcc_train)
