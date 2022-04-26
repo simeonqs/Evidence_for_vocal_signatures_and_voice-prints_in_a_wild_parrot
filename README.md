@@ -24,9 +24,14 @@ ANALYSIS:
 
 **File information and meta data:**
 
-- README.md: overview of repo and all files
-- .gitignore: which files not to sync to GitHub
-- voice_paper.Rproj: R Studio Project file; if you open the code from this file all paths are relative to the main folder
+Below are all files in the repository. The first bullet point under the path is a short explanation of the file. Other bullet points are meta data for the columns if relevant.
+
+- README.md
+	- overview of repo and all files
+- .gitignore
+	- which files not to sync to GitHub
+- voice_paper.Rproj
+	- R Studio Project file; if you open the code from this file all paths are relative to the main folder
 
 - ANALYSIS/DATA/luscinia/all_2021.csv
 	- the fundamental frequency traces made in Luscinia for all calls in 2021
@@ -127,6 +132,36 @@ ANALYSIS:
 	- Low Freq (Hz)	: not used
 	- High Freq (Hz): not used
 	- Annotation: annotation reference for the annotations of 2020 (multiple selections can have the same annotation), for 2021 this was not used and the selection number was used in combination with the file name to match annotations
+	
+- ANALYSIS/RESULTS/00_run_methods
+	- in this location the results for each method should be stored in separate folders; since files are too large, these cannot be uploaded to GitHub
+- ANALYSIS/RESULTS/00_run_methods/all_data.RData
+	- RData file with the relevant processed data, following objects will be loaded:
+		- data_sets: the names of file + selection for each call type
+		- smooth_traces: the smoothed traces from Luscinia
+		- st: the merged selection tables 
+- ANALYSIS/RESULTS/01_compare_call_types
+	- in this location model output should be stored; since files are too large, these cannot be uploaded to GitHub
+- ANALYSIS/RESULTS//01_compare_call_types/model results.pdf
+	- pdf with all results for model I
+- ANALYSIS/RESULTS/02_time_effect
+	- in this location model output should be stored; since files are too large, these cannot be uploaded to GitHub
+- ANALYSIS/RESULTS/02_time_effect/model results.pdf
+	- pdf with all results for model II and model III
+- ANALYSIS/RESULTS/03_year_comparison
+	- - in this location model output should be stored; since files are too large, these cannot be uploaded to GitHub
+- ANALYSIS/RESULTS/03_year_comparison/model results.pdf
+	- pdf with all results for model IV
+- ANALYSIS/RESULTS/04_cross_call_type/mfcc_out.RData
+	- the MFCC results for all calls
+- ANALYSIS/RESULTS/04_cross_call_type/results.txt
+	- a txt file with all results from the pDFAs
+- ANALYSIS/RESULTS/04_cross_call_type/scores.pdf
+	- a pdf of the differences in trained and random scores from the pDFAs
+- ANALYSIS/RESULTS/figures/final_figure_ind.pdf
+	- the final pdf for model I
+- ANALYSIS/RESULTS/figures/final_figure_time.pdf
+	- the final pdf for model II and III
 
 NOTE: each code file contains additional information about author, date modified and description. 
 
