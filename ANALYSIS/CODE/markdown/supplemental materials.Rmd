@@ -24,9 +24,25 @@ rm(list=ls())
 
 # Paths
 path_pdf_pdfa = '../../RESULTS/04_cross_call_type/scores.pdf'
+path_pdf_year = '../../RESULTS/03_year_comparison/results.pdf'
+path_pdf_spectros = '../../RESULTS/figures/example spectrograms.pdf'
 ```
 
 # Supplemental Methods
+
+## Call types
+
+Call types were manually determined from the spectrogram and audio in Raven Lite [@RavenLite]. We included X types in the main text (see also figure SX):
+
+- contact: tonal vocalisation component and at least three frequency modulation peaks
+- tja: tonal vocalisation with a single up-sweep component; sometimes one or two very short amplitude modulated components are present before or after the main component
+- trruup: vocalisation that consists of at least three amplitude modulated components at the start, followed by a frequency modulated tonal component
+- alarm: loud amplitude modulated tonal vocalisation with at least five clear u-shaped components
+- growl: medium loud amplitude modulated vocalisation with at least five components without clear tonality
+
+```{r figure-spectros, include=TRUE, fig.align="center", fig.cap='Example spectrograms of the call types.', fig.height=5, fig.width=7, echo=FALSE}
+knitr::include_graphics(path_pdf_spectros)
+```
 
 ## Statistical analysis
 
@@ -135,9 +151,15 @@ We wrote a custom R script to run the pDFA. We ran 100 iterations with the follo
 
 # Supplemental Results
 
+## Model IV: difference between years
+
+```{r figure-year, include=TRUE, fig.align="center", fig.cap='Parameter estimates (posterior distributions) for the Bayesian multilevel model with difference between recordings from the same vs different years. Greater values  mean more within year similarity. Models were run separately for the main call types (columns) and methods (rows; DTW - dynamic time warping, SPCC - spectrographic cross correlation, MFCCCC - mel frequency cepstral coefficient analysis). N represents the number of calls included in the model.', fig.height=5, fig.width=7, echo=FALSE}
+knitr::include_graphics(path_pdf_year)
+```
+
 ## pDFA
 
-```{r figure, include=TRUE, fig.align="center", fig.cap='pDFA results. Densities of the differences between the trained and random DFAs. N is number of individals for which there was enough data available.', fig.height=5, fig.width=7, echo=FALSE}
+```{r figure-pdfa, include=TRUE, fig.align="center", fig.cap='pDFA results. Densities of the differences between the trained and random DFAs. N is number of individals for which there was enough data available.', fig.height=5, fig.width=7, echo=FALSE}
 knitr::include_graphics(path_pdf_pdfa)
 ```
 
