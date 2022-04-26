@@ -22,7 +22,7 @@ path_data_sets_time = 'ANALYSIS/RESULTS/02_time_effect/data_sets_time.RData'
 path_data_sets_date = 'ANALYSIS/RESULTS/02_time_effect/data_sets_date.RData'
 path_data_sets_year = 'ANALYSIS/RESULTS/03_year_comparison/data_sets_year.RData'
   
-path_ind_model = 'ANALYSIS/CODE/models/m_5.stan'
+path_ind_model = 'ANALYSIS/CODE/models/m_ind.stan'
 
 path_ind_model_results = 'ANALYSIS/RESULTS/01_compare_call_types/all_models_out.RData'
 path_time_model_results = 'ANALYSIS/RESULTS/02_time_effect/all_models_out_time.RData'
@@ -56,6 +56,7 @@ path_pdf_test_specan = 'ANALYSIS/RESULTS/test output/test specan.pdf'
 path_pdf_year_results = 'ANALYSIS/RESULTS/03_year_comparison/model results.pdf'
 path_pdf_pdfa = 'ANALYSIS/RESULTS/04_cross_call_type/scores.pdf'
 path_pdf_model_parameters = 'ANALYSIS/RESULTS/01_compare_call_types/parameters.pdf'
+path_pdf_example_spectrograms = 'ANALYSIS/RESULTS/figures/example spectrograms.pdf'
 
 path_final_figure_ind = 'ANALYSIS/RESULTS/final_figure_ind.pdf'
 path_final_figure_time = 'ANALYSIS/RESULTS/final_figure_time.pdf'
