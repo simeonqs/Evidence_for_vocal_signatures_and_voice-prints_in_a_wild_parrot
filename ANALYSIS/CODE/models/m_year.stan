@@ -34,7 +34,7 @@ model{
     z_ind ~ normal(0, 1);
     z_rec_pair ~ normal(0, 1);
     z_call ~ normal(0, 1);
-    sigma ~ exponential(1);
+    sigma ~ exponential(2);
     sigma_call ~ exponential(2);
     sigma_ind ~ exponential(2);
     sigma_year ~ exponential(2);
