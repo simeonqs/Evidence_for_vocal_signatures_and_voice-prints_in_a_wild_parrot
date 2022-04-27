@@ -2,3 +2,16 @@ all_models_out_date.RData
 all_models_out_time.RData
 all_models_out_year.RData
 spcc
+dtw_contact_post.RData
+dtw_tja_post.RData
+dtw_trruup_post.RData
+mfcccc_alarm_post.RData
+mfcccc_contact_post.RData
+mfcccc_growl_post.RData
+mfcccc_tja_post.RData
+mfcccc_trruup_post.RData
+spcc_alarm_post.RData
+spcc_contact_post.RData
+spcc_growl_post.RData
+spcc_tja_post.RData
+spcc_trruup_post.RData

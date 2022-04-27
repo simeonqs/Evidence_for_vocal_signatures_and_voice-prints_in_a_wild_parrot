@@ -17,12 +17,32 @@ bibliography: bibliography.bib
 ```{r setup, include=FALSE}
 # Set up
 library(tidyverse)
+library(scales)
 
-# Clean environment
-rm(list = ls())
+# Clean R
+rm(list=ls()) 
+
+# Paths
+path_pdf_pdfa = '../../RESULTS/04_cross_call_type/scores.pdf'
+path_pdf_year = '../../RESULTS/03_year_comparison/results.pdf'
+path_pdf_spectros = '../../RESULTS/figures/example spectrograms.pdf'
 ```
 
 # Supplemental Methods
+
+## Call types
+
+Call types were manually determined from the spectrogram and audio in Raven Lite [@RavenLite]. We included X types in the main text (see also figure SX):
+
+- contact: tonal vocalisation component and at least three frequency modulation peaks
+- tja: tonal vocalisation with a single up-sweep component; sometimes one or two very short amplitude modulated components are present before or after the main component
+- trruup: vocalisation that consists of at least three amplitude modulated components at the start, followed by a frequency modulated tonal component
+- alarm: loud amplitude modulated tonal vocalisation with at least five clear u-shaped components
+- growl: medium loud amplitude modulated vocalisation with at least five components without clear tonality
+
+```{r figure-spectros, include=TRUE, fig.align="center", fig.cap='Example spectrograms of the call types.', fig.height=5, fig.width=7, echo=FALSE}
+knitr::include_graphics(path_pdf_spectros)
+```
 
 ## Statistical analysis
 
@@ -34,7 +54,7 @@ $$
 \begin{aligned}
 \text{accoustic distance} & \sim \text{normal}(\mu,\ \sigma)\\
 \mu_n & = \bar\alpha + \alpha_\text{same ind[n]} + \alpha_\text{same rec[n]} +\\
-& \ \ \ \ \ \ \alpha_\text{ind pair[n]} + \alpha_\text{rec pair[n]} + \alpha_\text{call i[n]} + \alpha_\text{call i[n]}\\
+& \ \ \ \ \ \ \alpha_\text{ind pair[n]} + \alpha_\text{rec pair[n]} + \alpha_\text{call i[n]} + \alpha_\text{call j[n]}\\
 \bar\alpha & \sim \text{normal}(0,\ 0.25)\\
 \alpha_\text{same ind} & \sim \text{normal}(0,\ \sigma_\text{same ind})\\
 \alpha_\text{same rec} & \sim  \text{normal}(0,\ \sigma_\text{same rec})\\
@@ -46,7 +66,7 @@ $$
 \end{aligned}
 $$
 
-We fitted an un-centred version of the model using the package *cmdstanr* [@cmdstanr] with the No U-turn Sampler in Stan [@gelman2015stan] in from R [@R]. We ran 2000 iterations on four chains with adapt_delta = 0.99 and max_treedepth = 15. We used the difference between $\alpha_\text{same ind [same]}$ and $\alpha_\text{same ind [different]}$ as measure of individual signal and the difference between $\alpha_\text{same rec [same]}$ and $\alpha_\text{same rec [different]}$ as measure of recording signal. The other off-sets were included to control for unbalanced data and non-independence (e.g., some individuals might sound very much alike and we included multiple pairs of calls from the same two individuals). 
+We fitted an un-centred version of the model using the package *cmdstanr* [@cmdstanr] with the No U-turn Sampler in Stan [@gelman2015stan] from R [@R]. We ran 2000 iterations on four chains with adapt_delta = 0.99 and max_treedepth = 15. We used the difference between $\alpha_\text{same ind [same]}$ and $\alpha_\text{same ind [different]}$ as measure of individual signal and the difference between $\alpha_\text{same rec [same]}$ and $\alpha_\text{same rec [different]}$ as measure of recording signal. The other off-sets were included to control for unbalanced data and non-independence (e.g., some individuals might sound very much alike and we included multiple pairs of calls from the same two individuals). 
 
 ### Model II: decay over time within recording
 
@@ -55,8 +75,8 @@ To test how stable the individual signature is within a recording we subsetted t
 $$
 \begin{aligned}
 \text{accoustic distance} & \sim \text{normal}(\mu,\ \sigma)\\
-\mu_n & = \bar\alpha + \alpha_\text{ind[n]} + \alpha_\text{rec[n]} + \alpha_\text{call i[n]} + \alpha_\text{call i[n]}\\
-& \ \ \ \ \ \ (\bar\beta + \beta_\text{ind[n]} + \beta_\text{rec[n]}) * \text{time} \\
+\mu_n & = \bar\alpha + \alpha_\text{ind[n]} + \alpha_\text{rec[n]} + \alpha_\text{call i[n]} + \alpha_\text{call j[n]}\\
+& \ \ \ \ \ \ (\bar\beta + \beta_\text{ind[n]} + \beta_\text{rec[n]}) * \text{time}_n \\
 \bar\alpha & \sim \text{normal}(0,\ 0.5)\\
 \alpha_\text{ind} & \sim \text{normal}(0,\ \sigma_\text{ind})\\
 \alpha_\text{rec} & \sim  \text{normal}(0,\ \sigma_\text{rec})\\
@@ -67,20 +87,19 @@ $$
 \sigma,\ \sigma_\text{ind},\ \sigma_\text{rec},\ \xi_\text{ind},\ \xi_\text{rec} & \sim \text{exponential}(2)\\
 \sigma_\text{call} & \sim \text{exponential}(3)
 \end{aligned}
-
 $$
 
 The model was fitted in the same way as model I.
 
 ### Model III: decay over days
 
-To test how stable the individual signature is across days we subsetted the pairwise dis-similarities to only include comparisons between calls from the same individual, but from different recording. We also included the difference in days between the calls. We then used a multi-level model with a global intercept, a slope for the time-effect, off-sets for the intercept for individual pa, recording and call, and off-sets on the slope for individual and recording. The full model structure was as follows:
+To test how stable the individual signature is across days we subsetted the pairwise dis-similarities to only include comparisons between calls from the same individual and year, but from different recordings. We also included the difference in days between the calls. We then used a multi-level model with a global intercept, a slope for the time-effect, off-sets for the intercept for individual pair, recording and call, and off-sets on the slope for individual. The full model structure was as follows:
 
 $$
 \begin{aligned}
 \text{accoustic distance} & \sim \text{normal}(\mu,\ \sigma)\\
-\mu_n & = \bar\alpha + \alpha_\text{ind pair[n]} + \alpha_\text{rec pair[n]} + \alpha_\text{call i[n]} + \alpha_\text{call i[n]}\\
-& \ \ \ \ \ \ (\bar\beta + \beta_\text{ind[n]})* \text{time} \\
+\mu_n & = \bar\alpha + \alpha_\text{ind pair[n]} + \alpha_\text{rec pair[n]} + \alpha_\text{call i[n]} + \alpha_\text{call j[n]}\\
+& \ \ \ \ \ \ (\bar\beta + \beta_\text{ind[n]})* \text{time}_n \\
 \bar\alpha & \sim \text{normal}(0,\ 0.5)\\
 \alpha_\text{ind pair} & \sim \text{normal}(0,\ \sigma_\text{ind pair})\\
 \alpha_\text{rec pair} & \sim  \text{normal}(0,\ \sigma_\text{rec pair})\\
@@ -95,14 +114,55 @@ The model was fitted in the same way as model I.
 
 ### Model IV: difference between years
 
+To test how stable the individual signature is across years we subsetted the pairwise dis-similarities to only include comparisons between calls from the same individual, but from different recording. We also included whether or not the recordings came from the same year. We then used a multi-level model with a global intercept, off-sets for: same vs different year, the individual, recording pair and call. The full model structure was as follows:
 
+$$
+\begin{aligned}
+\text{accoustic distance} & \sim \text{normal}(\mu,\ \sigma)\\
+\mu_n & = \bar\alpha + \alpha_\text{same year[n]} + \alpha_\text{ind[n]} +\\
+& \ \ \ \ \ \ \alpha_\text{rec pair[n]} + \alpha_\text{call i[n]} + \alpha_\text{call j[n]}\\
+\bar\alpha & \sim \text{normal}(0,\ 0.25)\\
+\alpha_\text{same year} & \sim \text{normal}(0,\ \sigma_\text{same year})\\
+\alpha_\text{ind} & \sim  \text{normal}(0,\ \sigma_\text{ind})\\
+\alpha_\text{rec pair} & \sim  \text{normal}(0,\ \sigma_\text{rec pair})\\
+\alpha_\text{call} & \sim  \text{normal}(0,\ \sigma_\text{call})\\
+\sigma,\ \sigma_\text{same year},\ \sigma_\text{ind},\ \sigma_\text{rec pair},\ \sigma_\text{call} & \sim \text{exponential}(3)\\
+\end{aligned}
+$$
+
+The model was fitted in the same way as model I.
+
+### pDFA
+
+To test if there are features that contain an individual signal across call types we used mel frequency cepstral coefficients (MFCC). More specifically we used the function *melfcc* from the package *warbleR* [@warbleR] with the settings wintime = 512/44100, hoptime = 50/44100 and minfreq = 300 to retrieve the first ten cepstral coefficient traces. For each trace we saved the mean and standard deviation. These 20 measures per call were then used for the pDFA.
+
+We wrote a custom R script to run the pDFA. We ran 100 iterations with the following steps:
+
+- for each individual we randomly selected recordings until the set of recordings contained enough calls for testing (N_test)
+- we then selected the other recordings for training 
+- if there were not enough recordings to fullfill both N_test and N_train, we did not include this individual
+- for the individuals with enough data, we randomly selected N_test calls from the testing recordings and N_train calls from the training recordings
+- we then used the standardised MFCC values to train an LDA (using the function *lda* from the package *MASS* [@MASS])
+- this LDA was then used to predict the IDs of the test data, the resulting proportion of correct classification was the trained score
+- we repeated the previous two steps with both training and testing IDs randomised within the set and retrieved the random score
+- for each iteration the difference between the trained and random score was reported
 
 \pagebreak
 
 # Supplemental Results
 
-```{r figure, include=TRUE, fig.align="center", fig.cap='Caption.', fig.height=7, fig.width=7, echo=FALSE}
-# knitr::include_graphics(path_phylo)
+## Model IV: difference between years
+
+```{r figure-year, include=TRUE, fig.align="center", fig.cap='Parameter estimates (posterior distributions) for the Bayesian multilevel model with difference between recordings from the same vs different years. Greater values  mean more within year similarity. Models were run separately for the main call types (columns) and methods (rows; DTW - dynamic time warping, SPCC - spectrographic cross correlation, MFCCCC - mel frequency cepstral coefficient analysis). N represents the number of calls included in the model.', fig.height=5, fig.width=7, echo=FALSE}
+knitr::include_graphics(path_pdf_year)
 ```
+
+## pDFA
+
+```{r figure-pdfa, include=TRUE, fig.align="center", fig.cap='pDFA results. Densities of the differences between the trained and random DFAs. N is number of individals for which there was enough data available.', fig.height=5, fig.width=7, echo=FALSE}
+knitr::include_graphics(path_pdf_pdfa)
+```
+
+\pagebreak
 
 # References

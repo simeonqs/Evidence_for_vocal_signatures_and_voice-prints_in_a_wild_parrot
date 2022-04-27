@@ -1,9 +1,13 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 21-02-2022
-# Date last modified: 14-03-2022
+# Date last modified: 22-04-2022
 # Author: Simeon Q. Smeele
-# Description: Running and plotting all functions for DFA.
+# Description: This function runs the permuted DFA. For each iteration it creates a training and testing
+# set based on the settings. It then runs a single DFA for the labelled and randomised data. Due to limited
+# number of attempts to find a usable train/test split not all individuals will always be included. The 
+# function returns the trained score, random score, pair-wise difference and plots the density of the 
+# contrast.
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 run.pdfa = function(train_set, test_set,

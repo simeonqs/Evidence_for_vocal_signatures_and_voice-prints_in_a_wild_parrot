@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 25-01-2022
-# Date last modified: 28-02-2022
+# Date last modified: 01-04-2022
 # Author: Simeon Q. Smeele
 # Description: Test if the mfcc output is correct. 
 # This version includes the 2020 data. 
@@ -28,14 +28,6 @@ load(path_data)
 load(path_waves)
 load(path_mfcc_m_list)
 
-# Choose the year
-waves = waves_20
-smooth_traces = smooth_traces_20
-st = st_20
-data_sets = data_sets_20
-m_list = m_list_20
-path_audio = path_audio_20
-
 # Plot most extreme case per call type
 pdf(path_pdf_test_mfcc)
 for(type in names(m_list)){
@@ -46,6 +38,7 @@ for(type in names(m_list)){
     i = which(st$fs == one)
     start = st$Begin.Time..s.[i] - 0.05
     end = st$End.Time..s.[i] + 0.05
+    path_audio = ifelse(str_detect(st$fs[i], '2020'), path_audio_20, path_audio_21)
     wave = load.wave(path_audio_file = paste0(path_audio, '/', st$file[i], '.wav'), 
                      from = start,
                      to = end)
