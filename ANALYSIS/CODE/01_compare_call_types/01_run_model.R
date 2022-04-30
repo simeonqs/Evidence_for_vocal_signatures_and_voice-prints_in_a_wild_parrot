@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 19-03-2022
-# Date last modified: 19-03-2022
+# Date last modified: 27-04-2022
 # Author: Simeon Q. Smeele
 # Description: Running the vectorised (but actually slower) version of the social relations model. 
 # source('ANALYSIS/CODE/01_compare_call_types/04_run_vsrm.R')
@@ -46,9 +46,9 @@ run.single.model = function(m, st, path_out_vsrm, method, type){
   ## call
   clean_dat$call_i = c[1,]
   clean_dat$call_j = c[2,]
-  ## same ind = 1, else = 0
+  ## same ind = 1, else = 2
   clean_dat$same_ind = sapply(1:ncol(c), function(x) ifelse(inds[c[1,x]] == inds[c[2,x]], 1, 2))
-  ## same rec = 1, else = 0
+  ## same rec = 1, else = 2
   clean_dat$same_rec = sapply(1:ncol(c), function(x) ifelse(recs[c[1,x]] == recs[c[2,x]], 1, 2))
   ## ind pair
   clean_dat$ind_pair = sapply(1:ncol(c), function(x) 
