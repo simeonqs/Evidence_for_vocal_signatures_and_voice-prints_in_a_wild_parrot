@@ -87,5 +87,5 @@ fit$output_files() %>%
   rstan::read_stan_csv() %>%
   rethinking::extract.samples() -> post
 
-
+save(clean_dat, post, file = 'temp.RData')
 
