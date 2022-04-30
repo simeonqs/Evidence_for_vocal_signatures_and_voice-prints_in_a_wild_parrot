@@ -32,11 +32,11 @@ run.pdfa = function(train_set, test_set,
   #      max(density(pdfa_out$score_random)$y) - max(density(pdfa_out$score_random)$y)/10, 
   #      sprintf('N = %s', round(mean(pdfa_out$N[1]), 2)))
   # lines(density(pdfa_out$score), lwd = 3, col = 3)
-  plot(density(pdfa_out$score_diff), lwd = 3, col = 4, main = main, 
+  plot(density(pdfa_out$score_diff), lwd = 3, col = 4, main = main, ylim = c(0, 12),
        xlab = 'difference proportion correct classified', ylab = 'density', xlim = c(-0.2, 0.5))
   abline(v = 0, lty = 2, lwd = 3, col = alpha('black', 0.3))
   text(0.43, 
-       9, 
+       11, 
        sprintf('N = %s', round(mean(pdfa_out$N[1]), 2)))
   return(pdfa_out)
 }
