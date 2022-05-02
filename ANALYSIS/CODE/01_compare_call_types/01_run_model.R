@@ -1,10 +1,11 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 19-03-2022
-# Date last modified: 27-04-2022
+# Date last modified: 30-04-2022
 # Author: Simeon Q. Smeele
 # Description: Running the vectorised (but actually slower) version of the social relations model. 
-# source('ANALYSIS/CODE/01_compare_call_types/04_run_vsrm.R')
+# This version switches to normalised instead of standardised accoustic distance. 
+# source('ANALYSIS/CODE/01_compare_call_types/01_run_model.R')
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
@@ -24,7 +25,7 @@ source('ANALYSIS/CODE/paths.R')
 load(path_data)
 
 # Function to run single model
-run.single.model = function(m, st, path_out_vsrm, method, type){
+run.single.model = function(m, st, path_ind_model_results, method, type){
   
   message(sprintf('Running %s - %s with %s calls.', method, type, nrow(m)))
   
@@ -32,14 +33,14 @@ run.single.model = function(m, st, path_out_vsrm, method, type){
   set.seed(1)
   n = rownames(m)
   subber = 1:length(n)
-  if(length(n) > 400) subber = sample(length(n), 400) else subber = 1:length(n)
+  if(length(n) > 300) subber = sample(length(n), 300) else subber = 1:length(n)
   inds = st[n,]$bird[subber] %>% as.factor %>% as.integer
   recs = paste(st[n,]$bird[subber], st[n,]$file[subber]) %>% as.factor %>% as.integer
   m =  m[subber, subber]
   
   # Make vectors
   ## acoustic distance
-  clean_dat = data.frame(acc_dist = as.vector(scale(as.vector(as.dist(m)))))
+  clean_dat = data.frame(acc_dist = as.vector(as.dist(m)))
   ## getting dimensions
   l = nrow(m)
   c = combn(1:l, 2)
@@ -85,33 +86,33 @@ run.single.model = function(m, st, path_out_vsrm, method, type){
   fit$output_files() %>%
     rstan::read_stan_csv() %>%
     rethinking::extract.samples() -> post
-  save(post, clean_dat, file = sprintf('%s_%s_%s.RData', path_out_vsrm, method, type))
+  save(post, clean_dat, file = sprintf('%s_%s_%s.RData', path_ind_model_results, method, type))
   
 }
 
 # Run
-model = cmdstan_model(path_vsr_model)
+model = cmdstan_model(path_ind_model)
 load(path_dtw_m_list)
-run.single.model(m_list$contact, st, path_out_vsrm, 'dtw', 'contact')
-# run.single.model(m_list$tja, st, path_out_vsrm, 'dtw', 'tja')
-# run.single.model(m_list$trruup, st, path_out_vsrm, 'dtw', 'trruup')
+# run.single.model(m_list$contact, st, path_ind_model_results, 'dtw', 'contact')
+# run.single.model(m_list$tja, st, path_ind_model_results, 'dtw', 'tja')
+# run.single.model(m_list$trruup, st, path_ind_model_results, 'dtw', 'trruup')
 load(path_spcc_m_list)
-run.single.model(m_list$contact, st, path_out_vsrm, 'spcc', 'contact')
-# run.single.model(m_list$tja, st, path_out_vsrm, 'spcc', 'tja')
-# run.single.model(m_list$trruup, st, path_out_vsrm, 'spcc', 'trruup')
-# run.single.model(m_list$alarm, st, path_out_vsrm, 'spcc', 'alarm')
-run.single.model(m_list$growl, st, path_out_vsrm, 'spcc', 'growl')
+run.single.model(m_list$contact, st, path_ind_model_results, 'spcc', 'contact')
+run.single.model(m_list$tja, st, path_ind_model_results, 'spcc', 'tja')
+run.single.model(m_list$trruup, st, path_ind_model_results, 'spcc', 'trruup')
+run.single.model(m_list$alarm, st, path_ind_model_results, 'spcc', 'alarm')
+run.single.model(m_list$growl, st, path_ind_model_results, 'spcc', 'growl')
 load(path_mfcccc_m_list)
-run.single.model(m_list$contact, st, path_out_vsrm, 'mfcccc', 'contact')
-# run.single.model(m_list$tja, st, path_out_vsrm, 'mfcccc', 'tja')
-# run.single.model(m_list$trruup, st, path_out_vsrm, 'mfcccc', 'trruup')
-# run.single.model(m_list$alarm, st, path_out_vsrm, 'mfcccc', 'alarm')
-run.single.model(m_list$growl, st, path_out_vsrm, 'mfcccc', 'growl')
+# run.single.model(m_list$contact, st, path_ind_model_results, 'mfcccc', 'contact')
+# run.single.model(m_list$tja, st, path_ind_model_results, 'mfcccc', 'tja')
+# run.single.model(m_list$trruup, st, path_ind_model_results, 'mfcccc', 'trruup')
+# run.single.model(m_list$alarm, st, path_ind_model_results, 'mfcccc', 'alarm')
+# run.single.model(m_list$growl, st, path_ind_model_results, 'mfcccc', 'growl')
 load(path_specan_m_list)
-run.single.model(m_list$contact, st, path_out_vsrm, 'specan', 'contact')
-# run.single.model(m_list$tja, st, path_out_vsrm, 'specan', 'tja')
-# run.single.model(m_list$trruup, st, path_out_vsrm, 'specan', 'trruup')
-# run.single.model(m_list$alarm, st, path_out_vsrm, 'specan', 'alarm')
-run.single.model(m_list$growl, st, path_out_vsrm, 'specan', 'growl')
+# run.single.model(m_list$contact, st, path_ind_model_results, 'specan', 'contact')
+# run.single.model(m_list$tja, st, path_ind_model_results, 'specan', 'tja')
+# run.single.model(m_list$trruup, st, path_ind_model_results, 'specan', 'trruup')
+# run.single.model(m_list$alarm, st, path_ind_model_results, 'specan', 'alarm')
+# run.single.model(m_list$growl, st, path_ind_model_results, 'specan', 'growl')
 
 message('Finished, saved all results.')

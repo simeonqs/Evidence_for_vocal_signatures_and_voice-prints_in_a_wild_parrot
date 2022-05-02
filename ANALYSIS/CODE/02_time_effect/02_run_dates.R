@@ -1,10 +1,10 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 22-03-2022
-# Date last modified: 22-03-2022
+# Date last modified: 30-04-2022
 # Author: Simeon Q. Smeele
 # Description: Prepping data and running vsr model dates. 
-# source('ANALYSIS/CODE/02_time_effect/06_run_vsrm_dates.R')
+# source('ANALYSIS/CODE/02_time_effect/02_run_dates.R')
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
@@ -19,11 +19,6 @@ rm(list=ls())
 
 # Paths
 source('ANALYSIS/CODE/paths.R')
-path_out = 'ANALYSIS/RESULTS/02_time_effect/vsrm_dates'
-path_model = 'ANALYSIS/CODE/vectorised srm/m_dates_1.stan'
-
-# Import functions
-# .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
 
 # Load data
 load(path_data)
@@ -98,13 +93,13 @@ run.model = function(m_list, st, method, type){
   fit$output_files() %>%
     rstan::read_stan_csv() %>%
     rethinking::extract.samples() -> post
-  save(post, clean_dat, file = sprintf('%s_%s_%s_post.RData', path_out, method, type))
+  save(post, clean_dat, file = sprintf('%s_%s_%s_post.RData', path_date_model_results, method, type))
   print(precis(post))
   
 }
 
 # Running models
-model = cmdstan_model(path_model)
+model = cmdstan_model(path_date_model)
 # load(path_dtw_m_list)
 # run.model(m_list, st, 'dtw', 'contact')
 # run.model(m_list, st, 'dtw', 'tja')
@@ -115,11 +110,11 @@ run.model(m_list, st, 'spcc', 'tja')
 run.model(m_list, st, 'spcc', 'trruup')
 run.model(m_list, st, 'spcc', 'alarm')
 run.model(m_list, st, 'spcc', 'growl')
-load(path_mfcccc_m_list)
-run.model(m_list, st, 'mfcccc', 'contact')
-run.model(m_list, st, 'mfcccc', 'tja')
-run.model(m_list, st, 'mfcccc', 'trruup')
-run.model(m_list, st, 'mfcccc', 'alarm')
-run.model(m_list, st, 'mfcccc', 'growl')
+# load(path_mfcccc_m_list)
+# run.model(m_list, st, 'mfcccc', 'contact')
+# run.model(m_list, st, 'mfcccc', 'tja')
+# run.model(m_list, st, 'mfcccc', 'trruup')
+# run.model(m_list, st, 'mfcccc', 'alarm')
+# run.model(m_list, st, 'mfcccc', 'growl')
 
 message('All done!')
