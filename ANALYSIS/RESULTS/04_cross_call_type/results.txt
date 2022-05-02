@@ -1,56 +1,24 @@
-
-Please cite 'warbleR' as follows:
-
-  Araya-Salas, M. and Smith-Vidaurre, G. (2017), warbleR: an r package to streamline analysis of
-  animal acoustic signals. Methods Ecol Evol. 8, 184-191.
-  
-  NOTE: please also cite the 'tuneR' and 'seewave' packages if you use any spectrogram-creating or
-  acoustic-measuring function
-
-A BibTeX entry for LaTeX users is
-
-  @Misc{,
-    title = {warbleR: an r package to streamline analysis of animal acoustic signals},
-    author = {M. Araya-Salas and G. Smith-Vidaurre},
-    year = {2017},
-    journal = {Methods in Ecology and Evolution},
-    url = {https://dx.doi.org/10.1111/2041-210X.12624},
-  }
-
-
-To cite R in publications use:
-
-  R Core Team (2021). R: A language and environment for statistical computing. R Foundation for
-  Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.
-
-A BibTeX entry for LaTeX users is
-
-  @Manual{,
-    title = {R: A Language and Environment for Statistical Computing},
-    author = {{R Core Team}},
-    organization = {R Foundation for Statistical Computing},
-    address = {Vienna, Austria},
-    year = {2021},
-    url = {https://www.R-project.org/},
-  }
-
-We have invested a lot of time and effort in creating R, please cite it when using it for data
-analysis. See also ‘citation("pkgname")’ for citing R packages.
-
-`, `V V1`, `V V2`, `V V2`, `V V2`, `V V2`, `V V2`, `V V2`, `V V2`, `V V2`, `V V2`, `V V1`, `V V4`, `V V1`, `V V2`, `V V2`, `V V1`, `V V1`, `V V1`, `V V2`, `V V2`, `V V2`, `V V2`, `V V1`, `V V2`, `V V1`, `V V2`, `V V2`, `V V2`, `V V2`, `V V2`, `V V2`, `V V2`, `V V1`, `V V2`, `V V1`, `V V2`, `V V2`, `V V2`, `V V2`, `V V2`, V1, `V V2`, `V V2`, `V V2`, `V V2`, `V V1`, `V V2`, `V V2`, `V V1`, `V V1`, `V V2`, `V V2`, `V V1`, `V V2`, `V V1`, `V V2`, `V V2`, `V V1`, `V V1`, `V V2`, `V V2`, `V V2`, `V V2`
-Score contact to contact: 0.23
-Overlap 0 contact to contact: 0
-N contact to contact: 29
-Loadings contact to contact: `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V2`, `V V2`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V2`, `V V1`, `V V2`, `V V1`, `V V1`, `V V1`, `V V1`, `V V2`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V2`, `V V2`, `V V1`, `V V1`, `V V2`, `V V2`, `V V1`, `V V1`, `V V4`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V4`, `V V1`, `V V2`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V2`, `V V2`, `V V1`, `V V1`, `V V1`, `V V3`, `V V1`, `V V2`, `V V1`, `V V2`, `V V1`, `V V1`, `V V1`, `V V2`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V2`, `V V1`, `V V1`, `V V1`, `V V8`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V2`, `V V2`, `V V2`, `V V1`, `V V1`, `V V1`, `V V2`, `V V1`, `V V1`, `V V2`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`
-Score growly to growly: 0.1
-Overlap 0 growly to growly: 0
-N growly to growly: 27
-Loadings growly to growly: `V V2`, V10, `V V11`, `V V1`, V10, V10, `V V12`, `V V12`, `V V2`, V9, `V V2`, V11, `V V4`, V11, V12, `V V1`, `V V9`, `V V3`, `V V1`, `V V1`, `V V1`, `V V4`, `V V9`, `V V2`, `V V1`, `V V4`, `V V9`, `V V2`, `V V12`, `V V1`, `V V5`, `V V2`, `V V2`, `V V1`, V12, `V V12`, V1, V12, `V V7`, V12, `V V1`, V12, `V V1`, V13, V12, `V V2`, `V V4`, `V V2`, `V V1`, V12, `V V9`, V7, V10, V12, `V V4`, `V V8`, `V V1`, `V V2`, V11, `V V12`, `V V2`, `V V2`, V12, `V V2`, `V V1`, `V V2`, `V V1`, V11, `V V10`, V9, `V V2`, `V V8`, `V V5`, V13, V12, `V V9`, `V V2`, V11, V9, `V V1`, V12, V14, `V V1`, `V V4`, V12, `V V11`, V9, `V V2`, V9, V7, V8, `V V1`, `V V1`, `V V8`, `V V12`, `V V8`, V13, `V V9`, `V V1`, `V V12`
-Score other tonal to other tonal: 0.12
-Overlap 0 other tonal to other tonal: 0.04
-N other tonal to other tonal: 15
-Loadings other tonal to other tonal: `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V2`, `V V2`, `V V1`, `V V1`, `V V1`, `V V1`, `V V9`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`
-Score alarm to alarm: 0.12
-Overlap 0 alarm to alarm: 0.11
-N alarm to alarm: 7
-Loadings alarm to alarm: V14, `V V13`, `V V3`, `V V3`, V9, V9, V13, V3, V12, V12, V11, V8, `V V12`, `V V11`, V9, `V V2`, `V V3`, `V V6`, `V V14`, `V V2`, V13, `V V12`, V9, V9, `V V12`, `V V12`, V8, V9, V13, `V V1`, V12, `V V2`, V13, `V V12`, V11, `V V1`, V15, V11, `V V9`, `V V7`, V15, `V V12`, `V V12`, `V V3`, V11, V15, V15, `V V12`, `V V12`, `V V6`, V11, V15, V10, V10, V9, V8, V15, V13, V9, `V V6`, V9, `V V11`, `V V2`, V8, `V V12`, V3, `V V1`, V11, V10, V3, `V V7`, V12, V8, V13, V9, `V V7`, V3, V11, V9, `V V9`, V14, V12, V12, V9, V13, `V V9`, V11, V9, V11, V6, V11, `V V7`, V12, V9, V3, `V V2`, V9, `V V7`, V12, V9
+-------------------------------------------------------------------------
+Contact to contact
+Score: 0.39
+Overlap 0: 0
+N: 16
+Loadings: `V V2`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V2`, `V V1`, `V V2`, `V V1`, `V V1`, `V V1`, `V V2`, `V V2`, `V V1`, `V V1`, `V V1`, `V V1`, `V V2`, `V V1`, `V V1`, `V V2`, `V V2`, `V V2`, `V V1`, `V V2`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V2`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V2`, `V V1`, `V V1`, `V V1`, `V V2`, `V V1`, `V V1`, `V V2`, `V V4`, `V V1`, `V V2`, `V V1`, `V V1`, `V V1`, `V V2`, `V V1`, `V V1`, `V V1`, `V V2`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V2`, `V V1`, `V V2`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V2`, `V V1`, `V V1`, `V V2`, `V V1`, `V V1`, `V V1`, `V V2`, `V V1`, `V V1`, `V V2`, `V V1`, `V V1`, `V V1`
+-------------------------------------------------------------------------
+Tonal to growly
+Score: 0.15
+Overlap 0: 0.01
+N: 19
+Loadings: `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`
+-------------------------------------------------------------------------
+Growly to tonal
+Score: 0.21
+Overlap 0: 0
+N: 11.75
+Loadings: `V V1`, V13, `V V1`, `V V2`, `V V2`, `V V1`, `V V1`, `V V4`, `V V2`, `V V1`, `V V1`, `V V2`, `V V1`, `V V1`, `V V1`, `V V2`, V1, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, V13, `V V2`, `V V5`, `V V1`, `V V1`, V13, `V V1`, `V V1`, V13, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, V13, `V V1`, `V V1`, `V V1`, V13, `V V1`, `V V1`, `V V2`, `V V1`, `V V1`, `V V4`, `V V1`, `V V1`, V13, `V V1`, `V V1`, `V V4`, `V V1`, `V V1`, V13, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V2`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V2`, `V V1`, `V V4`, `V V2`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V2`, `V V1`, `V V1`, `V V1`, `V V2`, `V V1`, `V V4`, `V V1`, `V V1`
+-------------------------------------------------------------------------
+All to all
+Score: 0.15
+Overlap 0: 0
+N: 52
+Loadings: `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`
