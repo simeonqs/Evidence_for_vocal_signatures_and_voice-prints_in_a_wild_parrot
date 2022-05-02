@@ -1,0 +1,24 @@
+-------------------------------------------------------------------------
+Contact to contact
+Score: 0.25
+Overlap 0: 0
+N: 19
+Loadings: `V V1`, `V V4`, `V V1`, `V V7`, `V V1`, `V V3`, `V V3`, `V V5`, `V V1`, `V V1`, `V V1`, `V V2`, `V V7`, `V V1`, `V V1`, `V V3`, `V V4`, `V V1`, `V V1`, `V V4`, `V V4`, V1, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V2`, `V V1`, `V V3`, `V V1`, `V V1`, `V V1`, `V V1`, V1, `V V9`, V1, `V V3`, `V V4`, `V V1`, `V V1`, `V V1`, `V V1`, `V V5`, `V V1`, V1, V8, `V V1`, `V V1`, `V V1`, V7, `V V1`, `V V4`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V3`, `V V8`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V3`, `V V3`, `V V1`, `V V1`, `V V1`, `V V7`, `V V4`, `V V1`, `V V4`, `V V1`, `V V1`, `V V4`, `V V3`, `V V2`, `V V1`, `V V1`, `V V6`, V1, `V V12`, `V V1`, `V V4`, `V V1`, `V V4`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V3`, `V V4`
+-------------------------------------------------------------------------
+Tonal to growly
+Score: 0.16
+Overlap 0: 0.05
+N: 16
+Loadings: `V V1`, `V V4`, `V V2`, `V V4`, `V V2`, V5, `V V4`, `V V4`, `V V1`, V13, `V V7`, `V V2`, `V V2`, `V V2`, `V V7`, `V V7`, `V V2`, `V V2`, V11, `V V1`, `V V2`, `V V2`, `V V4`, `V V1`, `V V1`, `V V2`, `V V2`, `V V4`, `V V1`, `V V2`, V8, V5, `V V1`, V3, `V V4`, V11, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, V1, `V V1`, V10, `V V1`, `V V4`, `V V4`, `V V2`, `V V1`, `V V1`, `V V2`, `V V2`, `V V4`, `V V4`, `V V2`, `V V1`, V11, `V V7`, `V V4`, `V V1`, `V V7`, `V V2`, `V V2`, `V V2`, `V V2`, `V V8`, `V V4`, `V V12`, `V V2`, `V V1`, `V V8`, `V V7`, V9, `V V1`, `V V1`, V13, `V V7`, `V V1`, `V V7`, `V V2`, `V V2`, `V V7`, `V V2`, V2, `V V4`, `V V1`, `V V1`, `V V4`, `V V1`, `V V2`, `V V2`, V10, `V V4`, `V V1`, `V V1`, `V V1`, `V V2`
+-------------------------------------------------------------------------
+Growly to tonal
+Score: 0.22
+Overlap 0: 0.1
+N: 9
+Loadings: V13, `V V13`, `V V7`, `V V7`, V9, V9, V14, `V V7`, V9, V9, `V V2`, `V V7`, V9, V14, V14, `V V7`, V9, V9, V9, V13, `V V7`, V14, `V V2`, `V V8`, V13, `V V13`, V8, V13, `V V12`, V11, V11, `V V12`, V9, V9, V9, V9, `V V2`, `V V2`, `V V3`, V11, `V V1`, `V V1`, `V V8`, V14, `V V8`, V9, `V V3`, V9, V13, `V V7`, `V V7`, `V V8`, V10, `V V6`, `V V3`, V9, `V V7`, V13, `V V12`, `V V7`, V9, `V V7`, `V V7`, `V V12`, `V V2`, `V V3`, `V V2`, V9, V13, V8, `V V12`, `V V3`, V14, V13, `V V7`, V9, V11, V10, V9, V14, `V V7`, V7, `V V14`, `V V7`, `V V7`, `V V1`, V13, `V V7`, V11, `V V7`, V12, `V V7`, `V V5`, `V V8`, V14, `V V12`, `V V1`, `V V8`, `V V8`, `V V12`
+-------------------------------------------------------------------------
+All to all
+Score: 0.19
+Overlap 0: 0
+N: 24
+Loadings: `V V13`, `V V8`, `V V1`, `V V5`, `V V8`, `V V1`, `V V1`, `V V4`, `V V7`, `V V1`, `V V4`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V13`, `V V1`, `V V1`, `V V1`, `V V1`, `V V2`, `V V8`, `V V1`, `V V1`, `V V1`, `V V1`, `V V4`, `V V1`, `V V4`, `V V8`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V4`, `V V1`, `V V1`, `V V4`, `V V7`, V11, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V4`, `V V4`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V4`, `V V8`, `V V4`, `V V1`, `V V1`, `V V1`, `V V7`, `V V1`, `V V1`, `V V1`, `V V1`, `V V1`, `V V4`, `V V1`, V11, `V V1`, `V V1`, `V V7`, `V V1`, `V V1`, `V V4`, `V V7`, `V V1`, `V V5`, `V V8`, `V V4`, `V V1`, `V V8`, `V V1`, `V V1`, `V V1`, `V V5`, `V V1`, V11, `V V1`, `V V5`, `V V1`, `V V2`, `V V1`, `V V7`, `V V1`, `V V4`, `V V1`
