@@ -1,9 +1,11 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 20-03-2022
-# Date last modified: 20-03-2022
+# Date last modified: 29-04-2022
 # Author: Simeon Q. Smeele
 # Description: Plotting model results per method for vsrm. 
+# This version plots the difference between same_ind and same_rec with diff_ind and between same_ind, 
+# diff_rec with diff_ind. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
@@ -34,10 +36,22 @@ plot.model = function(path_model, yaxt = 'n', xaxt = 'n'){
   plot(NULL, xlim = c(-0.5, 1.5), ylim = c(0, 12), main = '', 
        xlab = '', ylab = '', xaxt = xaxt, yaxt = yaxt)
   abline(v = 0, col = alpha(1, 0.5), lwd = 5, lty = 2)
-  sapply(1:2000, function(i) (post$z_same_rec[i,2] - post$z_same_rec[i,1]) * post$sigma_same_rec[i]) %>% 
-    density %>% lines(col = alpha(4, 1), lwd = 5, lty = 1)
-  sapply(1:2000, function(i) (post$z_same_ind[i,2] - post$z_same_ind[i,1]) * post$sigma_same_ind[i]) %>% 
-    density %>% lines(col = alpha(3, 1), lwd = 5, lty = 1)
+  
+  a_same_rec = sapply(1:length(post$a_bar), function(i) 
+    post$a_bar[i] + post$z_same_ind[i,1] * post$sigma_same_ind[i] + 
+      post$z_same_rec[i,1] * post$sigma_same_rec[i])
+  
+  a_same_ind = sapply(1:length(post$a_bar), function(i) 
+    post$a_bar[i] + post$z_same_ind[i,1] * post$sigma_same_ind[i] + 
+      post$z_same_rec[i,2] * post$sigma_same_rec[i])
+  
+  a_diff_ind = sapply(1:length(post$a_bar), function(i) 
+    post$a_bar[i] + post$z_same_ind[i,2] * post$sigma_same_ind[i] + 
+      post$z_same_rec[i,2] * post$sigma_same_rec[i])
+  
+  
+  density(a_diff_ind - a_same_rec) %>% lines(col = alpha(4, 1), lwd = 5, lty = 1)
+  density(a_diff_ind - a_same_ind) %>% lines(col = alpha(3, 1), lwd = 5, lty = 1)
   text(1.25, 9, sprintf('N = %s', ncol(post$z_call), adj = 1))
 }
 
@@ -91,6 +105,5 @@ plot.model(models[str_detect(models, 'specan_growl')], xaxt = 'l')
 mtext('beta', 1, 2, cex = 0.75)
 
 dev.off()
-
 
 message('Done')
