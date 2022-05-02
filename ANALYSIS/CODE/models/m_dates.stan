@@ -1,8 +1,9 @@
 // Project: voice paper
 // Date started: 21-03-2022
-// Date last modified: 21-03-2022
+// Date last modified: 30-04-2022
 // Author: Simeon Q. Smeele
 // Description: Multi-level model for date between recording effect. 
+// This version uses priors for normalised rather than standardised accoustic distance. 
 data{
     int N_obs; // number of rows (one row per call pair)
     int N_call; // number of calls
@@ -30,17 +31,17 @@ parameters{
 }
 model{
     vector[N_obs] mu;
-    a_bar ~ normal(0, 0.5);
+    a_bar ~ normal(0.5, 0.25);
     z_ind ~ normal(0, 1);
     z_rec_pair ~ normal(0, 1);
     z_call ~ normal(0, 1);
     b_bar ~ normal(0, 0.5);
     b_ind ~ normal(0, 1);
-    sigma ~ exponential(1);
-    sigma_z_call ~ exponential(2);
-    sigma_z_ind ~ exponential(2);
-    sigma_z_rec_pair ~ exponential(2);
-    sigma_b_ind ~ exponential(2);
+    sigma ~ exponential(3);
+    sigma_z_call ~ exponential(3);
+    sigma_z_ind ~ exponential(3);
+    sigma_z_rec_pair ~ exponential(3);
+    sigma_b_ind ~ exponential(3);
     for( n in 1:N_obs ) {
         mu[n] =
         // intercept
