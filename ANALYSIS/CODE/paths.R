@@ -22,11 +22,13 @@ path_data_sets_time = 'ANALYSIS/RESULTS/02_time_effect/data_sets_time.RData'
 path_data_sets_date = 'ANALYSIS/RESULTS/02_time_effect/data_sets_date.RData'
 path_data_sets_year = 'ANALYSIS/RESULTS/03_year_comparison/data_sets_year.RData'
   
-path_ind_model = 'ANALYSIS/CODE/models/m_ind.stan'
+path_ind_model = 'ANALYSIS/CODE/models/m_ind_0_1.stan'
+path_time_model = 'ANALYSIS/CODE/models/m_time.stan'
+path_date_model = 'ANALYSIS/CODE/models/m_dates.stan'
 
-path_ind_model_results = 'ANALYSIS/RESULTS/01_compare_call_types/all_models_out.RData'
-path_time_model_results = 'ANALYSIS/RESULTS/02_time_effect/all_models_out_time.RData'
-path_date_model_results = 'ANALYSIS/RESULTS/02_time_effect/all_models_out_date.RData'
+path_ind_model_results = 'ANALYSIS/RESULTS/01_compare_call_types/model_result'
+path_time_model_results = 'ANALYSIS/RESULTS/02_time_effect/model_result_time'
+path_date_model_results = 'ANALYSIS/RESULTS/02_time_effect/model_results_date'
 path_year_model_results = 'ANALYSIS/RESULTS/03_year_comparison/all_models_out_year.RData'
 
 path_data = 'ANALYSIS/RESULTS/00_run_methods/all_data.RData'
@@ -60,7 +62,5 @@ path_pdf_example_spectrograms = 'ANALYSIS/RESULTS/figures/example spectrograms.p
 
 path_final_figure_ind = 'ANALYSIS/RESULTS/final_figure_ind.pdf'
 path_final_figure_time = 'ANALYSIS/RESULTS/final_figure_time.pdf'
-
-path_out_vsrm = 'ANALYSIS/RESULTS/01_compare_call_types/vsrm'
 
 path_dfa_output = 'ANALYSIS/RESULTS/04_cross_call_type/results.txt'
