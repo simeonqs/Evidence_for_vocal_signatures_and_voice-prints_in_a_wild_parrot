@@ -1,9 +1,10 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 22-03-2022
-# Date last modified: 30-04-2022
+# Date last modified: 02-05-2022
 # Author: Simeon Q. Smeele
 # Description: Prepping data and running vsr model dates. 
+# This version runs on normalised data. 
 # source('ANALYSIS/CODE/02_time_effect/02_run_dates.R')
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -62,8 +63,6 @@ prep.dat = function(m, st){
   names(call_trans) = as.character(unique(c(clean_dat$call_i, clean_dat$call_j)))
   clean_dat$call_i = call_trans[as.character(clean_dat$call_i)]
   clean_dat$call_j = call_trans[as.character(clean_dat$call_j)]
-  ## scale
-  clean_dat$acc_dist = as.vector(scale(clean_dat$acc_dist))
   ## sample sizes
   clean_dat = as.list(clean_dat)
   clean_dat$N_call = max(clean_dat$call_j)
