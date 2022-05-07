@@ -64,6 +64,7 @@ path_pdf_pdfa_sub = 'ANALYSIS/RESULTS/04_cross_call_type/scores_sub.pdf'
 path_pdf_model_parameters = 'ANALYSIS/RESULTS/01_compare_call_types/parameters.pdf'
 path_pdf_example_spectrograms = 'ANALYSIS/RESULTS/figures/example spectrograms.pdf'
 path_pdf_pco_plots = 'ANALYSIS/RESULTS/figures/PCO plots.pdf'
+path_pdf_composite_figure = 'ANALYSIS/RESULTS/figures/composite figure.pdf'
 
 path_final_figure_ind = 'ANALYSIS/RESULTS/final_figure_ind.pdf'
 path_final_figure_time = 'ANALYSIS/RESULTS/final_figure_time.pdf'
