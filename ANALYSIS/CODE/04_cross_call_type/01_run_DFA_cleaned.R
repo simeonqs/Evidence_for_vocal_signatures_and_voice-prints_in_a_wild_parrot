@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 06-02-2022
-# Date last modified: 02-05-2022
+# Date last modified: 07-05-2022
 # Author: Simeon Q. Smeele
 # Description: Running DFA.  
 # This version also takes recording into account. 
@@ -50,10 +50,10 @@ par(mfrow = c(2, 3))
 sink(path_dfa_output)
 ## contact to contact
 pdfa_out = run.pdfa(train_set = 'contact', 
-                      N_train = 40, N_test = 5,
-                      test_set = 'contact', 
-                      main = 'contact to contact',
-                      mfcc_out = mfcc_out, st = st)
+                    N_train = 40, N_test = 5,
+                    test_set = 'contact', 
+                    main = 'contact to contact',
+                    mfcc_out = mfcc_out, st = st)
 cat("-------------------------------------------------------------------------", sep="\n",append=TRUE)
 cat("Contact to contact", sep="\n",append=TRUE)
 cat(sprintf('Score: %s', round(mean(pdfa_out$score), 2)), 
