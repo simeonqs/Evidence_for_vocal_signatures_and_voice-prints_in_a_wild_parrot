@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 30-04-2022
-# Date last modified: 01-02-2022
+# Date last modified: 09-05-2022
 # Author: Simeon Q. Smeele
 # Description: Running the pDFA on a subset of individuals from the square.
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -34,7 +34,7 @@ sexing$sex = toupper(sexing$sex)
 nesting = read.csv2(path_nesting)
 
 # Subset for females from the square
-keep = (st$bird %in% sexing$ID[sexing$sex %in% c('F', 'M')] & 
+keep = (st$bird %in% sexing$ID[sexing$sex %in% c('F')] & 
           st$bird %in% nesting$id[str_detect(nesting$area, 'square')])
 st = st[keep,]
 mfcc_out = mfcc_out[keep]
