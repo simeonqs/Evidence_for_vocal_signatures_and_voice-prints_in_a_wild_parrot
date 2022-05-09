@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 15-03-2022
-# Date last modified: 06-05-2022
+# Date last modified: 07-05-2022
 # Author: Simeon Q. Smeele
 # Description: Plotting the final figures for the paper.
 # This version has a completely new figure that combines all the Bayesian results. 
@@ -24,6 +24,7 @@ source('ANALYSIS/CODE/paths.R')
 pdf(path_pdf_composite_figure, 4, 6)
 
 # Set plot layout
+set.seed(1)
 layout(mat = matrix(c(1, 2,
                       3, 4,
                       5, 6,
@@ -31,7 +32,7 @@ layout(mat = matrix(c(1, 2,
                       9, 10), nrow = 5, ncol = 2, byrow = T),
        heights = c(1, 1, 1, 1, 1),
        widths = c(1, 2, 1, 2, 1, 2, 1, 2, 1, 2))
-par(mar = rep(0.5, 4), oma = c(5, 5, 1, 1))
+par(mar = rep(0.5, 4), oma = c(4.5, 0.5, 0, 4.5))
 
 # Run through call types
 for(j in 1:5){
@@ -44,11 +45,13 @@ for(j in 1:5){
     'ANALYSIS/RESULTS/01_compare_call_types/model_result_spcc_alarm.RData',
     'ANALYSIS/RESULTS/01_compare_call_types/model_result_spcc_growl.RData'
   )[j] )
-  plot(NULL, ylim = c(0.5, 0.85), xlim = c(0, 1), main = '', 
+  plot(NULL, xlim = c(-0.05, 0.15), ylim = c(0, 90), main = '', 
        xlab = '', ylab = '', xaxt = 'n', yaxt = 'n')
-  if(j == 3) mtext('acoustic distance', 2, 3)
-  axis(2, c(0.55, 0.7, 0.85))
-  if(j == 5) mtext('', 1, 3)
+  abline(v = 0, lty = 2, lwd = 3, col = 'grey')
+  if(j == 5){
+    axis(1, c(0, 0.1))
+    mtext('contrast', 1, 3)
+  } 
   
   a_same_rec = sapply(1:length(post$a_bar), function(i) 
     post$a_bar[i] + post$z_same_ind[i,1] * post$sigma_same_ind[i] + 
@@ -62,27 +65,21 @@ for(j in 1:5){
     post$a_bar[i] + post$z_same_ind[i,2] * post$sigma_same_ind[i] + 
       post$z_same_rec[i,2] * post$sigma_same_rec[i])
   
-  d = density(a_diff_ind)[c('y', 'x')] %>% as.data.frame
-  d$y = d$y/max(d$y)
-  d %>% lines(col = alpha('grey', 1), lwd = 5, lty = 1)
-  d = density(a_same_rec)[c('y', 'x')] %>% as.data.frame
-  d$y = d$y/max(d$y)
-  d %>% lines(col = alpha(4, 1), lwd = 5, lty = 1)
-  d = density(a_same_ind)[c('y', 'x')] %>% as.data.frame
-  d$y = d$y/max(d$y)
-  d %>% lines(col = alpha(3, 1), lwd = 5, lty = 1)
-  text(1.25, 9, sprintf('N = %s', ncol(post$z_call)), adj = 1)
+  lines(density(a_diff_ind - a_same_ind), col = 3, lwd = 5, lty = 1)
+  lines(density(a_diff_ind - a_same_rec), col = 4, lwd = 5, lty = 1)
   
   # Plot time models
-  plot(NULL, xlim = c(-7, 7), ylim = c(0.5, 0.85), main = '', 
+  plot(NULL, xlim = c(-7, 7), ylim = c(0.45, 0.95), main = '', 
        xlab = '', 
        ylab = '', xaxt = 'n', yaxt = 'n')
+  axis(4, c(0.5, 0.7, 0.9))
+  if(j == 3) mtext('acoustic distance', 4, 3)
   if(j == 5){
-    mtext('time [s]          time [days]',
+    mtext(' time [s]         time [days]',
           1, 3)
     axis(1, c(-7, -4, -1, 1, 4, 7), c(0.01, 0.32, 10, 0, 15, 30))
   }
-  lines(c(0, 0), c(0.5, 0.85), lwd = 2)  
+  lines(c(0, 0), c(0.45, 0.95), lwd = 2)  
   
   load( c(
     'ANALYSIS/RESULTS/02_time_effect/model_result_time_spcc_contact_post.RData',
