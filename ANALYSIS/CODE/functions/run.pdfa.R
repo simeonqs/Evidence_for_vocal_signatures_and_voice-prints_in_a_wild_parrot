@@ -1,19 +1,21 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 21-02-2022
-# Date last modified: 22-04-2022
+# Date last modified: 09-05-2022
 # Author: Simeon Q. Smeele
 # Description: This function runs the permuted DFA. For each iteration it creates a training and testing
 # set based on the settings. It then runs a single DFA for the labelled and randomised data. Due to limited
 # number of attempts to find a usable train/test split not all individuals will always be included. The 
 # function returns the trained score, random score, pair-wise difference and plots the density of the 
 # contrast.
+# This version has to option to randomise within nesting locations. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 run.pdfa = function(train_set, test_set,
                     n_iter = 100, 
                     N_train = 15, N_test = 10, 
                     mfcc_out, st, 
+                    permute = F,
                     main = ''){
   
   pdfa_out = lapply(1:n_iter, function(i){
@@ -23,7 +25,8 @@ run.pdfa = function(train_set, test_set,
                      balance = T)
     dfa_out = run.dfa(names_train = out$names_train, 
                       names_test = out$names_test, 
-                      mfcc_out = mfcc_out)
+                      mfcc_out = mfcc_out,
+                      permute = permute)
     dfa_out['N'] = out$N
     return(dfa_out)
   }) %>% bind_rows
