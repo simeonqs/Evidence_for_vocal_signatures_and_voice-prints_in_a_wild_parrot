@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 06-02-2022
-# Date last modified: 07-05-2022
+# Date last modified: 14-05-2022
 # Author: Simeon Q. Smeele
 # Description: Running DFA.  
 # This version also takes recording into account. 
@@ -44,8 +44,8 @@ st$main_type = sapply(st$`call type`, function(type){
 
 # Run full pDFAs
 ## pdf
-pdf(path_pdf_pdfa, 7, 5)
-par(mfrow = c(2, 3))
+pdf(path_pdf_pdfa, 7, 7)
+par(mfrow = c(2, 2))
 ## txt
 sink(path_dfa_output)
 ## contact to contact
@@ -56,7 +56,11 @@ pdfa_out = run.pdfa(train_set = 'contact',
                     mfcc_out = mfcc_out, st = st)
 cat("-------------------------------------------------------------------------", sep="\n",append=TRUE)
 cat("Contact to contact", sep="\n",append=TRUE)
-cat(sprintf('Score: %s', round(mean(pdfa_out$score), 2)), 
+cat(sprintf('Score trained: %s', round(mean(pdfa_out$score), 2)), 
+    sep="\n",append=TRUE)
+cat(sprintf('Score random: %s', round(mean(pdfa_out$score_random), 2)), 
+    sep="\n",append=TRUE)
+cat(sprintf('Diff: %s', round(mean(pdfa_out$score_diff), 2)), 
     sep="\n",append=TRUE)
 cat(sprintf('Overlap 0: %s', 
             round(mean(length(which(pdfa_out$score_diff < 0))/length(pdfa_out$score_diff)), 2)), 
@@ -73,7 +77,11 @@ pdfa_out = run.pdfa(train_set = c('contact', 'tja', 'tjup', 'frill', 'other_tona
                     mfcc_out = mfcc_out, st = st)
 cat("-------------------------------------------------------------------------", sep="\n",append=TRUE)
 cat("Tonal to growly", sep="\n",append=TRUE)
-cat(sprintf('Score: %s', round(mean(pdfa_out$score), 2)), 
+cat(sprintf('Score trained: %s', round(mean(pdfa_out$score), 2)), 
+    sep="\n",append=TRUE)
+cat(sprintf('Score random: %s', round(mean(pdfa_out$score_random), 2)), 
+    sep="\n",append=TRUE)
+cat(sprintf('Diff: %s', round(mean(pdfa_out$score_diff), 2)), 
     sep="\n",append=TRUE)
 cat(sprintf('Overlap 0: %s', 
             round(mean(length(which(pdfa_out$score_diff < 0))/length(pdfa_out$score_diff)), 2)), 
@@ -90,7 +98,11 @@ pdfa_out = run.pdfa(train_set = c('growl', 'alarm', 'growl_low', 'trruup'),
                     mfcc_out = mfcc_out, st = st)
 cat("-------------------------------------------------------------------------", sep="\n",append=TRUE)
 cat("Growly to tonal", sep="\n",append=TRUE)
-cat(sprintf('Score: %s', round(mean(pdfa_out$score), 2)), 
+cat(sprintf('Score trained: %s', round(mean(pdfa_out$score), 2)), 
+    sep="\n",append=TRUE)
+cat(sprintf('Score random: %s', round(mean(pdfa_out$score_random), 2)), 
+    sep="\n",append=TRUE)
+cat(sprintf('Diff: %s', round(mean(pdfa_out$score_diff), 2)), 
     sep="\n",append=TRUE)
 cat(sprintf('Overlap 0: %s', 
             round(mean(length(which(pdfa_out$score_diff < 0))/length(pdfa_out$score_diff)), 2)), 
@@ -108,7 +120,11 @@ pdfa_out = run.pdfa(train_set = c('contact', 'tja', 'tjup', 'frill', 'other_tona
                     mfcc_out = mfcc_out, st = st)
 cat("-------------------------------------------------------------------------", sep="\n",append=TRUE)
 cat("All to all", sep="\n",append=TRUE)
-cat(sprintf('Score: %s', round(mean(pdfa_out$score), 2)), 
+cat(sprintf('Score trained: %s', round(mean(pdfa_out$score), 2)), 
+    sep="\n",append=TRUE)
+cat(sprintf('Score random: %s', round(mean(pdfa_out$score_random), 2)), 
+    sep="\n",append=TRUE)
+cat(sprintf('Diff: %s', round(mean(pdfa_out$score_diff), 2)), 
     sep="\n",append=TRUE)
 cat(sprintf('Overlap 0: %s', 
             round(mean(length(which(pdfa_out$score_diff < 0))/length(pdfa_out$score_diff)), 2)), 

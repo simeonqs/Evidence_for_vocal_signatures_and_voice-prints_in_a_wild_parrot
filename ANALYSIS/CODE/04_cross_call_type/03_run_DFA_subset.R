@@ -1,15 +1,16 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 30-04-2022
-# Date last modified: 09-05-2022
+# Date last modified: 14-05-2022
 # Author: Simeon Q. Smeele
 # Description: Running the pDFA on a subset of individuals from the square.
+# This version adds the area for the 2020 birds. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # Loading libraries
 libraries = c('tidyverse', 'warbleR', 'MASS')
-for(i in libraries){
-  if(! i %in% installed.packages()) lapply(i, install.packages)
+for(lib in libraries){
+  if(! lib %in% installed.packages()) lapply(lib, install.packages)
   lapply(libraries, require, character.only = TRUE)
 }
 
@@ -31,10 +32,18 @@ sexing_v = read_xlsx(path_sexing_v)
 sexing = na.omit(rbind(sexing_f, sexing_v))
 sexing$ID = toupper(sexing$ID)
 sexing$sex = toupper(sexing$sex)
-nesting = read.csv2(path_nesting)
+nesting_20 = read.csv2(path_nesting_20)
+nesting_20 = nesting_20[!is.na(nesting_20$tree_manual),]
+nest_overview_20 = read.csv2(path_nesting_overview_20)
+nesting_20$area = sapply(nesting_20$tree_manual, function(tree){
+  area = nest_overview_20$cluster[which(nest_overview_20$tree == tree)]
+  if(length(area) != 1) return(NA) else return(area)
+})
+nesting_21 = read.csv2(path_nesting_21)
+nesting = rbind(nesting_20[,c('id', 'area')], nesting_21[,c('id', 'area')])
 
 # Subset for females from the square
-keep = (st$bird %in% sexing$ID[sexing$sex %in% c('F')] & 
+keep = (st$bird %in% sexing$ID[sexing$sex %in% c('M')] & 
           st$bird %in% nesting$id[str_detect(nesting$area, 'square')])
 st = st[keep,]
 mfcc_out = mfcc_out[keep]
@@ -51,8 +60,8 @@ st$main_type = sapply(st$`call type`, function(type){
 
 # Run full pDFAs
 ## pdf
-pdf(path_pdf_pdfa_sub, 7, 5)
-par(mfrow = c(2, 3))
+pdf(path_pdf_pdfa_sub, 7, 7)
+par(mfrow = c(2, 2))
 ## txt
 sink(path_dfa_output_sub)
 ## contact to contact
@@ -63,7 +72,11 @@ pdfa_out = run.pdfa(train_set = 'contact',
                       mfcc_out = mfcc_out, st = st)
 cat("-------------------------------------------------------------------------", sep="\n",append=TRUE)
 cat("Contact to contact", sep="\n",append=TRUE)
-cat(sprintf('Score: %s', round(mean(pdfa_out$score), 2)), 
+cat(sprintf('Score trained: %s', round(mean(pdfa_out$score), 2)), 
+    sep="\n",append=TRUE)
+cat(sprintf('Score random: %s', round(mean(pdfa_out$score_random), 2)), 
+    sep="\n",append=TRUE)
+cat(sprintf('Diff: %s', round(mean(pdfa_out$score_diff), 2)), 
     sep="\n",append=TRUE)
 cat(sprintf('Overlap 0: %s', 
             round(mean(length(which(pdfa_out$score_diff < 0))/length(pdfa_out$score_diff)), 2)), 
@@ -80,7 +93,11 @@ pdfa_out = run.pdfa(train_set = c('contact', 'tja', 'tjup', 'frill', 'other_tona
                     mfcc_out = mfcc_out, st = st)
 cat("-------------------------------------------------------------------------", sep="\n",append=TRUE)
 cat("Tonal to growly", sep="\n",append=TRUE)
-cat(sprintf('Score: %s', round(mean(pdfa_out$score), 2)), 
+cat(sprintf('Score trained: %s', round(mean(pdfa_out$score), 2)), 
+    sep="\n",append=TRUE)
+cat(sprintf('Score random: %s', round(mean(pdfa_out$score_random), 2)), 
+    sep="\n",append=TRUE)
+cat(sprintf('Diff: %s', round(mean(pdfa_out$score_diff), 2)), 
     sep="\n",append=TRUE)
 cat(sprintf('Overlap 0: %s', 
             round(mean(length(which(pdfa_out$score_diff < 0))/length(pdfa_out$score_diff)), 2)), 
@@ -97,7 +114,11 @@ pdfa_out = run.pdfa(train_set = c('growl', 'alarm', 'growl_low', 'trruup'),
                     mfcc_out = mfcc_out, st = st)
 cat("-------------------------------------------------------------------------", sep="\n",append=TRUE)
 cat("Growly to tonal", sep="\n",append=TRUE)
-cat(sprintf('Score: %s', round(mean(pdfa_out$score), 2)), 
+cat(sprintf('Score trained: %s', round(mean(pdfa_out$score), 2)), 
+    sep="\n",append=TRUE)
+cat(sprintf('Score random: %s', round(mean(pdfa_out$score_random), 2)), 
+    sep="\n",append=TRUE)
+cat(sprintf('Diff: %s', round(mean(pdfa_out$score_diff), 2)), 
     sep="\n",append=TRUE)
 cat(sprintf('Overlap 0: %s', 
             round(mean(length(which(pdfa_out$score_diff < 0))/length(pdfa_out$score_diff)), 2)), 
@@ -115,7 +136,11 @@ pdfa_out = run.pdfa(train_set = c('contact', 'tja', 'tjup', 'frill', 'other_tona
                     mfcc_out = mfcc_out, st = st)
 cat("-------------------------------------------------------------------------", sep="\n",append=TRUE)
 cat("All to all", sep="\n",append=TRUE)
-cat(sprintf('Score: %s', round(mean(pdfa_out$score), 2)), 
+cat(sprintf('Score trained: %s', round(mean(pdfa_out$score), 2)), 
+    sep="\n",append=TRUE)
+cat(sprintf('Score random: %s', round(mean(pdfa_out$score_random), 2)), 
+    sep="\n",append=TRUE)
+cat(sprintf('Diff: %s', round(mean(pdfa_out$score_diff), 2)), 
     sep="\n",append=TRUE)
 cat(sprintf('Overlap 0: %s', 
             round(mean(length(which(pdfa_out$score_diff < 0))/length(pdfa_out$score_diff)), 2)), 
