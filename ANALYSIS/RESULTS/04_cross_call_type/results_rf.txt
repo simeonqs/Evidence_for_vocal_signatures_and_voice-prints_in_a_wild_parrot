@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------
+Contact to contact
+Contact to contact
+Score trained: 0.37
+Score random: 0.06
+Diff: 0.31
+Overlap 0: 0
+N: 16
