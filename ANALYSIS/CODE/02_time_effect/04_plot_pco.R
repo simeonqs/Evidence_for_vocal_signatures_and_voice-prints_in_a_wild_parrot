@@ -56,8 +56,9 @@ for(i in 1:10){
   
   # Plot
   tr = round(time, -1) %>% as.factor %>% as.integer
-  plot(pco_out$vectors[,1:2], type = 'b', col = tr, pch = 16,
+  plot(pco_out$vectors[,1:2], type = 'b', col = tr, pch = 16, cex = 2,
        xaxt = 'n', yaxt = 'n', xlab = '', ylab = '')
+  points(pco_out$vectors[1,1], pco_out$vectors[1,2], pch = 16, col = 'white')
   if(i < 6) mtext(type, 3, 1, font = 2)
   if(i > 5) mtext('axis 1', 1, 1)
   if(i %in% c(1, 6)) mtext('axis 2', 2, 1)
