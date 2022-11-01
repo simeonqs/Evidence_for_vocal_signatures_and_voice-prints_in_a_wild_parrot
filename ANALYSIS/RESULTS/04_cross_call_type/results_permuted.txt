@@ -1,0 +1,32 @@
+-------------------------------------------------------------------------
+Contact to contact
+Score trained: 0.33
+Score random: 0.09
+Diff: 0.25
+Overlap 0: 0
+N: 16
+Loadings: means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1
+-------------------------------------------------------------------------
+Tonal to growly
+Score trained: 0.13
+Score random: 0.07
+Diff: 0.06
+Overlap 0: 0.13
+N: 20
+Loadings: means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1
+-------------------------------------------------------------------------
+Growly to tonal
+Score trained: 0.33
+Score random: 0.17
+Diff: 0.16
+Overlap 0: 0.07
+N: 7.72
+Loadings: sds_11, sds_10, delta_means_11, delta_means_7, delta_means_3, means_1, delta_means_7, delta_means_3, delta_means_11, delta_means_13, delta_means_13, delta_means_3, delta_means_3, delta_means_3, delta_means_3, delta_means_7, means_1, delta_means_11, delta_means_11, sds_12, delta_means_3, sds_13, delta_means_7, delta_means_3, delta_means_3, delta_means_14, sds_11, means_1, means_1, delta_means_7, delta_means_7, delta_means_11, delta_means_7, means_1, sds_11, means_1, sds_11, means_1, delta_means_7, delta_means_11, delta_means_3, delta_means_3, delta_means_3, delta_means_3, delta_means_3, delta_means_11, delta_means_7, delta_means_3, delta_means_11, delta_means_7, delta_means_3, delta_means_3, delta_means_8, sds_11, means_8, delta_means_13, means_2, sds_11, sds_11, sds_10, delta_means_14, delta_means_3, sds_11, delta_means_3, delta_means_7, sds_11, delta_means_3, delta_means_11, means_1, delta_means_7, means_2, delta_means_3, delta_means_3, delta_means_7, sds_13, delta_means_13, sds_13, sds_11, sds_13, delta_means_7, means_1, delta_means_10, sds_11, delta_means_3, delta_means_14, delta_means_11, means_1, means_2, delta_means_3, delta_means_3, means_1, delta_means_7, delta_means_11, delta_means_7, means_2, means_2, means_1, delta_means_3, delta_means_3, delta_means_3
+-------------------------------------------------------------------------
+All to all
+Score trained: 0.13
+Score random: 0.03
+Diff: 0.1
+Overlap 0: 0
+N: 40
+Loadings: means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_4, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_2, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_4, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1, means_1
