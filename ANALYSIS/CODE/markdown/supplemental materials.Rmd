@@ -126,7 +126,7 @@ The model was fitted in the same way as model I.
 
 ### Model IV: difference between years
 
-To test how stable the individual signature is across years we subsetted the pairwise dis-similarities to only include comparisons between calls from the same individual, but from different recording. We also included whether or not the recordings came from the same year. We then used a multi-level model with a global intercept, off-sets for: same vs different year, the individual, recording pair and call. The full model structure was as follows:
+To test how stable the individual signature is across years we subsetted the pairwise dis-similarities to only include comparisons between calls from the same individual, but from different recordings. We also included whether or not the recordings came from the same year. We then used a multi-level model with a global intercept, off-sets for: same vs different year, the individual, recording pair and call. The full model structure was as follows:
 
 $$
 \begin{aligned}
@@ -163,9 +163,15 @@ We wrote a custom R script to run the pDFA. We ran 100 iterations with the follo
 
 # Supplemental Results
 
+## Model I: results other methods
+
+
+
 ## Model IV: difference between years
 
-```{r figure-year, include=TRUE, fig.align="center", fig.cap='Posterior distributions for the for the Bayesian multilevel model with difference between recordings from the same vs different years. Greater values  mean more within year similarity. Models were run separately for the main call types (columns) and methods (rows; DTW - dynamic time warping, SPCC - spectrographic cross correlation, MFCCCC - mel frequency cepstral coefficient analysis). N represents the number of calls included in the model.', fig.height=5, fig.width=7, echo=FALSE}
+There was no effect of year for any of the methods or call types (see Figure SX). 
+
+```{r figure-year, include=TRUE, fig.align="center", fig.cap='Posterior distributions for the for the Bayesian multilevel model with difference between recordings from the same vs different years. Greater values  mean more within year similarity. Models were run separately for the main call types (columns) and methods (rows; DTW - dynamic time warping, SPCC - spectrographic cross correlation, MF4C - mel frequency cepstral coefficient cross correlation). N represents the number of calls included in the model.', fig.height=5, fig.width=7, echo=FALSE}
 knitr::include_graphics(path_pdf_year)
 ```
 
@@ -173,7 +179,7 @@ knitr::include_graphics(path_pdf_year)
 
 ## pDFA
 
-For the results presented in the paper there was no overlap with zero for any of the pDFAs. For full distributions and sample sizes see Figure \@ref(fig:figure-pdfa).
+For the results presented in the paper there was no overlap with zero for any of the pDFAs. For full distributions and sample sizes see Figure SX.
 
 ```{r figure-pdfa, include=TRUE, fig.align="center", fig.cap='pDFA results. Densities of the differences between the trained and random DFAs. N is number of individals for which there was enough data available.', fig.height=5, fig.width=7, echo=FALSE}
 knitr::include_graphics(path_pdf_pdfa)
@@ -181,25 +187,25 @@ knitr::include_graphics(path_pdf_pdfa)
 
 \pagebreak
 
-When sub-setting the data to only include females from the square the results for growly to tonal fell towards chance-level, but all other results remained stable with overlap with zero less than 2%. For full distributions and sample sizes see Figure \@ref(fig:figure-pdfa-sub-f).
+When sub-setting the data to only include females from Promenade Passeig de Lluís Companys the results for growly to tonal fell towards chance-level, but all other results remained stable with overlap with zero less than 2%. For full distributions and sample sizes see Figure SX.
 
-```{r figure-pdfa-sub-f, include=TRUE, fig.align="center", fig.cap='pDFA results for females from the square. Densities of the differences between the trained and random DFAs. N is number of individals for which there was enough data available.', fig.height=5, fig.width=7, echo=FALSE}
+```{r figure-pdfa-sub-f, include=TRUE, fig.align="center", fig.cap='pDFA results for females from Promenade Passeig de Lluís Companys. Densities of the differences between the trained and random DFAs. N is number of individals for which there was enough data available.', fig.height=5, fig.width=7, echo=FALSE}
 knitr::include_graphics(path_pdf_pdfa_sub_f)
 ```
 
 \pagebreak
 
-When sub-setting the data to only include males from the square the results for both cross-call type models fell towards chance-level. For full distributions and sample sizes see Figure \@ref(fig:figure-pdfa-sub-m).
+When sub-setting the data to only include males from Promenade Passeig de Lluís Companys the results for both cross-call type models fell towards chance-level. For full distributions and sample sizes see Figure SX.
 
-```{r figure-pdfa-sub-m, include=TRUE, fig.align="center", fig.cap='pDFA results for males from the square. Densities of the differences between the trained and random DFAs. N is number of individals for which there was enough data available.', fig.height=5, fig.width=7, echo=FALSE}
+```{r figure-pdfa-sub-m, include=TRUE, fig.align="center", fig.cap='pDFA results for males from Promenade Passeig de Lluís Companys. Densities of the differences between the trained and random DFAs. N is number of individals for which there was enough data available.', fig.height=5, fig.width=7, echo=FALSE}
 knitr::include_graphics(path_pdf_pdfa_sub_m)
 ```
 
 \pagebreak
 
-When sub-setting the data to only include females from the square the results for the cross call type models remained stable but overlap with zero increased to 6-7%. For full distributions and sample sizes see Figure \@ref(fig:figure-pdfa-perm).
+When randomising within Promenade Passeig de Lluís Companys and Parc de la Ciutadella the results for the cross call type models remained stable but overlap with zero increased to 6-7%. For full distributions and sample sizes see Figure SX.
 
-```{r figure-pdfa-perm, include=TRUE, fig.align="center", fig.cap='pDFA results with randomisation withing square and park only. Densities of the differences between the trained and random DFAs. N is number of individals for which there was enough data available.', fig.height=5, fig.width=7, echo=FALSE}
+```{r figure-pdfa-perm, include=TRUE, fig.align="center", fig.cap='pDFA results with randomisation withing Promenade Passeig de Lluís Companys and Parc de la Ciutadella only. Densities of the differences between the trained and random DFAs. N is number of individals for which there was enough data available.', fig.height=5, fig.width=7, echo=FALSE}
 knitr::include_graphics(path_pdf_pdfa_permuted)
 ```
 
