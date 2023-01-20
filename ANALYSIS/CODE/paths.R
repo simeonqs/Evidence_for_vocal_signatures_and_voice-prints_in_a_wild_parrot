@@ -72,7 +72,9 @@ path_pdf_model_parameters = 'ANALYSIS/RESULTS/01_compare_call_types/parameters.p
 path_pdf_example_spectrograms = 'ANALYSIS/RESULTS/figures/example spectrograms.pdf'
 path_pdf_pco_plots = 'ANALYSIS/RESULTS/figures/PCO plots.pdf'
 path_pdf_composite_figure = 'ANALYSIS/RESULTS/figures/composite figure.pdf'
-path_pdf_composite_figure_dtw = 'ANALYSIS/RESULTS/figures/composite figure - dtw.pdf'
+path_pdf_composite_figure_dtw = 'ANALYSIS/RESULTS/supplemental figures/composite figure - dtw.pdf'
+path_pdf_composite_figure_mfcccc = 'ANALYSIS/RESULTS/supplemental figures/composite figure - mfcccc.pdf'
+path_pdf_composite_figure_specan = 'ANALYSIS/RESULTS/supplemental figures/composite figure - specan.pdf'
 path_spec_seq = 'ANALYSIS/RESULTS/figures/spectrogram sequence.pdf'
 
 path_final_figure_ind = 'ANALYSIS/RESULTS/final_figure_ind.pdf'
