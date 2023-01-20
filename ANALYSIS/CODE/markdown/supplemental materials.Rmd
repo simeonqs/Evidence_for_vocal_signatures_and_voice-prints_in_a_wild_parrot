@@ -22,6 +22,9 @@ library(scales)
 rm(list=ls()) 
 
 # Paths
+path_pdf_composite_figure_dtw = '../../RESULTS/supplemental figures/composite figure - dtw.pdf'
+path_pdf_composite_figure_mfcccc = '../../RESULTS/supplemental figures/composite figure - mfcccc.pdf'
+path_pdf_composite_figure_specan = '../../RESULTS/supplemental figures/composite figure - specan.pdf'
 path_pdf_pdfa = '../../RESULTS/04_cross_call_type/scores.pdf'
 path_pdf_pdfa_sub_f = '../../RESULTS/04_cross_call_type/scores_sub_f.pdf'
 path_pdf_pdfa_sub_m = '../../RESULTS/04_cross_call_type/scores_sub_m.pdf'
@@ -34,12 +37,12 @@ path_pdf_spectros = '../../RESULTS/figures/example spectrograms.pdf'
 
 ## Call types
 
-Call types were manually determined from the spectrogram and audio in Raven Lite [@RavenLite]. We included X types in the main text (see also figure SX):
+Call types were manually determined from the spectrogram and audio in Raven Lite [@RavenLite]. We included 5 types in the main text (see also Figure S1):
 
 - contact: tonal vocalisation component and at least three frequency modulation peaks
 - tja: tonal vocalisation with a single up-sweep component; sometimes one or two very short amplitude modulated components are present before or after the main component
 - trruup: vocalisation that consists of at least three amplitude modulated components at the start, followed by a frequency modulated tonal component
-- alarm: loud amplitude modulated tonal vocalisation with at least five clear u-shaped components
+- alarm: loud amplitude modulated tonal vocalisation with at least five clear u-shaped tonal components
 - growl: medium loud amplitude modulated vocalisation with at least five components without clear tonality
 
 ```{r figure-spectros, include=TRUE, fig.align="center", fig.cap='Example spectrograms of the call types.', fig.height=5, fig.width=7, echo=FALSE}
@@ -48,19 +51,49 @@ knitr::include_graphics(path_pdf_spectros)
 
 \pagebreak
 
-## Dynamic time warping (DTW)
+## Quantification of similarity
 
-For tonal calls the fundamental frequency was traced in Luscinia  [@lachlan2007luscinia]. For non-tonal calls only the start and end times were determined manually. Traces were then exported as CSV and imported into R [@R] for further analysis. Traces were smoothed using two steps. The first step filled gaps within a call by connecting the fundamental frequency at both sides of the gap with a straight line. To get rid of small measurement jitter, we used smooth.spline from *stats* with spar = 0.1. 
+For tonal calls the fundamental frequency was traced in Luscinia  [@lachlan2007luscinia]. For non-tonal calls only the start and end times were determined manually. Traces were then exported as CSV and imported into R [@R] for further analysis. Traces were smoothed using two steps. The first step filled gaps within a call by connecting the fundamental frequency at both sides of the gap with a straight line. To get rid of small measurement jitter, we used smooth.spline from *stats* with spar = 0.1 as a second step. 
 
-[ADD DETAILS SPCC, DTW, MFCCCC and SPECAN]
+To measure the similarity between any two calls a variety of methods have been used. The most common are 1) dynamic time warping (DTW), which measures measures similarity between the fundamental frequencies of two calls while controlling for differences in speech rhythm [@Bellman1959IRE]; 2) spectrographic cross correlation (SPCC), which measures similarity between the spectrograms of two calls [@clark1987quantitative]; and 3) spectrograpic analysis (SPECAN) which measures a set of variables on the spectrogram. We added a fourth method not commonly used and cross correlated the mel frequency cepstral coefficients (MF4C). 
 
-To measure the similarity between any two calls a variety of methods have been used. The most important are 1) dynamic time warping (DTW), which measures measures similarity between the fundamental frequencies of two calls while controlling for differences in speech rhythm \parencite{Bellman1959IRE}; 2) spectrographic cross correlation (SPCC), which measures similarity between the spectrograms of two calls \parencite{clark1987quantitative}; and 3) spectrograpic analysis (SPECAN) which measures a set of variables on the spectrogram. We added a fourth method not commonly used and cross correlated the mel frequency cepstral coefficients (MFCCCC). 
+### Spectrographic cross correlation (SPCC)
+
+We used a set of custom functions to run the SPCC.  We used the raw audio files and the start and end times determined in Luscinia. We used the function *ffilter* from the package *seewave* [@seewave] to apply a high pass filter from 500 Hz before analysis. Then we created spectrograms with window length = 512 and overlap = 89%, which were modified to:
+
+- be limited to frequencies between 1-3 kHz
+- have standardised pixel values 
+- have all values below 1.1 on the standardised scale to be set to 0 (to remove noise)
+- have all values above 1.8 on the standardised scale to bet set to 1.8 (to soften loud components)
+- then have all pixels sum to 1 (deviding each pixel by the sum of all the pixels in the spectrogram - to ensure that long spectrograms would weight as much as short)
+
+These modified spectrograms were then run through a function that slid them over each other in the time dimension and computed the difference for each step. The minimal difference (the difference at point of maximal overlap of the signal) was then used as measure of acoustic distance. 
+
+### Dynamic time warping (DTW)
+
+We used the function *dtw* from the package *dtw* [@giorgino2009computing] to run DTW on the fundamental frequency traces. We normalised and log transformed the resulting distance matrix.
+
+### Spectrographic analysis (SPECAN)
+
+We ran spectrographic analysis on the raw audio files. We used the start and end times determined in Luscinia. We used the function *ffilter* from the package *seewave* [@seewave] to apply a bandpass filter between 500 and 6,000 Hz before analysis. We then measured the following variables:
+
+- duration (s)
+- peak frequency (kHz): the loudest frequency component from the spectrum over the whole signal
+- low frequency (kHz): the lowest frequency above 0.4 times the loudest component from the spectrum over the whole signal
+- high frequency (kHz): the highest frequency above 0.4 times the loudest component from the spectrum over the whole signal
+- bandwidth (kHz): the difference between highest and lowest frequency
+- number of amplitude modulation peaks (n): the number of peaks in the spectral envelope 
+- inter peak interval (s): the median time between amplitude modulation peaks
+
+### Mel frequency cepstral coefficient cross correlation (MF4C)
+
+We first created MFCC objects. These consisted of matrices with MFCC traces as rows. We used the raw audio files and the start and end times determined in Luscinia. We used the function *ffilter* from the package *seewave* [@seewave] to apply a high pass filter from 500 Hz before analysis. We then used the *melfcc* function from the *tuneR* package [@tuneR] to generate the traces. We used the following settings: wintime = 512/44100, hoptime = 50/44100, numcep = 10, minfreq = 300. We then used the same custom function as for SPCC to run the cross correlation. 
 
 ## Statistical analysis
 
 ### Model I: individual and recording signal
 
-We used the dis-similarity matrices from DTW, SPCC, MFCCCC or SPECAN to get a pairwise acoustic distance between all calls. We only included call pairs from the same year. We used a model similar to the Bayesian social relations model used in psychology. In our case the acoustic distance between any two calls was the response variable and was standardised before analysis. We included a global intercept and off-sets for: same vs different individual, same vs different recording, pair of individuals from which the calls came, pair of recordings from which the calls came and each call. The full model structure was as follows:
+We used the dis-similarity matrices from DTW, SPCC, MF4C or SPECAN to get a pairwise acoustic distance between all calls. We only included call pairs from the same year. We used a model similar to the Bayesian social relations model used in psychology. In our case the acoustic distance between any two calls was the response variable and was standardised before analysis. We included a global intercept and off-sets for: same vs different individual, same vs different recording, pair of individuals from which the calls came, pair of recordings from which the calls came and each call. The full model structure was as follows:
 
 $$
 \begin{aligned}
@@ -163,13 +196,29 @@ We wrote a custom R script to run the pDFA. We ran 100 iterations with the follo
 
 # Supplemental Results
 
-## Model I: results other methods
+## Model I-III: results other methods
 
+Results for dynamic time warping (see Figure S2) are similar to those of spectrographic cross correlation as presented in the main text. Note dynamic time warping cold only be run for tonal calls. 
 
+```{r figure-dtw, include=TRUE, fig.align="center", fig.cap='Model results for contact calls, tja calls amd trruup calls (ttb) using dynamic time warping. Blue density plots are the posterior contrast between the similarity of calls from different individuals versus the same individual and same recording. Green density plots are the posterior contrast between the similarity of calls from different individuals vs from the same individual but different recordings. Blue lines are 20 samples from the posterior prediction of acoustic distance throughout time within a recording. Green lines are 20 samples from the posterior prediction of acoustic distance throughout days between a recording.', fig.height=5, fig.width=7, echo=FALSE}
+knitr::include_graphics(path_pdf_composite_figure_dtw)
+```
+
+Individual signal was much reduced for spectrographic analysis (see Figure S3) compared to those of spectrographic cross correlation as presented in the main text. 
+
+```{r figure-specan, include=TRUE, fig.align="center", fig.cap='Model results for contact calls, tja calls, trruup calls, alarm calls and growls (ttb) using spectrogaphic analysis. Blue density plots are the posterior contrast between the similarity of calls from different individuals versus the same individual and same recording. Green density plots are the posterior contrast between the similarity of calls from different individuals vs from the same individual but different recordings. Blue lines are 20 samples from the posterior prediction of acoustic distance throughout time within a recording. Green lines are 20 samples from the posterior prediction of acoustic distance throughout days between a recording.', fig.height=5, fig.width=7, echo=FALSE}
+knitr::include_graphics(path_pdf_composite_figure_specan)
+```
+
+Individual signal was much reduced for mel frequency cepstral coefficient cross correlation (see Figure S4) compared to those of spectrographic cross correlation as presented in the main text. 
+
+```{r figure-mfcccc, include=TRUE, fig.align="center", fig.cap='Model results for contact calls, tja calls, trruup calls, alarm calls and growls (ttb) using mel frequency cepstral coefficient cross correlation. Blue density plots are the posterior contrast between the similarity of calls from different individuals versus the same individual and same recording. Green density plots are the posterior contrast between the similarity of calls from different individuals vs from the same individual but different recordings. Blue lines are 20 samples from the posterior prediction of acoustic distance throughout time within a recording. Green lines are 20 samples from the posterior prediction of acoustic distance throughout days between a recording.', fig.height=5, fig.width=7, echo=FALSE}
+knitr::include_graphics(path_pdf_composite_figure_mfcccc)
+```
 
 ## Model IV: difference between years
 
-There was no effect of year for any of the methods or call types (see Figure SX). 
+There was no effect of year for any of the methods or call types (see Figure S5). 
 
 ```{r figure-year, include=TRUE, fig.align="center", fig.cap='Posterior distributions for the for the Bayesian multilevel model with difference between recordings from the same vs different years. Greater values  mean more within year similarity. Models were run separately for the main call types (columns) and methods (rows; DTW - dynamic time warping, SPCC - spectrographic cross correlation, MF4C - mel frequency cepstral coefficient cross correlation). N represents the number of calls included in the model.', fig.height=5, fig.width=7, echo=FALSE}
 knitr::include_graphics(path_pdf_year)
@@ -179,7 +228,7 @@ knitr::include_graphics(path_pdf_year)
 
 ## pDFA
 
-For the results presented in the paper there was no overlap with zero for any of the pDFAs. For full distributions and sample sizes see Figure SX.
+For the results presented in the paper there was no overlap with zero for any of the pDFAs. For full distributions and sample sizes see Figure S6.
 
 ```{r figure-pdfa, include=TRUE, fig.align="center", fig.cap='pDFA results. Densities of the differences between the trained and random DFAs. N is number of individals for which there was enough data available.', fig.height=5, fig.width=7, echo=FALSE}
 knitr::include_graphics(path_pdf_pdfa)
@@ -187,7 +236,7 @@ knitr::include_graphics(path_pdf_pdfa)
 
 \pagebreak
 
-When sub-setting the data to only include females from Promenade Passeig de Lluís Companys the results for growly to tonal fell towards chance-level, but all other results remained stable with overlap with zero less than 2%. For full distributions and sample sizes see Figure SX.
+When sub-setting the data to only include females from Promenade Passeig de Lluís Companys the results for growly to tonal fell towards chance-level, but all other results remained stable with overlap with zero less than 2%. For full distributions and sample sizes see Figure S7.
 
 ```{r figure-pdfa-sub-f, include=TRUE, fig.align="center", fig.cap='pDFA results for females from Promenade Passeig de Lluís Companys. Densities of the differences between the trained and random DFAs. N is number of individals for which there was enough data available.', fig.height=5, fig.width=7, echo=FALSE}
 knitr::include_graphics(path_pdf_pdfa_sub_f)
@@ -195,7 +244,7 @@ knitr::include_graphics(path_pdf_pdfa_sub_f)
 
 \pagebreak
 
-When sub-setting the data to only include males from Promenade Passeig de Lluís Companys the results for both cross-call type models fell towards chance-level. For full distributions and sample sizes see Figure SX.
+When sub-setting the data to only include males from Promenade Passeig de Lluís Companys the results for both cross-call type models fell towards chance-level. For full distributions and sample sizes see Figure S8.
 
 ```{r figure-pdfa-sub-m, include=TRUE, fig.align="center", fig.cap='pDFA results for males from Promenade Passeig de Lluís Companys. Densities of the differences between the trained and random DFAs. N is number of individals for which there was enough data available.', fig.height=5, fig.width=7, echo=FALSE}
 knitr::include_graphics(path_pdf_pdfa_sub_m)
@@ -203,7 +252,7 @@ knitr::include_graphics(path_pdf_pdfa_sub_m)
 
 \pagebreak
 
-When randomising within Promenade Passeig de Lluís Companys and Parc de la Ciutadella the results for the cross call type models remained stable but overlap with zero increased to 6-7%. For full distributions and sample sizes see Figure SX.
+When randomising within Promenade Passeig de Lluís Companys and Parc de la Ciutadella the results for the cross call type models remained stable but overlap with zero increased to 6-7%. For full distributions and sample sizes see Figure S9.
 
 ```{r figure-pdfa-perm, include=TRUE, fig.align="center", fig.cap='pDFA results with randomisation withing Promenade Passeig de Lluís Companys and Parc de la Ciutadella only. Densities of the differences between the trained and random DFAs. N is number of individals for which there was enough data available.', fig.height=5, fig.width=7, echo=FALSE}
 knitr::include_graphics(path_pdf_pdfa_permuted)
