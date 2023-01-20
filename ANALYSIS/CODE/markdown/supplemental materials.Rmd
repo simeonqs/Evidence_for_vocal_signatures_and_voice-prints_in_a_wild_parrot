@@ -1,5 +1,5 @@
 ---
-title: "Supplemental Materials for The voice of the parrot: vocal identity across multiple call types in a communally nesting parrot"
+title: "Supplemental Materials for Evidence for vocal signatures and voice-prints in a wild parrot"
 output:
   bookdown::pdf_document2:
     toc: yes
