@@ -3,13 +3,14 @@
 The R code and data needed to replicate results from the article:
 
 ```
-Voice paper
+Evidence for vocal signatures and voice-prints in a wild parrot
 ```
 
 ------------------------------------------------
 
 **Abstract**
 
+In humans, identity is partly encoded in a voice-print that is carried across multiple vocalisations. Other species of vocal learners also signal vocal identity in calls, for example as shown in the contact call of parrots. However, it remains unclear to what extent other call types in parrots are individually distinct, and whether there is  an analogous voice-print across calls. Here we test if an individual signal is also present in other call types, how stable this signal is, and if parrots exhibit voice-prints across call types. We recorded 5599 vocalisations from 229 individually-marked monk parakeets (\emph{Myiopsitta monachus}) over a two year period in Barcelona, Spain. We find evidence for an individual signal in two out of five call types. We further show that while contact calls are individually distinct, they are more variable within individuals than previously assumed, changing over short time scales. Finally, we provide evidence for voice-prints across multiple call types, with a discriminant function being able to predict caller identity across call types. This suggests that monk parakeets may be able to use vocal cues to recognise conspecifics, even across vocalisation types and without necessarily needing active vocal signals of identity.
 
 ------------------------------------------------
 
@@ -28,6 +29,8 @@ Below are all files in the repository. The first bullet point under the path is 
 
 - README.md
 	- overview of repo and all files
+- license.md 
+	- liscense file
 - .gitignore
 	- which files not to sync to GitHub
 - voice_paper.Rproj
@@ -162,6 +165,91 @@ Below are all files in the repository. The first bullet point under the path is 
 	- the final pdf for model I
 - ANALYSIS/RESULTS/figures/final_figure_time.pdf
 	- the final pdf for model II and III
+- ANALYSIS/RESULTS/supplemental figures/composite figure - dtw.pdf
+	- composite figure for dtw
+- ANALYSIS/RESULTS/supplemental figures/composite figure - mfcccc.pdf
+	- composite figure for mf4c
+- ANALYSIS/RESULTS/supplemental figures/composite figure - specan.pdf
+	- composite figure for specan
+	
+- ANALYSIS/CODE/00_run_methods/README.md 
+	- short explanation of folder
+- ANALYSIS/CODE/00_run_methods/00_DATA_create_data_sets.R
+	- creates the data sets for next steps
+- ANALYSIS/CODE/00_run_methods/01_DTW_run.R
+	- runs dynamic time warping
+- ANALYSIS/CODE/00_run_methods/02_MFCC_run.R
+	- runs mel frequency cepstral coefficients, which is not used in the paper
+- ANALYSIS/CODE/00_run_methods/03_SPCC_create_spec_objects.R
+	- creates the spectrograms for spcc
+- ANALYSIS/CODE/00_run_methods/04_SPCC_run_pixel_comparison.R
+	- runs spectrographic cross correlation
+- ANALYSIS/CODE/00_run_methods/05_SPECAN_run.R
+	- runs spectrographic analysis
+- ANALYSIS/CODE/00_run_methods/07_MFCCCC_run.R
+	- runs mel frequency cepstral coefficient cross correlation
+- ANALYSIS/CODE/01_compare_call_types/01_run_model.R
+	- runs the Bayesian models on all analysis and call types
+- ANALYSIS/CODE/01_compare_call_types/02_plot_results.R
+	- plots the results
+- ANALYSIS/CODE/01_compare_call_types/03_test_model.R
+	- running tests on model output
+- ANALYSIS/CODE/01_compare_call_types/04_test_vis.R
+	- testing some visualisations
+- ANALYSIS/CODE/02_time_effect/01_run_time.R
+	- running the Bayesian models for time within recording
+- ANALYSIS/CODE/02_time_effect/02_run_dates.R
+	- running the Bayesian models for time between recordings
+- ANALYSIS/CODE/02_time_effect/03_plot_results.R
+	- plotting the results for both 01 and 02
+- ANALYSIS/CODE/02_time_effect/04_plot_pco.R
+	- plotting some pco figures to visualise within recording change
+- ANALYSIS/CODE/02_time_effect/05_spectrogram_sequence.R
+	- plotting spectrograms for step 04
+- ANALYSIS/CODE/03_year_comparison/01_run_models.R
+	- running Bayesian models for comparison years
+- ANALYSIS/CODE/03_year_comparison/02_plot_results.R
+	- plotting the results
+- ANALYSIS/CODE/04_cross_call_type/00_MFCC_run.R
+	- generating data for mfcc
+- ANALYSIS/CODE/04_cross_call_type/01_SPECAN_run.R
+	- generating data for specan (not used)
+- ANALYSIS/CODE/04_cross_call_type/02_run_DFA_full.R
+	- running pDFA on full dataset
+- ANALYSIS/CODE/04_cross_call_type/03_run_DFA_subset.R
+	- running pDFA on subset
+- ANALYSIS/CODE/04_cross_call_type/04_run_DFA_permuted.R
+	- running permuted within location
+- ANALYSIS/CODE/04_cross_call_type/05_random_forest.R
+	- running random forest (not used, similar results)
+- ANALYSIS/CODE/functions
+	- all functions used in other code (for description see inside script)
+- ANALYSIS/CODE/luscinia/00_export_clips.R
+	- exports clips based on the selections from luscinia (not used)
+- ANALYSIS/CODE/luscinia/01_analyse_traces.R
+	- analyses the luscinia traces (not used)
+- ANALYSIS/CODE/luscinia/02_run_mantel.R
+	- runs mantel tests (not used)
+- ANALYSIS/CODE/markdown
+	- files to generate the supplemental materials, also includes the supplemental pdf
+- ANALYSIS/CODE/models
+	- Stan models and code to simulate/test models
+- ANALYSIS/CODE/test
+	- test scripts for methods
+- ANALYSIS/CODE/call type classification.R
+	- classification keys for call types
+- ANALYSIS/CODE/final figures - supplemental.R
+	- generates the supplemental figures for the manuscript
+- ANALYSIS/CODE/final figures.R
+	- generates the final figures for the manuscript
+- ANALYSIS/CODE/Luscinia - clips 2020.R
+	- script to save missing wavs for analysis in Luscinia
+- ANALYSIS/CODE/paths.R
+	- paths used in all other scripts
+- ANALYSIS/CODE/plot example spectrograms.R
+	- plots examples for the supplemental figures
+- ANALYSIS/CODE/save wavs all contact.R
+	- saves all contact calls for sorting into loud vs soft contact call
 
 NOTE: each code file contains additional information about author, date modified and description. 
 
