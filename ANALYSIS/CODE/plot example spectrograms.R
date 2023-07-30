@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 07-04-2022
-# Date last modified: 07-04-2022
+# Date last modified: 29-07-2023
 # Author: Simeon Q. Smeele
 # Description: Plotting spectrograms of the call types for sups. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -27,24 +27,25 @@ load(path_data)
 load(path_waves)
 
 pdf(path_pdf_example_spectrograms, 8, 5)
-par(mfrow = c(3, 5), oma = c(1, 1, 4, 1))
+par(mfrow = c(3, 5), oma = c(3, 3, 3, 1))
 better.spectro(ffilter(waves[[data_sets$contact[17]]], from = 300, output = 'Wave'), 
-               ylim = c(0, 15000), xlim = c(0, 0.2))
-mtext('contact', 3, 2, font = 2)
+               ylim = c(0, 15000), xlim = c(0, 0.2), mar = c(1, 1, 1, 1))
+mtext('contact', 3, 1.5, font = 2)
 better.spectro(ffilter(waves[[data_sets$tja[6]]], from = 300, output = 'Wave'), 
                ylim = c(0, 15000), xlim = c(0, 0.2))
-mtext('tja', 3, 2, font = 2)
+mtext('tja', 3, 1.5, font = 2)
 better.spectro(ffilter(waves[[data_sets$trruup[63]]], from = 300, output = 'Wave'), 
                ylim = c(0, 15000), xlim = c(0, 0.2))
-mtext('trruup', 3, 2, font = 2)
+mtext('trruup', 3, 1.5, font = 2)
 better.spectro(ffilter(waves[[data_sets$alarm[34]]], from = 300, output = 'Wave'), 
                ylim = c(0, 15000), xlim = c(0, 0.2))
-mtext('alarm', 3, 2, font = 2)
+mtext('alarm', 3, 1.5, font = 2)
 better.spectro(ffilter(waves[[data_sets$growl[10]]], from = 300, output = 'Wave'), 
                ylim = c(0, 15000), xlim = c(0, 0.2))
-mtext('growl', 3, 2, font = 2)
+mtext('growl', 3, 1.5, font = 2)
 better.spectro(ffilter(waves[[data_sets$contact[101]]], from = 300, output = 'Wave'), 
                ylim = c(0, 15000), xlim = c(0, 0.2))
+mtext('Frequency [Hz]', 2, 2)
 better.spectro(ffilter(waves[[data_sets$tja[101]]], from = 300, output = 'Wave'), 
                ylim = c(0, 15000), xlim = c(0, 0.2))
 better.spectro(ffilter(waves[[data_sets$trruup[15]]], from = 300, output = 'Wave'), 
@@ -59,6 +60,7 @@ better.spectro(ffilter(waves[[data_sets$tja[51]]], from = 300, output = 'Wave'),
                ylim = c(0, 15000), xlim = c(0, 0.2))
 better.spectro(ffilter(waves[[data_sets$trruup[110]]], from = 300, output = 'Wave'), 
                ylim = c(0, 15000), xlim = c(0, 0.2))
+mtext('Time [s]', 1, 2)
 better.spectro(ffilter(waves[[data_sets$alarm[201]]], from = 300, output = 'Wave'), 
                ylim = c(0, 15000), xlim = c(0, 0.2))
 better.spectro(ffilter(waves[[data_sets$growl[221]]], from = 300, output = 'Wave'), 
