@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 30-01-2022
-# Date last modified: 01-11-2022
+# Date last modified: 23-03-2023
 # Author: Simeon Q. Smeele
 # Description: Plotting model results per method.
 # This version includes all methods and call types. 
@@ -20,7 +20,7 @@ rm(list=ls())
 # Paths
 source('ANALYSIS/CODE/paths.R')
 path_model_results = 'ANALYSIS/RESULTS/03_year_comparison'
-path_figure_time = 'ANALYSIS/RESULTS/03_year_comparison/results.pdf'
+path_figure_time = 'ANALYSIS/RESULTS/figures/year effect.pdf'
 
 # Import functions
 # .functions = sapply(list.files(path_functions, pattern = '*R', full.names = T), source)
@@ -73,7 +73,7 @@ plot.model(models[str_detect(models, 'spcc_growl')])
 
 plot.model(models[str_detect(models, 'mfcccc_contact')], yaxt = 'l', xaxt = 'l')
 mtext('density', 2, 2, cex = 0.75)
-mtext('MFCCCC', 2, 7, font = 2, las = 2, adj = 0.5)
+mtext('MF4C', 2, 7, font = 2, las = 2, adj = 0.5)
 mtext('beta', 1, 2, cex = 0.75)
 plot.model(models[str_detect(models, 'mfcccc_tja')], xaxt = 'l')
 mtext('beta', 1, 2, cex = 0.75)
