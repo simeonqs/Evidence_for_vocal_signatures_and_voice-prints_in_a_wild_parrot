@@ -1,7 +1,7 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 15-03-2022
-# Date last modified: 07-05-2022
+# Date last modified: 22-03-2023
 # Author: Simeon Q. Smeele
 # Description: Plotting the final figures for the paper.
 # This version has a completely new figure that combines all the Bayesian results. 
@@ -35,16 +35,17 @@ layout(mat = matrix(c(1, 2,
 par(mar = rep(0.5, 4), oma = c(4.5, 0.5, 0, 4.5))
 
 # Run through call types
+cts = c(
+  'ANALYSIS/RESULTS/01_compare_call_types/model_result_spcc_contact.RData',
+  'ANALYSIS/RESULTS/01_compare_call_types/model_result_spcc_tja.RData',
+  'ANALYSIS/RESULTS/01_compare_call_types/model_result_spcc_trruup.RData',
+  'ANALYSIS/RESULTS/01_compare_call_types/model_result_spcc_alarm.RData',
+  'ANALYSIS/RESULTS/01_compare_call_types/model_result_spcc_growl.RData'
+)
 for(j in 1:5){
   
   # Plot ind model
-  load( c(
-    'ANALYSIS/RESULTS/01_compare_call_types/model_result_spcc_contact.RData',
-    'ANALYSIS/RESULTS/01_compare_call_types/model_result_spcc_tja.RData',
-    'ANALYSIS/RESULTS/01_compare_call_types/model_result_spcc_trruup.RData',
-    'ANALYSIS/RESULTS/01_compare_call_types/model_result_spcc_alarm.RData',
-    'ANALYSIS/RESULTS/01_compare_call_types/model_result_spcc_growl.RData'
-  )[j] )
+  load(cts[j])
   plot(NULL, xlim = c(-0.05, 0.15), ylim = c(0, 90), main = '', 
        xlab = '', ylab = '', xaxt = 'n', yaxt = 'n')
   abline(v = 0, lty = 2, lwd = 3, col = 'grey')
@@ -68,6 +69,13 @@ for(j in 1:5){
   lines(density(a_diff_ind - a_same_ind), col = 3, lwd = 5, lty = 1)
   lines(density(a_diff_ind - a_same_rec), col = 4, lwd = 5, lty = 1)
   
+  # Print the mean and overlap with zero for main text
+  message(cts[j])
+  message(sprintf('mean individual signal: %s', 
+                  mean(a_diff_ind - a_same_ind)))
+  message(sprintf('overlap zero individual signal: %s', 
+                  length(which(a_diff_ind - a_same_ind < 0))/length(a_diff_ind)))
+  
   # Plot time models
   plot(NULL, xlim = c(-7, 7), ylim = c(0.45, 0.95), main = '', 
        xlab = '', 
@@ -88,9 +96,9 @@ for(j in 1:5){
     'ANALYSIS/RESULTS/02_time_effect/model_result_time_spcc_alarm_post.RData',
     'ANALYSIS/RESULTS/02_time_effect/model_result_time_spcc_growl_post.RData'
   )[j] )
-  for(i in sample(1:length(post$a_bar), 20)) 
+  for(i in sample(1:length(post$a_bar), 16)) 
     lines(c(-7, -1), post[['a_bar']][i] + c(-2, 1) * post[['b_bar']][i], 
-          col = 4, lwd = 5, lty = 1)
+          col = 4, lwd = 3, lty = 1)
   
   load( c(
     'ANALYSIS/RESULTS/02_time_effect/model_results_date_spcc_contact_post.RData',
@@ -99,9 +107,9 @@ for(j in 1:5){
     'ANALYSIS/RESULTS/02_time_effect/model_results_date_spcc_alarm_post.RData',
     'ANALYSIS/RESULTS/02_time_effect/model_results_date_spcc_growl_post.RData'
   )[j] )
-  for(i in sample(1:length(post$a_bar), 20)) 
+  for(i in sample(1:length(post$a_bar), 16)) 
     lines(c(1, 7), post[['a_bar']][i] + c(0, 1) * post[['b_bar']][i], 
-          col = 3, lwd = 5, lty = 1)
+          col = 3, lwd = 3, lty = 1)
   
 } # end i loop
 
