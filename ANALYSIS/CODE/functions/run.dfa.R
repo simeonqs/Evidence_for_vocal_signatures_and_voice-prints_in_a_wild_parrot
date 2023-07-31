@@ -1,13 +1,19 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: voice paper
 # Date started: 15-02-2022
-# Date last modified: 09-05-2022
+# Date last modified: 29-07-2023
 # Author: Simeon Q. Smeele
 # Description: Running DFA. Assumes multiple objects are loaded, very specific to this chapter. 
 # This version has to option to randomise within nesting locations. 
+# This version optionally also prints the true and predicted labels. 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-run.dfa = function(names_train, names_test, mfcc_out, permute = F, print_scaling = T){
+run.dfa = function(names_train, 
+                   names_test, 
+                   mfcc_out, 
+                   permute = FALSE, 
+                   print_scaling = TRUE,
+                   print_predictions = FALSE){
   
   # Prepare data
   mfcc_scale = scale(bind_rows(mfcc_out))
@@ -25,6 +31,7 @@ run.dfa = function(names_train, names_test, mfcc_out, permute = F, print_scaling
   model = lda(inds ~ ., data = mfcc_train)
   predictions = model %>% predict(mfcc_test)
   score = mean(predictions$class == mfcc_test$inds)
+  trained_predictions = predictions$class
   # print(score)
   lda_data = cbind(mfcc_train, predict(model)$x)
   # print(ggplot(lda_data, aes(LD1, LD2)) +
@@ -52,9 +59,16 @@ run.dfa = function(names_train, names_test, mfcc_out, permute = F, print_scaling
   predictions = model %>% predict(mfcc_random_test)
   score_random = mean(predictions$class == mfcc_random_test$inds)
   
-  return(list(score = score, 
-              score_random = score_random,
-              score_diff = score - score_random,
-              most_important = first))
+  return_list = list(score = score, 
+                     score_random = score_random,
+                     score_diff = score - score_random,
+                     most_important = first)
+  
+  if(print_predictions){
+    return_list$true_labels = mfcc_test$inds
+    return_list$predicted_labels = trained_predictions
+  }
+  
+  return(return_list)
   
 }
