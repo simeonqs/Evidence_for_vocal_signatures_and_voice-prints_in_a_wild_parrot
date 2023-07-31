@@ -1,10 +1,10 @@
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Project: monk parakeets
 # Date started: 10-12-2020
-# Date last modified: 30-08-2021
+# Date last modified: 29-07-2023
 # Author: Simeon Q. Smeele
 # Description: Creates spectrogram from wave object. Based on code from chapter I.
-# This version has the requires
+# This version has the requires.
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 require(oce)
@@ -15,7 +15,8 @@ better.spectro = function(wave,
                           wl = 512, 
                           ovl = 450, 
                           xlim = 'free', 
-                          ylim = 'free'){
+                          ylim = 'free',
+                          mar = par()$mar){
   
   # Create spectrogram
   n = wl
@@ -53,6 +54,7 @@ better.spectro = function(wave,
          col = hcl.colors(20, "RdBu", rev = TRUE) ,
          drawPalette = F,
          decimate = F,
-         main = main) 
+         main = main,
+         mar = mar) 
   
 }
