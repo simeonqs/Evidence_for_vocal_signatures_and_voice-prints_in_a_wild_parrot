@@ -1,4 +1,4 @@
-# Voice paper
+# Evidence for vocal signatures and voice-prints in a wild parrot
 
 The R code and data needed to replicate results from the article:
 
