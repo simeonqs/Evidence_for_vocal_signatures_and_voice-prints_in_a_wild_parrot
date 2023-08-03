@@ -3,7 +3,7 @@
 The R code and data needed to replicate results from the article:
 
 ```
-Evidence for vocal signatures and voice-prints in a wild parrot
+Smeele, S. Q., Senar, J. C., Aplin, L. M., & McElreath, M. B. (2023). Evidence for vocal signatures and voice-prints in a wild parrot. bioRxiv, 2023-01.
 ```
 
 ------------------------------------------------
@@ -21,6 +21,8 @@ ANALYSIS:
   - DATA: raw data
   - RESULTS: results and figures
 
+NOTE: Some large data files and results are not available in this repository. They can be downloaded from Edmond after publication. If you are interested in using the data now, you can always contact me on <simeonqs@hotmail.com>.
+
 ------------------------------------------------
 
 **File information and meta data:**
@@ -36,8 +38,8 @@ Below are all files in the repository. The first bullet point under the path is 
 - voice_paper.Rproj
 	- R Studio Project file; if you open the code from this file all paths are relative to the main folder
 
-- ANALYSIS/DATA/luscinia/all_2021.csv
-	- the fundamental frequency traces made in Luscinia for all calls in 2021
+- ANALYSIS/DATA/luscinia/all_2021.csv	
+	- the fundamental frequency traces made in Luscinia for all calls in 2021, **large data file, only available on Edmond**
 	- Individual: not used
 	- Song: file-selection.wav, where file is the original wav file name and selection is the selection from the Raven selection table
 	- Syllable: not used
@@ -46,7 +48,7 @@ Below are all files in the repository. The first bullet point under the path is 
 	- Time: time within the clip in milli seconds
 	- Fundamental_frequency: the recorded fundamental frequency in Herz
 - ANALYSIS/DATA/luscinia/contact_2020.csv
-	- the fundamental frequency traces made in Luscinia for most contact calls in 2020
+	- the fundamental frequency traces made in Luscinia for most contact calls in 2020, **large data file, only available on Edmond**
 	- Individual: not used
 	- Song: file-selection.wav, where file is the original wav file name and selection is the selection from the Raven selection table
 	- Syllable: not used
@@ -55,7 +57,7 @@ Below are all files in the repository. The first bullet point under the path is 
 	- Time: time within the clip in milli seconds
 	- Fundamental_frequency: the recorded fundamental frequency in Herz
 - ANALYSIS/DATA/luscinia/remaining_2020.csv
-	- the fundamental frequency traces made in Luscinia for the remaining calls in 2020
+	- the fundamental frequency traces made in Luscinia for the remaining calls in 2020, **large data file, only available on Edmond**
 	- Individual: not used
 	- Song: file-selection.wav, where file is the original wav file name and selection is the selection from the Raven selection table
 	- Syllable: not used
