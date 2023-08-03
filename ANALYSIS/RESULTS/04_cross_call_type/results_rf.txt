@@ -1,21 +1,0 @@
--------------------------------------------------------------------------
-Contact to contact
-Contact to contact
-pdf 
-  3 
--/                                                                                                              -/                                                                                                              -/                                                                                                              to contact
-Score trained: 0.17
-Score random: 0.09
-Diff: 0.08
-Overlap 0: 0.08
-N: 11.77
-Loadings: 
--------------------------------------------------------------------------
-All to all
-Contact to contact
-Score trained: 0.13
-Score random: 0.02
-Diff: 0.11
-Overlap 0: 0
-N: 52
-Loadings: 
