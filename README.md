@@ -73,6 +73,18 @@ Below are all files in the repository. The first bullet point under the path is 
 	- an overview over which files from 2021 to exclude from the Luscinia traces due to poor quality
 	- file_end: the end of the Song column in the Lucinia trace files, used to match and exclude
 	- total_useless: if 1 the call was very poor quality, if none the fundamental frequency was poor quality but the 2-4 kHz range was still good
+- ANALYSIS/DATA/nesting/nest overview 2020.csv
+	- an overview of all nests recorded in 2020
+ 	- tree: the tree id (numeric)
+  	- nest: the nest id within the tree (alphabetic)
+  	- n_entries: the number of nest entries within that nest
+  	- cluster: the location in the park (named based on clustering of nests)
+- ANALYSIS/DATA/nesting/nesting 2020 - manual added.csv
+	- overview of nesting location per individual (only used for pDFA analysis)
+ 	- id: individual id (mostly alphanumeric, but some old ones are purely numeric)
+  	- tree_manual: manually decided final tree id (numeric)
+  	- final_nest: manually decided final nest id (alphanumeric)
+  	- nest_locations: a comma separated vector of recorded nest locations (underscore seperated alphanumeric for tree_nest_entry)
 - ANALYSIS/DATA/overview recordings/annotations - 2020.csv
 	- annotations linked to the selection tables from Raven for 2020, note that these follow a different format compared to the 2021 data
 	- annotation_ref: annotation reference in the selection table (from the Annotation column in the selection table files) 
