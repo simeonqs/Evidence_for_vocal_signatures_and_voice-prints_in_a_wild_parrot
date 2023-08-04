@@ -167,22 +167,22 @@ Below are all files in the repository. The first bullet point under the path is 
   	- sex: f or m
  
 - ANALYSIS/RESULTS/00_run_methods
-	- in this location the results for each method should be stored in separate folders; since files are too large, these cannot be uploaded to GitHub
+	- in this location the results for each method should be stored in separate folders; **since files are too large, these cannot be uploaded to GitHub, but can be downloade from Edmond**
 - ANALYSIS/RESULTS/00_run_methods/all_data.RData
 	- RData file with the relevant processed data, following objects will be loaded:
-		- data_sets: the names of file + selection for each call type
-		- smooth_traces: the smoothed traces from Luscinia
-		- st: the merged selection tables 
+	- data_sets: the names of file + selection for each call type
+	- smooth_traces: the smoothed traces from Luscinia
+	- st: the merged selection tables 
 - ANALYSIS/RESULTS/01_compare_call_types
-	- in this location model output should be stored; since files are too large, these cannot be uploaded to GitHub
+	- in this location model output should be stored; **since files are too large, these cannot be uploaded to GitHub, but can be downloade from Edmond**
 - ANALYSIS/RESULTS//01_compare_call_types/model results.pdf
 	- pdf with all results for model I
 - ANALYSIS/RESULTS/02_time_effect
-	- in this location model output should be stored; since files are too large, these cannot be uploaded to GitHub
+	- in this location model output should be stored; **since files are too large, these cannot be uploaded to GitHub, but can be downloade from Edmond**
 - ANALYSIS/RESULTS/02_time_effect/model results.pdf
 	- pdf with all results for model II and model III
 - ANALYSIS/RESULTS/03_year_comparison
-	- - in this location model output should be stored; since files are too large, these cannot be uploaded to GitHub
+	- - in this location model output should be stored; **since files are too large, these cannot be uploaded to GitHub, but can be downloade from Edmond**
 - ANALYSIS/RESULTS/03_year_comparison/model results.pdf
 	- pdf with all results for model IV
 - ANALYSIS/RESULTS/04_cross_call_type/mfcc_out.RData
