@@ -3,13 +3,15 @@
 *.Ruserdata
 *.Rproj
 *.DS_Store
+Rplots.pdf
+*m_list.RData
+DOCUMENTS
 ANALYSIS/DATA/audio
+ANALYSIS/DATA/luscinia/all_2021.csv
+ANALYSIS/DATA/luscinia/contact_2020.csv
+ANALYSIS/DATA/luscinia/remaining_2020.csv
 ANALYSIS/RESULTS/social networks model/real_model.RData
 ANALYSIS/RESULTS/social networks model/sim_model.RData
 ANALYSIS/RESULTS/social networks model/sim_dat.RData
 ANALYSIS/RESULTS/spcc/models
 ANALYSIS/CODE/[ARCHIVE]
-.Rproj.user
-Rplots.pdf
-*m_list.RData
-DOCUMENTS
