@@ -85,6 +85,14 @@ Below are all files in the repository. The first bullet point under the path is 
   	- tree_manual: manually decided final tree id (numeric)
   	- final_nest: manually decided final nest id (alphanumeric)
   	- nest_locations: a comma separated vector of recorded nest locations (underscore seperated alphanumeric for tree_nest_entry)
+- ANALYSIS/DATA/nesting/nesting 2021 - manual added.csv
+  	- overview of nesting location per individual (only used for pDFA analysis)
+ 	- id: individual id (mostly alphanumeric, but some old ones are purely numeric)
+  	- tree_manual: manually decided final tree id (numeric)
+  	- nest_manual: manually decided final nest id (space separated alphanumeric)
+  	- area: the location in the park (named based on clustering of nests)
+  	- nest: a comma separated vector of recorded nest locations (space seperated alphanumeric for tree nest entry)
+  	- tree: a comma separated vector of recorded tree locations
 - ANALYSIS/DATA/overview recordings/annotations - 2020.csv
 	- annotations linked to the selection tables from Raven for 2020, note that these follow a different format compared to the 2021 data
 	- annotation_ref: annotation reference in the selection table (from the Annotation column in the selection table files) 
@@ -149,7 +157,14 @@ Below are all files in the repository. The first bullet point under the path is 
 	- Low Freq (Hz)	: not used
 	- High Freq (Hz): not used
 	- Annotation: annotation reference for the annotations of 2020 (multiple selections can have the same annotation), for 2021 this was not used and the selection number was used in combination with the file name to match annotations
-	
+- ANALYSIS/DATA/sex/data Francisca.csv
+	- this file is not shared because the data is from *Dawson Pell (2021)*
+ 	- ID: individual id
+  	- sex: NA, F or M
+- ANALYSIS/DATA/sex/sexing vetgenomics.xlsx
+  	- ID: individual ID
+  	- sex: f or m
+ 
 - ANALYSIS/RESULTS/00_run_methods
 	- in this location the results for each method should be stored in separate folders; since files are too large, these cannot be uploaded to GitHub
 - ANALYSIS/RESULTS/00_run_methods/all_data.RData
