@@ -3,15 +3,20 @@
 *.Ruserdata
 *.Rproj
 *.DS_Store
-Rplots.pdf
 *m_list.RData
+Rplots.pdf
 DOCUMENTS
 ANALYSIS/DATA/audio
 ANALYSIS/DATA/luscinia/all_2021.csv
 ANALYSIS/DATA/luscinia/contact_2020.csv
 ANALYSIS/DATA/luscinia/remaining_2020.csv
+ANALYSIS/DATA/sex/data Francisca.csv
 ANALYSIS/RESULTS/social networks model/real_model.RData
 ANALYSIS/RESULTS/social networks model/sim_model.RData
 ANALYSIS/RESULTS/social networks model/sim_dat.RData
 ANALYSIS/RESULTS/spcc/models
+ANALYSIS/RESULTS/contact call sorting 20 - done
+ANALYSIS/RESULTS/contact call sorting 21 - done
+ANALYSIS/RESULTS/luscinia
+ANALYSIS/RESULTS/models
 ANALYSIS/CODE/[ARCHIVE]
