@@ -162,6 +162,7 @@ Below are all files in the repository. The first bullet point under the path is 
  	- ID: individual id
   	- sex: NA, F or M
 - ANALYSIS/DATA/sex/sexing vetgenomics.xlsx
+	- file with all sexings done by Vetgenomics
   	- ID: individual ID
   	- sex: f or m
  
