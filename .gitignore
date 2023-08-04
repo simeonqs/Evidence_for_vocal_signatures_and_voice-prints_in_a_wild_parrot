@@ -4,6 +4,7 @@
 *.Rproj
 *.DS_Store
 *m_list.RData
+*wave.RDAta
 Rplots.pdf
 DOCUMENTS
 ANALYSIS/DATA/audio
@@ -21,4 +22,5 @@ ANALYSIS/RESULTS/luscinia
 ANALYSIS/RESULTS/models
 ANALYSIS/RESULTS/test output
 ANALYSIS/RESULTS/ARCHIVE
+ANALYSIS/RESULTS/00_run_methods/waves.RData
 ANALYSIS/CODE/[ARCHIVE]
