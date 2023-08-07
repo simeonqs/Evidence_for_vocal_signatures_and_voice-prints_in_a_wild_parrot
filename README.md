@@ -225,16 +225,8 @@ Below are all files in the repository. The first bullet point under the path is 
 	- RData file with the results of the pdfa, contains the subset of the pdfa.csv for subsetted for females in the square
 - ANALYSIS/RESULTS/04_cross_call_type/pdfa_permuted.RData
 	- RData file with the results of the pdfa, contains the subset of the pdfa.csv for permuted within location
-- ANALYSIS/RESULTS/figures/final_figure_ind.pdf
-	- the final pdf for model I
-- ANALYSIS/RESULTS/figures/final_figure_time.pdf
-	- the final pdf for model II and III
-- ANALYSIS/RESULTS/supplemental figures/composite figure - dtw.pdf
-	- composite figure for dtw
-- ANALYSIS/RESULTS/supplemental figures/composite figure - mfcccc.pdf
-	- composite figure for mf4c
-- ANALYSIS/RESULTS/supplemental figures/composite figure - specan.pdf
-	- composite figure for specan
+- ANALYSIS/RESULTS/figures
+	- pdfs of the figures for the main text and supplemental materials
 	
 - ANALYSIS/CODE/00_run_methods/README.md 
 	- short explanation of folder
@@ -252,6 +244,10 @@ Below are all files in the repository. The first bullet point under the path is 
 	- runs spectrographic analysis
 - ANALYSIS/CODE/00_run_methods/07_MFCCCC_run.R
 	- runs mel frequency cepstral coefficient cross correlation
+- ANALYSIS/CODE/00_run_methods/08_oberver_reliability_data.R
+	- runs the code to generate the sample of 200 random calls to test observer reliability
+- ANALYSIS/CODE/00_run_methods/09_oberver_reliability_scores.R
+	- runs the code to analyse the sample of 200 random calls to test observer reliability
 - ANALYSIS/CODE/01_compare_call_types/01_run_model.R
 	- runs the Bayesian models on all analysis and call types
 - ANALYSIS/CODE/01_compare_call_types/02_plot_results.R
@@ -286,6 +282,10 @@ Below are all files in the repository. The first bullet point under the path is 
 	- running permuted within location
 - ANALYSIS/CODE/04_cross_call_type/05_random_forest.R
 	- running random forest (not used, similar results)
+- ANALYSIS/CODE/04_cross_call_type/06_combine_DFA.R
+	- runs the code to generate the pDFA table 
+- ANALYSIS/CODE/04_cross_call_type/07_create_confusion_matrices.R
+	- runs the code to generate the confusion matrix
 - ANALYSIS/CODE/functions
 	- all functions used in other code (for description see inside script)
 - ANALYSIS/CODE/luscinia/00_export_clips.R
@@ -304,6 +304,10 @@ Below are all files in the repository. The first bullet point under the path is 
 	- classification keys for call types
 - ANALYSIS/CODE/final figures - supplemental.R
 	- generates the supplemental figures for the manuscript
+- ANALYSIS/CODE/additional figures - boxplot
+	- generates the supplemental figures with boxplots per call type
+- ANALYSIS/CODE/additional figures - PCA.R
+	- generates the supplemental figure with scatterplots for a few individuals
 - ANALYSIS/CODE/final figures.R
 	- generates the final figures for the manuscript
 - ANALYSIS/CODE/Luscinia - clips 2020.R
