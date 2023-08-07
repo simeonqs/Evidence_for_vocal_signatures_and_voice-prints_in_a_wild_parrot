@@ -95,3 +95,5 @@ path_csv_pdfa = 'ANALYSIS/RESULTS/04_cross_call_type/pdfa.csv'
 path_noise_clips = 'ANALYSIS/RESULTS/04_cross_call_type/noise clips'
 path_noise_files_sorted = 'ANALYSIS/RESULTS/04_cross_call_type/noise files sorted'
 path_noise_files_unsorted = 'ANALYSIS/RESULTS/04_cross_call_type/noise files unsorted'
+
+path_observer_reliability = 'ANALYSIS/RESULTS/observer reliability'
