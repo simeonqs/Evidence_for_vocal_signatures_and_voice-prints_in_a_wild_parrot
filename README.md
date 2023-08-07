@@ -166,23 +166,38 @@ Below are all files in the repository. The first bullet point under the path is 
   	- ID: individual ID
   	- sex: f or m
  
-- ANALYSIS/RESULTS/00_run_methods
-	- in this location the results for each method should be stored in separate folders; since files are too large, these cannot be uploaded to GitHub
 - ANALYSIS/RESULTS/00_run_methods/all_data.RData
 	- RData file with the relevant processed data, following objects will be loaded:
-		- data_sets: the names of file + selection for each call type
-		- smooth_traces: the smoothed traces from Luscinia
-		- st: the merged selection tables 
+	- data_sets: the names of file + selection for each call type
+	- smooth_traces: the smoothed traces from Luscinia
+	- st: the merged selection tables
+- ANALYSIS/RESULTS/00_run_methods/waves.RData
+	- RData file with a named list of all vocalisations as R wave objects, named with the file-selection (where file is the name of the original wav file), **large data file, only available on Edmond**
+- ANALYSIS/RESULTS/00_run_methods/dtw/m_list.RData
+	- RData file with a named list of distance matrices from dynamic time warping, named with the call type, **large data file, only available on Edmond**
+ 	- distance matrices are named with the file-selection across columns and rows
+- ANALYSIS/RESULTS/00_run_methods/mfcc/m_list.RData
+	- RData file with a named list of distance matrices from eucledian distance based on mel frequence cepstral coefficients, named with the call type, **large data file, only available on Edmond**
+ 	- distance matrices are named with the file-selection across columns and rows
+- ANALYSIS/RESULTS/00_run_methods/mfcccc/m_list.RData
+	- RData file with a named list of distance matrices from mel frequence cepstral coefficients cross correlation, named with the call type, **large data file, only available on Edmond**
+ 	- distance matrices are named with the file-selection across columns and rows
+- ANALYSIS/RESULTS/00_run_methods/spcc/m_list.RData
+	- RData file with a named list of distance matrices from spectrographic cross correlation, named with the call type, **large data file, only available on Edmond**
+ 	- distance matrices are named with the file-selection across columns and rows
+- ANALYSIS/RESULTS/00_run_methods/specan/m_list.RData
+	- RData file with a named list of distance matrices from eucledian distance based on spectrographic analysis, named with the call type, **large data file, only available on Edmond**
+ 	- distance matrices are named with the file-selection across columns and rows
 - ANALYSIS/RESULTS/01_compare_call_types
-	- in this location model output should be stored; since files are too large, these cannot be uploaded to GitHub
-- ANALYSIS/RESULTS//01_compare_call_types/model results.pdf
+	- in this location model output should be stored, **large data file, only available on Edmond**
+- ANALYSIS/RESULTS/01_compare_call_types/model results.pdf
 	- pdf with all results for model I
 - ANALYSIS/RESULTS/02_time_effect
-	- in this location model output should be stored; since files are too large, these cannot be uploaded to GitHub
+	- in this location model output should be stored, **large data file, only available on Edmond**
 - ANALYSIS/RESULTS/02_time_effect/model results.pdf
 	- pdf with all results for model II and model III
 - ANALYSIS/RESULTS/03_year_comparison
-	- - in this location model output should be stored; since files are too large, these cannot be uploaded to GitHub
+	- - in this location model output should be stored; **since files are too large, these cannot be uploaded to GitHub, but can be downloade from Edmond**
 - ANALYSIS/RESULTS/03_year_comparison/model results.pdf
 	- pdf with all results for model IV
 - ANALYSIS/RESULTS/04_cross_call_type/mfcc_out.RData
