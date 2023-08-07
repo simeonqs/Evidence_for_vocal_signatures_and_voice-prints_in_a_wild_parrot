@@ -24,5 +24,11 @@ ANALYSIS/RESULTS/test output
 ANALYSIS/RESULTS/ARCHIVE
 ANALYSIS/RESULTS/00_run_methods/waves.RData
 ANALYSIS/RESULTS/observer reliability/sorted_calls
+ANALYSIS/RESULTS/01_compare_call_types
+ANALYSIS/RESULTS/02_time_effect
+ANALYSIS/RESULTS/03_year_comparison
+ANALYSIS/RESULTS/04_cross_call_type/noise clips
+ANALYSIS/RESULTS/04_cross_call_type/noise files sorted
+ANALYSIS/RESULTS/04_cross_call_type/noise files unsorted
 ANALYSIS/CODE/[ARCHIVE]
 .Rproj.user
