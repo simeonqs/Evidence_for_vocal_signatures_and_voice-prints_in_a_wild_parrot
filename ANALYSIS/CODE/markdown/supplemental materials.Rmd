@@ -35,6 +35,7 @@ path_pdf_boxplot = '../../RESULTS/figures/boxplots.pdf'
 path_pdf_pca = '../../RESULTS/figures/pca - spcc - individual signal.pdf'
 path_dfa_conf_tonal_growly = '../../RESULTS/figures/confusion matrix tonal to growly.pdf'
 path_dfa_conf_growly_tonal = '../../RESULTS/figures/confusion matrix growly to tonal.pdf'
+path_observer_reliability = '../../RESULTS/observer reliability'
 ```
 
 # Supplemental Methods
@@ -54,6 +55,10 @@ path_dfa_conf_growly_tonal = '../../RESULTS/figures/confusion matrix growly to t
 <!-- ``` -->
 
 <!-- \pagebreak -->
+
+## Observer reliability
+
+To test how reliable calls were scored into the 11 call types, a random subset of 200 calls were scored by a second observer with prior experience to monk parakeet call type classification. The second observer had access to three examples per call type (not included in the random set) and could assign each of the random calls to only one call type. After sorting nine calls were excluded because they did not belong to any of the 11 call types (they were sorted into a 'other' category by the first observer). For the remaining classifications we plotted a confusion matrix and report the accuracy from the function *confusionMatrix* from the package *caret* [@caret]. We repeated this analysis for the binary classification into tonal and amplitude modulated calls. 
 
 ## Quantification of similarity
 
@@ -199,6 +204,20 @@ We wrote a custom R script to run the pDFA. We ran 100 iterations with the follo
 \pagebreak
 
 # Supplemental Results
+
+## Observer reliability
+
+The accuracy for the full call type classification was 0.72 (95% CI: 0.65, 0.78). Especially the short tonal calls and the soft growl were mis-classified (see Figure S\@ref(fig:figure-class1).
+
+```{r figure-class1, include=TRUE, fig.align="center", fig.cap='Confusion matrix for observer reliability. Numbers indicate how many calls were classified in that category, colour represent relative proportions.', fig.height=5, fig.width=7, echo=FALSE}
+knitr::include_graphics('../../RESULTS/figures/confusion matrix observer reliability.pdf')
+```
+
+The accuracy for the binary classification was 0.98 (95% CI: 0.95, 1.00). Only three growly calls were mis-classified (see Figure S\@ref(fig:figure-class2).
+
+```{r figure-class2, include=TRUE, fig.align="center", fig.cap='Confusion matrix for observer reliability with binary categories. Numbers indicate how many calls were classified in that category, colour represent relative proportions.', fig.height=5, fig.width=7, echo=FALSE}
+knitr::include_graphics('../../RESULTS/figures/confusion matrix observer reliability - binary.pdf')
+```
 
 ## Model I: boxplot raw data
 
