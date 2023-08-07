@@ -185,37 +185,48 @@ Below are all files in the repository. The first bullet point under the path is 
 - ANALYSIS/RESULTS/00_run_methods/spcc/m_list.RData
 	- RData file with a named list of distance matrices from spectrographic cross correlation, named with the call type, **large data file, only available on Edmond**
  	- distance matrices are named with the file-selection across columns and rows
+- ANALYSIS/RESULTS/00_run_methods/spcc/spec_objects.RData
+	- RData file with all the spectrograms for spectrographic cross correlation, named with the file-selection
 - ANALYSIS/RESULTS/00_run_methods/specan/m_list.RData
 	- RData file with a named list of distance matrices from eucledian distance based on spectrographic analysis, named with the call type, **large data file, only available on Edmond**
  	- distance matrices are named with the file-selection across columns and rows
 - ANALYSIS/RESULTS/01_compare_call_types
-	- in this location model output should be stored, **large data file, only available on Edmond**
-- ANALYSIS/RESULTS/01_compare_call_types/model results.pdf
-	- pdf with all results for model I
+	- in this location model output should be stored, **large data files, only available on Edmond**
+ 	- each model file loads two objects: (1) clean_dat, a list with all data used in the model and (2) post, the posterior distribution from the model
 - ANALYSIS/RESULTS/02_time_effect
-	- in this location model output should be stored, **large data file, only available on Edmond**
-- ANALYSIS/RESULTS/02_time_effect/model results.pdf
-	- pdf with all results for model II and model III
+	- in this location model output should be stored, **large data files, only available on Edmond**
+   	- each model file loads two objects: (1) clean_dat, a list with all data used in the model and (2) post, the posterior distribution from the model
 - ANALYSIS/RESULTS/03_year_comparison
-	- - in this location model output should be stored; **since files are too large, these cannot be uploaded to GitHub, but can be downloade from Edmond**
-- ANALYSIS/RESULTS/03_year_comparison/model results.pdf
-	- pdf with all results for model IV
+   	- in this location model output should be stored; **large data files, only available on Edmond**
+   	- each model file loads two objects: (1) clean_dat, a list with all data used in the model and (2) post, the posterior distribution from the model
 - ANALYSIS/RESULTS/04_cross_call_type/mfcc_out.RData
 	- the MFCC results for all calls
 - ANALYSIS/RESULTS/04_cross_call_type/results.txt
 	- a txt file with all results from the pDFAs
+- ANALYSIS/RESULTS/04_cross_call_type/results.txt
+	- a txt file with all results from the pDFAs, subsetted for females in the square
+- ANALYSIS/RESULTS/04_cross_call_type/results.txt
+	- a txt file with all results from the pDFAs, subsetted for males in the square
+- ANALYSIS/RESULTS/04_cross_call_type/results.txt
+	- a txt file with all results from the pDFAs, permuted within location
 - ANALYSIS/RESULTS/04_cross_call_type/scores.pdf
 	- a pdf of the differences in trained and random scores from the pDFAs
-- ANALYSIS/RESULTS/figures/final_figure_ind.pdf
-	- the final pdf for model I
-- ANALYSIS/RESULTS/figures/final_figure_time.pdf
-	- the final pdf for model II and III
-- ANALYSIS/RESULTS/supplemental figures/composite figure - dtw.pdf
-	- composite figure for dtw
-- ANALYSIS/RESULTS/supplemental figures/composite figure - mfcccc.pdf
-	- composite figure for mf4c
-- ANALYSIS/RESULTS/supplemental figures/composite figure - specan.pdf
-	- composite figure for specan
+- ANALYSIS/RESULTS/04_cross_call_type/scores_f.pdf
+	- a pdf of the differences in trained and random scores from the pDFAs, subsetted for females in the square
+- ANALYSIS/RESULTS/04_cross_call_type/scores_m.pdf
+	- a pdf of the differences in trained and random scores from the pDFAs, subsetted for males in the square
+- ANALYSIS/RESULTS/04_cross_call_type/scores_permuted.pdf
+	- a pdf of the differences in trained and random scores from the pDFAs, permuted within location
+- ANALYSIS/RESULTS/04_cross_call_type/pdfa.csv
+	- a csv file with all the pdfa scores combined, used for the table in the paper, see main text for metadata
+- ANALYSIS/RESULTS/04_cross_call_type/pdfa_full.RData
+	- RData file with the results of the pdfa, contains the subset of the pdfa.csv for the full pdfa
+- ANALYSIS/RESULTS/04_cross_call_type/pdfa_subset.RData
+	- RData file with the results of the pdfa, contains the subset of the pdfa.csv for subsetted for females in the square
+- ANALYSIS/RESULTS/04_cross_call_type/pdfa_permuted.RData
+	- RData file with the results of the pdfa, contains the subset of the pdfa.csv for permuted within location
+- ANALYSIS/RESULTS/figures
+	- pdfs of the figures for the main text and supplemental materials
 	
 - ANALYSIS/CODE/00_run_methods/README.md 
 	- short explanation of folder
@@ -233,6 +244,10 @@ Below are all files in the repository. The first bullet point under the path is 
 	- runs spectrographic analysis
 - ANALYSIS/CODE/00_run_methods/07_MFCCCC_run.R
 	- runs mel frequency cepstral coefficient cross correlation
+- ANALYSIS/CODE/00_run_methods/08_oberver_reliability_data.R
+	- runs the code to generate the sample of 200 random calls to test observer reliability
+- ANALYSIS/CODE/00_run_methods/09_oberver_reliability_scores.R
+	- runs the code to analyse the sample of 200 random calls to test observer reliability
 - ANALYSIS/CODE/01_compare_call_types/01_run_model.R
 	- runs the Bayesian models on all analysis and call types
 - ANALYSIS/CODE/01_compare_call_types/02_plot_results.R
@@ -267,6 +282,10 @@ Below are all files in the repository. The first bullet point under the path is 
 	- running permuted within location
 - ANALYSIS/CODE/04_cross_call_type/05_random_forest.R
 	- running random forest (not used, similar results)
+- ANALYSIS/CODE/04_cross_call_type/06_combine_DFA.R
+	- runs the code to generate the pDFA table 
+- ANALYSIS/CODE/04_cross_call_type/07_create_confusion_matrices.R
+	- runs the code to generate the confusion matrix
 - ANALYSIS/CODE/functions
 	- all functions used in other code (for description see inside script)
 - ANALYSIS/CODE/luscinia/00_export_clips.R
@@ -285,6 +304,10 @@ Below are all files in the repository. The first bullet point under the path is 
 	- classification keys for call types
 - ANALYSIS/CODE/final figures - supplemental.R
 	- generates the supplemental figures for the manuscript
+- ANALYSIS/CODE/additional figures - boxplot
+	- generates the supplemental figures with boxplots per call type
+- ANALYSIS/CODE/additional figures - PCA.R
+	- generates the supplemental figure with scatterplots for a few individuals
 - ANALYSIS/CODE/final figures.R
 	- generates the final figures for the manuscript
 - ANALYSIS/CODE/Luscinia - clips 2020.R
