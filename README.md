@@ -10,7 +10,7 @@ Smeele, S. Q., Senar, J. C., Aplin, L. M., & McElreath, M. B. (2023). Evidence f
 
 **Abstract**
 
-In humans, identity is partly encoded in a voice-print that is carried across multiple vocalisations. Other species of vocal learners also signal vocal identity in calls, for example as shown in the contact call of parrots. However, it remains unclear to what extent other call types in parrots are individually distinct, and whether there is  an analogous voice-print across calls. Here we test if an individual signal is also present in other call types, how stable this signal is, and if parrots exhibit voice-prints across call types. We recorded 5599 vocalisations from 229 individually-marked monk parakeets (*Myiopsitta monachus*) over a two year period in Barcelona, Spain. We find evidence for an individual signal in two out of five call types. We further show that while contact calls are individually distinct, they are more variable within individuals than previously assumed, changing over short time scales. Finally, we provide evidence for voice-prints across multiple call types, with a discriminant function being able to predict caller identity across call types. This suggests that monk parakeets may be able to use vocal cues to recognise conspecifics, even across vocalisation types and without necessarily needing active vocal signals of identity.
+In humans, identity is partly encoded in a voice-print that is carried across multiple vocalisations. Other species also signal vocal identity in calls, such as shown in the contact call of parrots. However, it remains unclear to what extent other call types in parrots are individually distinct, and whether there is  an analogous voice-print across calls. Here we test if an individual signature is present in other call types, how stable this signature is, and if parrots exhibit voice-prints across call types. We recorded 5599 vocalisations from 229 individually-marked monk parakeets (*Myiopsitta monachus*) over a two year period in Barcelona, Spain. We examined five distinct call types, finding evidence for an individual signature in three. We further show that in the contact call, while birds are individually distinct, the calls are more variable than previously assumed, changing over short time scales (seconds to minutes). Finally, we provide evidence for voice-prints across multiple call types, with a discriminant function being able to predict caller identity across call types. This suggests that monk parakeets may be able to use vocal cues to recognise conspecifics, even across vocalisation types and without necessarily needing active vocal signatures of identity.
 
 ------------------------------------------------
 
@@ -21,22 +21,22 @@ ANALYSIS:
   - DATA: raw data
   - RESULTS: results and figures
 
-NOTE: Some large data files and results are not available in this repository. They can be downloaded from Edmond after publication. If you are interested in using the data now, you can always contact me on <simeonqs@hotmail.com>.
+NOTE: Some large data files and results are not available in this repository. They can be downloaded from Edmond after publication. That repository also contains all code, so replicating results is easier from there.
 
 ------------------------------------------------
 
 **File information and meta data:**
 
-Below are all files in the repository. The first bullet point under the path is a short explanation of the file. Other bullet points are meta data for the columns if relevant.
+Below are all files in the repository. The first bullet point under the path is a short explanation of the file. Other bullet points are meta data for the columns or other structure if relevant.
 
 - README.md
 	- overview of repo and all files
 - license.md 
-	- liscense file
+	- license file
 - .gitignore
 	- which files not to sync to GitHub
 - voice_paper.Rproj
-	- R Studio Project file; if you open the code from this file all paths are relative to the main folder
+	- R Studio Project file; if you open the code from this file all paths are relative to the main folder and you can run all code without modifying anything (given that you downloaded the large data files from Edmond and stored them in the correct folders)
 
 - ANALYSIS/DATA/luscinia/all_2021.csv	
 	- the fundamental frequency traces made in Luscinia for all calls in 2021, **large data file, only available on Edmond**
@@ -148,7 +148,7 @@ Below are all files in the repository. The first bullet point under the path is 
 	- nest: the nest location if recorded at a nest
 	- notes: other observations
 - ANALYSIS/DATA/selection tables
-	- a folder with the Raven selection tables; the file name is the original wav file name without extension with .Table.1.selections.txt added to the end; note that each selection is listed twice (once for the Waveform 1 and once for the Spetrogram 1) and for analysis one has to be removed
+	- a folder with the Raven selection tables; the file name is the original wav file name without extension with .Table.1.selections.txt added to the end; note that each selection is listed twice within the file (once for the Waveform 1 and once for the Spetrogram 1) and for analysis one has to be removed (this is done in the code)
 	- Selection: the selection number (can be discontinuous if selections were later removed)
 	- View: not used
 	- Channel: not used
@@ -325,7 +325,7 @@ NOTE: each code file contains additional information about author, date modified
 
 **Maintainers and contact:**
 
-Please contact Simeon Q. Smeele, <ssmeele@ab.mpg.de>, if you have any questions or suggestions. 
+Please contact Simeon Q. Smeele, <simeonqs@hotmail.com>, if you have any questions or suggestions. 
 
 
 
