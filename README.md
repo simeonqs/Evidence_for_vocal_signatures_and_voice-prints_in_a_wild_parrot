@@ -3,7 +3,9 @@
 The R code and data needed to replicate results from the article:
 
 ```
-Smeele, S. Q., Senar, J. C., Aplin, L. M., & McElreath, M. B. (2023). Evidence for vocal signatures and voice-prints in a wild parrot. bioRxiv, 2023-01.
+Smeele SQ, Senar JC, Aplin LM, McElreath MB. 2023 Evidence for vocal
+signatures and voice-prints in a wild parrot. R. Soc. Open Sci. 10: 230835.
+https://doi.org/10.1098/rsos.230835
 ```
 
 ------------------------------------------------
