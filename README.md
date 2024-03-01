@@ -23,7 +23,7 @@ ANALYSIS:
   - DATA: raw data
   - RESULTS: results and figures
 
-NOTE: Some large data files and results are not available in this repository. They can be downloaded from Edmond after publication. That repository also contains all code, so replicating results is easier from there.
+NOTE: Some large data files and results are not available in this repository. They can be downloaded from Edmond: <http://dx.doi.org/10.17617/3.RUIM5I>. That repository also contains all code, so replicating results is easier from there.
 
 ------------------------------------------------
 
